@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T21:59:05Z",
+  "lastUpdated": "2026-03-20T22:12:48Z",
   "games": [
     {
       "id": 1,
@@ -134,12 +134,12 @@
       "team1": "Villanova",
       "seed2": 9,
       "team2": "Utah St",
-      "score1": 65,
-      "score2": 64,
+      "score1": 73,
+      "score2": 71,
       "status": "live",
       "winner": null,
-      "odds1": 50,
-      "odds2": 50
+      "odds1": 51,
+      "odds2": 49
     },
     {
       "id": 11,
@@ -235,8 +235,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 98,
-      "odds2": 2
+      "odds1": 99,
+      "odds2": 1
     },
     {
       "id": 18,
@@ -395,8 +395,8 @@
         "Miami (Ohio)",
         "SMU"
       ],
-      "score1": 58,
-      "score2": 36,
+      "score1": 64,
+      "score2": 45,
       "status": "live",
       "winner": null,
       "odds1": 99,
@@ -558,8 +558,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 31,
-      "odds2": 69
+      "odds1": 32,
+      "odds2": 68
     },
     {
       "id": 41,
@@ -588,8 +588,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 57,
-      "odds2": 43
+      "odds1": 51,
+      "odds2": 49
     }
   ]
 }
