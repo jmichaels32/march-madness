@@ -569,7 +569,7 @@ header .subtitle {
   opacity: 0.8;
 }
 .lb-card-chalk .lb-card-name::after {
-  content: " (baseline)";
+  content: " (always picks favorites)";
   font-size: 0.55rem;
   font-weight: 400;
   color: #475569;

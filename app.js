@@ -834,7 +834,7 @@ function renderChalkToggle(containerId) {
     const h2 = section.querySelector("h2");
     if (h2) h2.after(toggle);
   }
-  toggle.textContent = showChalk ? "Hide Chalk Baseline" : "Show Chalk Baseline";
+  toggle.textContent = showChalk ? "Hide Bandwagon" : "Show Bandwagon";
   toggle.onclick = () => {
     showChalk = !showChalk;
     // Re-render both leaderboards
@@ -1481,7 +1481,7 @@ async function refresh() {
 
     // Generate chalk baseline picks and compute its standing
     const chalkPicks = generateChalkPicks(games);
-    const chalkMember = { name: "Chalk", picks: chalkPicks };
+    const chalkMember = { name: "Bandwagon", picks: chalkPicks };
     const chalkPicksData = { members: [chalkMember] };
     const chalkStandings = computeStandings(chalkPicksData, games);
     _chalkStanding = chalkStandings[0];
