@@ -743,6 +743,93 @@ header .subtitle {
   flex-shrink: 0;
 }
 
+/* ── Mobile filter bar ─────────────────────── */
+.mobile-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0.6rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  background: rgba(13, 31, 53, 0.6);
+  border-bottom: 1px solid rgba(30, 52, 80, 0.4);
+}
+.mobile-filter-bar::-webkit-scrollbar { display: none; }
+
+.filter-label {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: #475569;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.25rem 0.45rem;
+  border: 1.5px solid transparent;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.5);
+  color: #64748b;
+  font-family: inherit;
+  font-size: 0.6rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.filter-btn.active {
+  background: rgba(30, 52, 80, 0.8);
+  color: #e2e8f0;
+  font-weight: 700;
+}
+.filter-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── Person summary ───────────────────────── */
+.mobile-person-summary {
+  min-height: 0;
+}
+.person-summary-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.6rem;
+  background: rgba(13, 31, 53, 0.4);
+  border-bottom: 1px solid rgba(30, 52, 80, 0.4);
+}
+.person-summary-name {
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+.person-summary-stats {
+  font-size: 0.65rem;
+  color: #94a3b8;
+}
+.stat-correct { color: #60a5fa; font-weight: 700; }
+.stat-wrong { color: #f87171; font-weight: 700; }
+.stat-pending { color: #94a3b8; font-weight: 700; }
+
+/* ── Filter highlighting ──────────────────── */
+.mobile-picker-chip.dimmed {
+  opacity: 0.2;
+}
+.mobile-picker-chip.highlighted {
+  outline: 1.5px solid rgba(255, 255, 255, 0.4);
+  font-weight: 700;
+}
+.mobile-team-row.person-picked {
+  border-left: 3px solid #f4a020;
+}
+
 /* ── Mini bracket (mobile overview) ─────────── */
 .mini-bracket-wrapper {
   display: none;

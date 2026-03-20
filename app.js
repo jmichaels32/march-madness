@@ -671,6 +671,7 @@ function renderLeaderboard(standings, gamesData) {
 // =============================================================
 
 let mobileSelectedRegion = "East";
+let mobileFilterPerson = null; // null = show all
 
 function renderMobileRegionTabs() {
   const container = document.getElementById("mobile-region-tabs");
@@ -820,6 +821,13 @@ function renderMobileGameCard(slot, eliminated) {
         chip.className = "mobile-picker-chip";
         const status = getPickStatus(slot, pickedTeam, eliminated);
         chip.classList.add(status);
+        // Dim non-filtered people when filter is active
+        if (mobileFilterPerson && person !== mobileFilterPerson) {
+          chip.classList.add("dimmed");
+        }
+        if (mobileFilterPerson && person === mobileFilterPerson) {
+          chip.classList.add("highlighted");
+        }
         const dot = document.createElement("span");
         dot.className = "mobile-picker-dot";
         dot.style.backgroundColor = PERSON_COLORS[person] || "#888";
@@ -830,14 +838,113 @@ function renderMobileGameCard(slot, eliminated) {
     }
     row.appendChild(pickers);
 
+    // When filtering, highlight the team row if this person picked this team
+    if (mobileFilterPerson && slot.picks[mobileFilterPerson] === t.name) {
+      row.classList.add("person-picked");
+    }
+
     card.appendChild(row);
   }
 
   return card;
 }
 
+function renderMobileFilterBar() {
+  const bar = document.getElementById("mobile-filter-bar");
+  if (!bar) return;
+  bar.innerHTML = "";
+
+  const label = document.createElement("span");
+  label.className = "filter-label";
+  label.textContent = "Filter by:";
+  bar.appendChild(label);
+
+  // "All" button
+  const allBtn = document.createElement("button");
+  allBtn.className = "filter-btn" + (mobileFilterPerson === null ? " active" : "");
+  allBtn.textContent = "All";
+  allBtn.addEventListener("click", () => {
+    mobileFilterPerson = null;
+    renderMobileFilterBar();
+    renderMobilePersonSummary();
+    renderMobileRegionContent();
+  });
+  bar.appendChild(allBtn);
+
+  // Person buttons
+  for (const name of Object.keys(PERSON_COLORS)) {
+    const btn = document.createElement("button");
+    btn.className = "filter-btn" + (mobileFilterPerson === name ? " active" : "");
+    btn.style.borderColor = mobileFilterPerson === name ? PERSON_COLORS[name] : "transparent";
+    const dot = document.createElement("span");
+    dot.className = "filter-dot";
+    dot.style.backgroundColor = PERSON_COLORS[name];
+    btn.appendChild(dot);
+    btn.appendChild(document.createTextNode(name));
+    btn.addEventListener("click", () => {
+      mobileFilterPerson = mobileFilterPerson === name ? null : name;
+      renderMobileFilterBar();
+      renderMobilePersonSummary();
+      renderMobileRegionContent();
+    });
+    bar.appendChild(btn);
+  }
+}
+
+function renderMobilePersonSummary() {
+  const container = document.getElementById("mobile-person-summary");
+  if (!container) return;
+  container.innerHTML = "";
+
+  if (!mobileFilterPerson || !_mobileRenderData) return;
+
+  const { regionBrackets, finalFour, eliminated } = _mobileRenderData;
+  const person = mobileFilterPerson;
+
+  // Count correct, wrong, pending picks across all rounds
+  let correct = 0, wrong = 0, pending = 0, total = 0;
+
+  function countSlot(slot) {
+    const pick = slot.picks[person];
+    if (!pick) return;
+    total++;
+    const status = getPickStatus(slot, pick, eliminated);
+    if (status === "correct") correct++;
+    else if (status === "wrong") wrong++;
+    else pending++;
+  }
+
+  for (const region of ALL_REGIONS) {
+    const data = regionBrackets[region];
+    for (const rk of ["round1", "round2", "sweet16", "elite8"]) {
+      for (const slot of (data[rk] || [])) countSlot(slot);
+    }
+  }
+  countSlot(finalFour.semi1);
+  countSlot(finalFour.semi2);
+  countSlot(finalFour.champ);
+
+  const summary = document.createElement("div");
+  summary.className = "person-summary-content";
+
+  const nameEl = document.createElement("span");
+  nameEl.className = "person-summary-name";
+  nameEl.style.color = PERSON_COLORS[person];
+  nameEl.textContent = person;
+  summary.appendChild(nameEl);
+
+  const stats = document.createElement("span");
+  stats.className = "person-summary-stats";
+  stats.innerHTML = `<span class="stat-correct">${correct}</span> correct · <span class="stat-wrong">${wrong}</span> wrong · <span class="stat-pending">${pending}</span> pending`;
+  summary.appendChild(stats);
+
+  container.appendChild(summary);
+}
+
 function renderMobileBracket(regionBrackets, finalFour, eliminated) {
   _mobileRenderData = { regionBrackets, finalFour, eliminated };
+  renderMobileFilterBar();
+  renderMobilePersonSummary();
   renderMobileRegionTabs();
   renderMobileRegionContent();
   renderMiniBracket(regionBrackets, finalFour, eliminated);
