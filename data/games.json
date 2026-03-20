@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T21:02:29Z",
+  "lastUpdated": "2026-03-20T21:16:38Z",
   "games": [
     {
       "id": 1,
@@ -138,8 +138,8 @@
       "score2": 35,
       "status": "live",
       "winner": null,
-      "odds1": 47,
-      "odds2": 53
+      "odds1": 50,
+      "odds2": 50
     },
     {
       "id": 11,
@@ -378,12 +378,12 @@
       "team1": "Alabama",
       "seed2": 13,
       "team2": "Hofstra",
-      "score1": 67,
-      "score2": 59,
+      "score1": 77,
+      "score2": 66,
       "status": "live",
       "winner": null,
-      "odds1": 92,
-      "odds2": 8
+      "odds1": 99,
+      "odds2": 1
     },
     {
       "id": 29,
@@ -397,12 +397,12 @@
         "Miami (Ohio)",
         "SMU"
       ],
-      "score1": 31,
-      "score2": 17,
+      "score1": 37,
+      "score2": 23,
       "status": "live",
       "winner": null,
-      "odds1": 95,
-      "odds2": 5
+      "odds1": 97,
+      "odds2": 3
     },
     {
       "id": 30,
@@ -438,8 +438,8 @@
       "team1": "Iowa St",
       "seed2": 15,
       "team2": "Tennessee St",
-      "score1": 91,
-      "score2": 55,
+      "score1": 103,
+      "score2": 70,
       "status": "live",
       "winner": null,
       "odds1": 99,
@@ -517,8 +517,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 16,
-      "odds2": 84
+      "odds1": 17,
+      "odds2": 83
     },
     {
       "id": 38,
@@ -562,8 +562,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 32,
-      "odds2": 68
+      "odds1": 31,
+      "odds2": 69
     }
   ]
 }
