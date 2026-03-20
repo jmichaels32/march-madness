@@ -1222,34 +1222,21 @@ function computeBracketRisks(regionBrackets, finalFour, picksData, eliminated) {
       kl += p * Math.log2(p / q);
     }
 
-    // Downstream points at stake: count points in this round and future rounds
-    // where each member picked this team
-    let team1Downstream = 0, team2Downstream = 0;
-    const roundIdx = ROUND_ORDER.indexOf(roundKey);
-
+    // Expected wrong picks: for each picker, P(their pick loses)
+    let expectedWrong = 0;
     for (const member of allMembers) {
-      for (let ri = roundIdx; ri < ROUND_ORDER.length; ri++) {
-        const rk = ROUND_ORDER[ri];
-        const picks = member.picks[rk] || [];
-        for (const pick of picks) {
-          if (pick === slot.team1) team1Downstream += SCORING[rk];
-          if (pick === slot.team2) team2Downstream += SCORING[rk];
-        }
-      }
+      const pick = slot.picks[member.name];
+      if (pick === slot.team1) expectedWrong += 1 - marketDist[slot.team1];
+      else if (pick === slot.team2) expectedWrong += 1 - marketDist[slot.team2];
     }
-
-    // Expected damage = P(team loses) * downstream points at stake for that team
-    const expectedDamage =
-      (1 - marketDist[slot.team1]) * team1Downstream +
-      (1 - marketDist[slot.team2]) * team2Downstream;
+    const pctWrong = expectedWrong / totalPickers;
 
     risks.push({
       slot, roundKey, kl,
       marketDist, familyDist,
       team1Pickers, team2Pickers,
-      team1Downstream, team2Downstream,
-      expectedDamage,
-      totalStake: team1Downstream + team2Downstream,
+      totalPickers,
+      expectedWrong, pctWrong,
     });
   }
 
@@ -1263,7 +1250,8 @@ function computeBracketRisks(regionBrackets, finalFour, picksData, eliminated) {
   processSlot(finalFour.semi2, "final4");
   processSlot(finalFour.champ, "championship");
 
-  risks.sort((a, b) => b.expectedDamage - a.expectedDamage);
+  // Sort by expected wrong picks (most pain first)
+  risks.sort((a, b) => b.expectedWrong - a.expectedWrong);
   return risks;
 }
 
@@ -1279,7 +1267,7 @@ function renderRiskAnalysis(regionBrackets, finalFour, picksData, eliminated) {
     return;
   }
 
-  const maxDamage = risks[0].expectedDamage || 1;
+  const maxWrong = risks[0].expectedWrong || 1;
 
   for (const r of risks) {
     const card = document.createElement("div");
@@ -1292,8 +1280,7 @@ function renderRiskAnalysis(regionBrackets, finalFour, picksData, eliminated) {
     const fam1 = Math.round(r.familyDist[t1] * 100);
     const fam2 = Math.round(r.familyDist[t2] * 100);
 
-    // Danger level (for visual intensity)
-    const dangerPct = Math.min((r.expectedDamage / maxDamage) * 100, 100);
+    const dangerPct = Math.min((r.expectedWrong / maxWrong) * 100, 100);
 
     // Header: matchup + round
     const header = document.createElement("div");
@@ -1312,9 +1299,9 @@ function renderRiskAnalysis(regionBrackets, finalFour, picksData, eliminated) {
     const comparison = document.createElement("div");
     comparison.className = "risk-comparison";
 
-    for (const [team, mktPct, famPct, pickers, downstream] of [
-      [t1, mkt1, fam1, r.team1Pickers, r.team1Downstream],
-      [t2, mkt2, fam2, r.team2Pickers, r.team2Downstream],
+    for (const [team, mktPct, famPct, pickers] of [
+      [t1, mkt1, fam1, r.team1Pickers],
+      [t2, mkt2, fam2, r.team2Pickers],
     ]) {
       const teamBlock = document.createElement("div");
       teamBlock.className = "risk-team-block";
@@ -1359,17 +1346,11 @@ function renderRiskAnalysis(regionBrackets, finalFour, picksData, eliminated) {
       }
       teamBlock.appendChild(pickersEl);
 
-      // Downstream stake
-      const stakeEl = document.createElement("div");
-      stakeEl.className = "risk-downstream";
-      stakeEl.textContent = `${downstream} pts at stake`;
-      teamBlock.appendChild(stakeEl);
-
       comparison.appendChild(teamBlock);
     }
     card.appendChild(comparison);
 
-    // Footer: KL divergence + expected damage meter
+    // Footer: KL divergence + upset probability + danger bar
     const footer = document.createElement("div");
     footer.className = "risk-card-footer";
     footer.innerHTML = `
@@ -1378,8 +1359,12 @@ function renderRiskAnalysis(regionBrackets, finalFour, picksData, eliminated) {
         <span class="risk-metric-val">${r.kl.toFixed(3)} bits</span>
       </div>
       <div class="risk-metric">
-        <span class="risk-metric-label">Expected Damage</span>
-        <span class="risk-metric-val">${r.expectedDamage.toFixed(1)} pts</span>
+        <span class="risk-metric-label">P(Wrong)</span>
+        <span class="risk-metric-val">${Math.round(r.pctWrong * 100)}%</span>
+      </div>
+      <div class="risk-metric">
+        <span class="risk-metric-label">Exp. Wrong</span>
+        <span class="risk-metric-val">${r.expectedWrong.toFixed(1)} / ${r.totalPickers}</span>
       </div>
       <div class="risk-danger-bar">
         <div class="risk-danger-fill" style="width:${dangerPct}%"></div>

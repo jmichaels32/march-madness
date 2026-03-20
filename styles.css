@@ -1248,12 +1248,6 @@ header .subtitle {
   border-radius: 50%;
   flex-shrink: 0;
 }
-.risk-downstream {
-  font-size: 0.6rem;
-  color: #64748b;
-  font-style: italic;
-}
-
 .risk-card-footer {
   display: flex;
   flex-wrap: wrap;
