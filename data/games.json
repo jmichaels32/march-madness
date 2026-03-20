@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T22:28:24Z",
+  "lastUpdated": "2026-03-20T22:46:35Z",
   "games": [
     {
       "id": 1,
@@ -136,10 +136,8 @@
       "team2": "Utah St",
       "score1": 76,
       "score2": 86,
-      "status": "live",
-      "winner": null,
-      "odds1": 1,
-      "odds2": 99
+      "status": "final",
+      "winner": "Utah St"
     },
     {
       "id": 11,
@@ -250,8 +248,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 48,
-      "odds2": 52
+      "odds1": 47,
+      "odds2": 53
     },
     {
       "id": 19,
@@ -395,12 +393,10 @@
         "Miami (Ohio)",
         "SMU"
       ],
-      "score1": 76,
-      "score2": 54,
-      "status": "live",
-      "winner": null,
-      "odds1": 99,
-      "odds2": 1
+      "score1": 78,
+      "score2": 56,
+      "status": "final",
+      "winner": "Tennessee"
     },
     {
       "id": 30,
@@ -558,8 +554,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 31,
-      "odds2": 69
+      "odds1": 32,
+      "odds2": 68
     },
     {
       "id": 41,
@@ -588,8 +584,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 51,
-      "odds2": 49
+      "odds1": 50,
+      "odds2": 50
     }
   ]
 }
