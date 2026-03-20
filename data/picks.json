@@ -1,0 +1,724 @@
+{
+  "members": [
+    {
+      "name": "Ben",
+      "picks": {
+        "round1": [
+          "Duke",
+          "Ohio St",
+          "Northern Iowa",
+          "Cal Baptist",
+          "Louisville",
+          "North Dakota St",
+          "UCLA",
+          "UConn",
+          "Arizona",
+          "Villanova",
+          "Wisconsin",
+          "Arkansas",
+          "BYU",
+          "Gonzaga",
+          "Miami (FL)",
+          "Queens (N.C.)",
+          "Florida",
+          "Iowa",
+          "McNeese",
+          "Nebraska",
+          "North Carolina",
+          "Penn",
+          "Texas A&M",
+          "Idaho",
+          "Michigan",
+          "Georgia",
+          "Akron",
+          "Alabama",
+          "Tennessee",
+          "Wright St",
+          "Kentucky",
+          "Iowa St"
+        ],
+        "round2": [
+          "Ohio St",
+          "Cal Baptist",
+          "Louisville",
+          "UConn",
+          "Arizona",
+          "Wisconsin",
+          "Gonzaga",
+          "Miami (FL)",
+          "Iowa",
+          "Nebraska",
+          "Penn",
+          "Idaho",
+          "Michigan",
+          "Akron",
+          "Tennessee",
+          "Kentucky"
+        ],
+        "sweet16": [
+          "Ohio St",
+          "Louisville",
+          "Arizona",
+          "Miami (FL)",
+          "Iowa",
+          "Idaho",
+          "Michigan",
+          "Tennessee"
+        ],
+        "elite8": [
+          "Louisville",
+          "Arizona",
+          "Iowa",
+          "Michigan"
+        ],
+        "final4": [
+          "Iowa",
+          "Arizona"
+        ],
+        "championship": [
+          "Iowa"
+        ]
+      }
+    },
+    {
+      "name": "Charlotte",
+      "picks": {
+        "round1": [
+          "Duke",
+          "Ohio St",
+          "St. John's",
+          "Kansas",
+          "Louisville",
+          "Michigan St",
+          "UCLA",
+          "UConn",
+          "Arizona",
+          "Villanova",
+          "Wisconsin",
+          "Arkansas",
+          "BYU",
+          "Gonzaga",
+          "Miami (FL)",
+          "Purdue",
+          "Florida",
+          "Clemson",
+          "Vanderbilt",
+          "Nebraska",
+          "North Carolina",
+          "Illinois",
+          "Saint Mary's",
+          "Houston",
+          "Michigan",
+          "Georgia",
+          "Texas Tech",
+          "Alabama",
+          "Tennessee",
+          "Virginia",
+          "Kentucky",
+          "Iowa St"
+        ],
+        "round2": [
+          "Duke",
+          "Kansas",
+          "Louisville",
+          "UConn",
+          "Arizona",
+          "Arkansas",
+          "Gonzaga",
+          "Purdue",
+          "Florida",
+          "Nebraska",
+          "North Carolina",
+          "Houston",
+          "Michigan",
+          "Alabama",
+          "Tennessee",
+          "Kentucky"
+        ],
+        "sweet16": [
+          "Duke",
+          "UConn",
+          "Arizona",
+          "Purdue",
+          "Florida",
+          "Houston",
+          "Alabama",
+          "Tennessee"
+        ],
+        "elite8": [
+          "Duke",
+          "Arizona",
+          "Houston",
+          "Alabama"
+        ],
+        "final4": [
+          "Houston",
+          "Arizona"
+        ],
+        "championship": [
+          "Arizona"
+        ]
+      }
+    },
+    {
+      "name": "Jason",
+      "picks": {
+        "round1": [
+          "Duke",
+          "Ohio St",
+          "St. John's",
+          "Cal Baptist",
+          "Louisville",
+          "Michigan St",
+          "UCLA",
+          "UConn",
+          "Arizona",
+          "Villanova",
+          "Wisconsin",
+          "Hawaii",
+          "Texas",
+          "Gonzaga",
+          "Missouri",
+          "Purdue",
+          "Florida",
+          "Clemson",
+          "Vanderbilt",
+          "Troy",
+          "VCU",
+          "Illinois",
+          "Saint Mary's",
+          "Houston",
+          "Michigan",
+          "Saint Louis",
+          "Texas Tech",
+          "Hofstra",
+          "Tennessee",
+          "Virginia",
+          "Kentucky",
+          "Iowa St"
+        ],
+        "round2": [
+          "Duke",
+          "St. John's",
+          "Michigan St",
+          "UCLA",
+          "Arizona",
+          "Wisconsin",
+          "Gonzaga",
+          "Purdue",
+          "Florida",
+          "Vanderbilt",
+          "Illinois",
+          "Houston",
+          "Michigan",
+          "Texas Tech",
+          "Virginia",
+          "Iowa St"
+        ],
+        "sweet16": [
+          "Duke",
+          "Michigan St",
+          "Arizona",
+          "Purdue",
+          "Florida",
+          "Houston",
+          "Michigan",
+          "Virginia"
+        ],
+        "elite8": [
+          "Duke",
+          "Arizona",
+          "Houston",
+          "Virginia"
+        ],
+        "final4": [
+          "Houston",
+          "Arizona"
+        ],
+        "championship": [
+          "Houston"
+        ]
+      }
+    },
+    {
+      "name": "Andrea",
+      "picks": {
+        "round1": [
+          "Duke",
+          "TCU",
+          "St. John's",
+          "Kansas",
+          "South Florida",
+          "Michigan St",
+          "UCLA",
+          "UConn",
+          "Arizona",
+          "Utah St",
+          "High Point",
+          "Arkansas",
+          "Texas",
+          "Gonzaga",
+          "Miami (FL)",
+          "Purdue",
+          "Florida",
+          "Clemson",
+          "McNeese",
+          "Troy",
+          "VCU",
+          "Penn",
+          "Texas A&M",
+          "Houston",
+          "Michigan",
+          "Saint Louis",
+          "Texas Tech",
+          "Alabama",
+          "Tennessee",
+          "Virginia",
+          "Kentucky",
+          "Iowa St"
+        ],
+        "round2": [
+          "Duke",
+          "Kansas",
+          "Michigan St",
+          "UCLA",
+          "Arizona",
+          "Arkansas",
+          "Gonzaga",
+          "Purdue",
+          "Florida",
+          "Troy",
+          "Penn",
+          "Houston",
+          "Michigan",
+          "Texas Tech",
+          "Virginia",
+          "Iowa St"
+        ],
+        "sweet16": [
+          "Duke",
+          "UCLA",
+          "Arizona",
+          "Purdue",
+          "Florida",
+          "Houston",
+          "Texas Tech",
+          "Iowa St"
+        ],
+        "elite8": [
+          "Duke",
+          "Arizona",
+          "Florida",
+          "Texas Tech"
+        ],
+        "final4": [
+          "Florida",
+          "Arizona"
+        ],
+        "championship": [
+          "Arizona"
+        ]
+      }
+    },
+    {
+      "name": "Nathan",
+      "picks": {
+        "round1": [
+          "Duke",
+          "TCU",
+          "St. John's",
+          "Kansas",
+          "Louisville",
+          "Michigan St",
+          "UCF",
+          "UConn",
+          "Arizona",
+          "Utah St",
+          "High Point",
+          "Arkansas",
+          "Texas",
+          "Gonzaga",
+          "Miami (FL)",
+          "Purdue",
+          "Florida",
+          "Iowa",
+          "McNeese",
+          "Nebraska",
+          "North Carolina",
+          "Illinois",
+          "Saint Mary's",
+          "Houston",
+          "Michigan",
+          "Saint Louis",
+          "Akron",
+          "Alabama",
+          "Miami (Ohio)",
+          "Virginia",
+          "Kentucky",
+          "Iowa St"
+        ],
+        "round2": [
+          "Duke",
+          "St. John's",
+          "Michigan St",
+          "UConn",
+          "Arizona",
+          "High Point",
+          "Gonzaga",
+          "Miami (FL)",
+          "Florida",
+          "McNeese",
+          "North Carolina",
+          "Houston",
+          "Michigan",
+          "Alabama",
+          "Virginia",
+          "Iowa St"
+        ],
+        "sweet16": [
+          "Duke",
+          "Michigan St",
+          "Arizona",
+          "Gonzaga",
+          "Florida",
+          "North Carolina",
+          "Michigan",
+          "Iowa St"
+        ],
+        "elite8": [
+          "Duke",
+          "Arizona",
+          "Florida",
+          "Iowa St"
+        ],
+        "final4": [
+          "Duke",
+          "Arizona"
+        ],
+        "championship": [
+          "Arizona"
+        ]
+      }
+    },
+    {
+      "name": "Nana",
+      "picks": {
+        "round1": [
+          null,
+          "Ohio St",
+          null,
+          "Kansas",
+          null,
+          "Michigan St",
+          "UCLA",
+          null,
+          null,
+          "Villanova",
+          null,
+          "Arkansas",
+          "BYU",
+          null,
+          "Missouri",
+          null,
+          "Florida",
+          null,
+          null,
+          "Nebraska",
+          "North Carolina",
+          null,
+          "Texas A&M",
+          null,
+          "Michigan",
+          null,
+          null,
+          "Alabama",
+          null,
+          "Virginia",
+          null,
+          "Tennessee St"
+        ],
+        "round2": [
+          "Ohio St",
+          "Kansas",
+          "Michigan St",
+          "UCLA",
+          "Villanova",
+          "Arkansas",
+          "BYU",
+          "Missouri",
+          "Florida",
+          "Nebraska",
+          "North Carolina",
+          "Texas A&M",
+          "Michigan",
+          "Alabama",
+          "Virginia",
+          "Tennessee St"
+        ],
+        "sweet16": [
+          "Ohio St",
+          "Michigan St",
+          "Arkansas",
+          "Missouri",
+          "Nebraska",
+          "Texas A&M",
+          "Alabama",
+          "Virginia"
+        ],
+        "elite8": [
+          "Michigan St",
+          "Arkansas",
+          "Texas A&M",
+          "Alabama"
+        ],
+        "final4": [
+          "Michigan St",
+          "Alabama"
+        ],
+        "championship": [
+          "Michigan St"
+        ]
+      }
+    },
+    {
+      "name": "Brent",
+      "picks": {
+        "round1": [
+          "Duke",
+          "Ohio St",
+          "St. John's",
+          "Kansas",
+          "Louisville",
+          "Michigan St",
+          "UCLA",
+          "UConn",
+          "Arizona",
+          "Villanova",
+          "Wisconsin",
+          "Arkansas",
+          "BYU",
+          "Gonzaga",
+          "Miami (FL)",
+          "Purdue",
+          "Florida",
+          "Iowa",
+          "Vanderbilt",
+          "Nebraska",
+          "VCU",
+          "Illinois",
+          "Texas A&M",
+          "Houston",
+          "Michigan",
+          "Saint Louis",
+          "Texas Tech",
+          "Alabama",
+          "SMU",
+          "Virginia",
+          "Kentucky",
+          "Iowa St"
+        ],
+        "round2": [
+          "Duke",
+          "St. John's",
+          "Louisville",
+          "UCLA",
+          "Arizona",
+          "Arkansas",
+          "Gonzaga",
+          "Purdue",
+          "Florida",
+          "Vanderbilt",
+          "Illinois",
+          "Houston",
+          "Michigan",
+          "Texas Tech",
+          "Virginia",
+          "Iowa St"
+        ],
+        "sweet16": [
+          "Duke",
+          "UCLA",
+          "Arizona",
+          "Purdue",
+          "Florida",
+          "Houston",
+          "Michigan",
+          "Virginia"
+        ],
+        "elite8": [
+          "Duke",
+          "Arizona",
+          "Houston",
+          "Michigan"
+        ],
+        "final4": [
+          "Duke",
+          "Michigan"
+        ],
+        "championship": [
+          "Duke"
+        ]
+      }
+    },
+    {
+      "name": "Susun",
+      "picks": {
+        "round1": [
+          "Duke",
+          "TCU",
+          "St. John's",
+          "Kansas",
+          null,
+          "Michigan St",
+          "UCLA",
+          "UConn",
+          "Arizona",
+          "Villanova",
+          "Wisconsin",
+          "Arkansas",
+          "BYU",
+          "Gonzaga",
+          "Miami (FL)",
+          "Purdue",
+          "Florida",
+          "Iowa",
+          "Vanderbilt",
+          "Nebraska",
+          "VCU",
+          "Illinois",
+          "Texas A&M",
+          "Houston",
+          "Michigan",
+          "Saint Louis",
+          "Texas Tech",
+          "Alabama",
+          "Tennessee",
+          "Virginia",
+          "Kentucky",
+          "Iowa St"
+        ],
+        "round2": [
+          "Duke",
+          "St. John's",
+          "Michigan St",
+          "UCLA",
+          "Arizona",
+          "Arkansas",
+          "Gonzaga",
+          "Purdue",
+          "Florida",
+          "Vanderbilt",
+          "Illinois",
+          "Houston",
+          "Michigan",
+          "Texas Tech",
+          "Virginia",
+          "Iowa St"
+        ],
+        "sweet16": [
+          "Duke",
+          "Michigan St",
+          "Arizona",
+          "Purdue",
+          "Florida",
+          "Houston",
+          "Michigan",
+          "Virginia"
+        ],
+        "elite8": [
+          "Duke",
+          "Arizona",
+          "Houston",
+          "Michigan"
+        ],
+        "final4": [
+          "Duke",
+          "Michigan"
+        ],
+        "championship": [
+          "Michigan"
+        ]
+      }
+    },
+    {
+      "name": "Jack",
+      "picks": {
+        "round1": [
+          "Duke",
+          "TCU",
+          "St. John's",
+          "Kansas",
+          "South Florida",
+          "Michigan St",
+          "UCLA",
+          "UConn",
+          "Arizona",
+          "Villanova",
+          "Wisconsin",
+          "Arkansas",
+          "Texas",
+          "Gonzaga",
+          "Miami (FL)",
+          "Purdue",
+          "Florida",
+          "Clemson",
+          "Vanderbilt",
+          "Nebraska",
+          "North Carolina",
+          "Illinois",
+          "Texas A&M",
+          "Houston",
+          "Michigan",
+          "Saint Louis",
+          "Texas Tech",
+          "Alabama",
+          "Tennessee",
+          "Virginia",
+          "Santa Clara",
+          "Iowa St"
+        ],
+        "round2": [
+          "Duke",
+          "St. John's",
+          "South Florida",
+          "UConn",
+          "Arizona",
+          "Arkansas",
+          "Gonzaga",
+          "Miami (FL)",
+          "Clemson",
+          "Vanderbilt",
+          "North Carolina",
+          "Houston",
+          "Michigan",
+          "Texas Tech",
+          "Tennessee",
+          "Santa Clara"
+        ],
+        "sweet16": [
+          "Duke",
+          "UConn",
+          "Arizona",
+          "Gonzaga",
+          "Clemson",
+          "Houston",
+          "Texas Tech",
+          "Tennessee"
+        ],
+        "elite8": [
+          "Duke",
+          "Gonzaga",
+          "Houston",
+          "Tennessee"
+        ],
+        "final4": [
+          "Duke",
+          "Gonzaga"
+        ],
+        "championship": [
+          "Duke"
+        ]
+      }
+    }
+  ]
+}

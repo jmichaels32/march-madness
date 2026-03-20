@@ -1,0 +1,40 @@
+{
+  "lastUpdated": "2026-03-19T10:00:00Z",
+  "games": [
+    { "id": 1,  "round": "round1", "region": "East",    "seed1": 1,  "team1": "Duke",           "seed2": 16, "team2": "Siena",           "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 2,  "round": "round1", "region": "East",    "seed1": 8,  "team1": "Ohio St",        "seed2": 9,  "team2": "TCU",             "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 3,  "round": "round1", "region": "East",    "seed1": 5,  "team1": "St. John's",     "seed2": 12, "team2": "Northern Iowa",   "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 4,  "round": "round1", "region": "East",    "seed1": 4,  "team1": "Kansas",         "seed2": 13, "team2": "Cal Baptist",     "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 5,  "round": "round1", "region": "East",    "seed1": 6,  "team1": "Louisville",     "seed2": 11, "team2": "South Florida",   "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 6,  "round": "round1", "region": "East",    "seed1": 3,  "team1": "Michigan St",    "seed2": 14, "team2": "North Dakota St", "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 7,  "round": "round1", "region": "East",    "seed1": 7,  "team1": "UCLA",           "seed2": 10, "team2": "UCF",             "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 8,  "round": "round1", "region": "East",    "seed1": 2,  "team1": "UConn",          "seed2": 15, "team2": "Furman",          "score1": null, "score2": null, "status": "upcoming", "winner": null },
+
+    { "id": 9,  "round": "round1", "region": "West",    "seed1": 1,  "team1": "Arizona",        "seed2": 16, "team2": "Long Island",     "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 10, "round": "round1", "region": "West",    "seed1": 8,  "team1": "Villanova",      "seed2": 9,  "team2": "Utah St",         "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 11, "round": "round1", "region": "West",    "seed1": 5,  "team1": "Wisconsin",      "seed2": 12, "team2": "High Point",      "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 12, "round": "round1", "region": "West",    "seed1": 4,  "team1": "Arkansas",       "seed2": 13, "team2": "Hawaii",          "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 13, "round": "round1", "region": "West",    "seed1": 6,  "team1": "BYU",            "seed2": 11, "team2": "Texas",           "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 14, "round": "round1", "region": "West",    "seed1": 3,  "team1": "Gonzaga",        "seed2": 14, "team2": "Kennesaw St",     "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 15, "round": "round1", "region": "West",    "seed1": 7,  "team1": "Miami (FL)",     "seed2": 10, "team2": "Missouri",        "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 16, "round": "round1", "region": "West",    "seed1": 2,  "team1": "Purdue",         "seed2": 15, "team2": "Queens (N.C.)",   "score1": null, "score2": null, "status": "upcoming", "winner": null },
+
+    { "id": 17, "round": "round1", "region": "South",   "seed1": 1,  "team1": "Florida",        "seed2": 16, "team2": "Prairie View A&M","score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 18, "round": "round1", "region": "South",   "seed1": 8,  "team1": "Clemson",        "seed2": 9,  "team2": "Iowa",            "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 19, "round": "round1", "region": "South",   "seed1": 5,  "team1": "Vanderbilt",     "seed2": 12, "team2": "McNeese",         "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 20, "round": "round1", "region": "South",   "seed1": 4,  "team1": "Nebraska",       "seed2": 13, "team2": "Troy",            "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 21, "round": "round1", "region": "South",   "seed1": 6,  "team1": "North Carolina", "seed2": 11, "team2": "VCU",             "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 22, "round": "round1", "region": "South",   "seed1": 3,  "team1": "Illinois",       "seed2": 14, "team2": "Penn",            "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 23, "round": "round1", "region": "South",   "seed1": 7,  "team1": "Saint Mary's",   "seed2": 10, "team2": "Texas A&M",       "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 24, "round": "round1", "region": "South",   "seed1": 2,  "team1": "Houston",        "seed2": 15, "team2": "Idaho",           "score1": null, "score2": null, "status": "upcoming", "winner": null },
+
+    { "id": 25, "round": "round1", "region": "Midwest", "seed1": 1,  "team1": "Michigan",       "seed2": 16, "team2": "Howard",          "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 26, "round": "round1", "region": "Midwest", "seed1": 8,  "team1": "Georgia",        "seed2": 9,  "team2": "Saint Louis",     "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 27, "round": "round1", "region": "Midwest", "seed1": 5,  "team1": "Texas Tech",     "seed2": 12, "team2": "Akron",           "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 28, "round": "round1", "region": "Midwest", "seed1": 4,  "team1": "Alabama",        "seed2": 13, "team2": "Hofstra",         "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 29, "round": "round1", "region": "Midwest", "seed1": 6,  "team1": "Tennessee",      "seed2": 11, "team2": "Miami (Ohio)",    "playInOptions": ["Miami (Ohio)", "SMU"], "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 30, "round": "round1", "region": "Midwest", "seed1": 3,  "team1": "Virginia",       "seed2": 14, "team2": "Wright St",       "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 31, "round": "round1", "region": "Midwest", "seed1": 7,  "team1": "Kentucky",       "seed2": 10, "team2": "Santa Clara",     "score1": null, "score2": null, "status": "upcoming", "winner": null },
+    { "id": 32, "round": "round1", "region": "Midwest", "seed1": 2,  "team1": "Iowa St",        "seed2": 15, "team2": "Tennessee St",    "score1": null, "score2": null, "status": "upcoming", "winner": null }
+  ]
+}

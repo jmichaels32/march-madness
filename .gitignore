@@ -1,0 +1,5 @@
+# Source bracket images (not needed for the site)
+data/images/
+
+# macOS
+.DS_Store

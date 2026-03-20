@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dev Editor — March Madness</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #080f1e; color: #e0e0e0; padding: 1rem; }
+    h1 { font-size: 1.3rem; color: #f4a020; margin-bottom: 0.5rem; }
+    .back { color: #64748b; font-size: 0.75rem; text-decoration: none; }
+    .back:hover { color: #f4a020; }
+
+    /* Tabs */
+    .tabs { display: flex; gap: 0.5rem; margin: 1rem 0; }
+    .tab {
+      padding: 0.4rem 1rem; background: #12263e; border: 1px solid #1e3450;
+      border-radius: 6px; color: #94a3b8; cursor: pointer; font-size: 0.75rem;
+      font-weight: 600; transition: all 0.15s;
+    }
+    .tab:hover { border-color: #2d5a8f; color: #fff; }
+    .tab.active { background: #1e3450; border-color: #f4a020; color: #f4a020; }
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* Action bar */
+    .action-bar {
+      position: sticky; top: 0; z-index: 10; background: rgba(8,15,30,0.95);
+      backdrop-filter: blur(8px); padding: 0.5rem 0; border-bottom: 1px solid #1e3450;
+      display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;
+    }
+    .action-btn {
+      padding: 0.4rem 1rem; border-radius: 6px; border: 1px solid #1e3450;
+      background: #12263e; color: #94a3b8; cursor: pointer; font-size: 0.7rem;
+      font-weight: 600; font-family: inherit; transition: all 0.15s;
+    }
+    .action-btn:hover { border-color: #2d5a8f; color: #fff; }
+    .action-btn.primary { background: linear-gradient(135deg,#1a5a2a,#1b4332); border-color: #4ade80; color: #4ade80; }
+    .action-btn.primary:hover { color: #fff; }
+    .action-btn.warn { border-color: #f59e0b; color: #f59e0b; }
+    .status-msg { font-size: 0.7rem; color: #4ade80; margin-left: auto; opacity: 0; transition: opacity 0.3s; }
+    .status-msg.show { opacity: 1; }
+
+    /* Games editor */
+    .game-editor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 0.5rem; }
+    .game-edit-card { background: #0f1f36; border: 1px solid #1e3450; border-radius: 8px; padding: 0.6rem; font-size: 0.75rem; }
+    .game-edit-card.final { border-left: 3px solid #4ade80; }
+    .game-edit-card.live { border-left: 3px solid #dc2626; }
+    .gec-header { display: flex; justify-content: space-between; font-size: 0.6rem; color: #475569; margin-bottom: 0.4rem; }
+    .gec-row { display: flex; align-items: center; gap: 0.4rem; margin: 0.25rem 0; }
+    .gec-row label { flex: 1; font-weight: 500; }
+    .gec-row input[type="number"] {
+      width: 50px; background: #12263e; border: 1px solid #1e3450; border-radius: 4px;
+      color: #e0e0e0; padding: 3px 6px; font-size: 0.7rem; font-family: inherit;
+    }
+    .gec-row input[type="number"]:focus { outline: none; border-color: #f4a020; }
+    .winner-btn {
+      padding: 2px 8px; border-radius: 4px; border: 1px solid #1e3450; background: #12263e;
+      color: #94a3b8; cursor: pointer; font-size: 0.65rem; font-family: inherit; transition: all 0.15s;
+    }
+    .winner-btn:hover { border-color: #4ade80; color: #4ade80; }
+    .winner-btn.selected { background: #1b4332; border-color: #4ade80; color: #4ade80; font-weight: 600; }
+    .status-select {
+      background: #12263e; border: 1px solid #1e3450; border-radius: 4px;
+      color: #94a3b8; padding: 2px 4px; font-size: 0.65rem; font-family: inherit;
+    }
+    .status-select:focus { outline: none; border-color: #f4a020; }
+
+    /* ── Picks bracket editor ───────────────── */
+    .person-tabs { display: flex; gap: 0.4rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .person-tab {
+      padding: 0.35rem 0.8rem; border-radius: 6px; border: 2px solid #1e3450;
+      background: #0f1f36; cursor: pointer; font-size: 0.7rem; font-weight: 600;
+      transition: all 0.15s; color: #94a3b8;
+    }
+    .person-tab:hover { border-color: #2d5a8f; color: #fff; }
+    .person-tab.active { color: #fff; }
+    .person-tab .ptab-dot {
+      display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+      margin-right: 4px; vertical-align: middle;
+    }
+
+    .bracket-editor { overflow-x: auto; padding-bottom: 1rem; }
+    .region-bracket-ed {
+      margin-bottom: 1.5rem;
+    }
+    .region-label-ed {
+      font-size: 0.6rem; font-weight: 800; letter-spacing: 3px; text-transform: uppercase;
+      color: #f4a020; margin-bottom: 0.4rem; opacity: 0.7;
+    }
+    .region-rounds-ed { display: flex; gap: 0; min-width: 700px; }
+    .round-col-ed {
+      display: flex; flex-direction: column; justify-content: space-around;
+      min-width: 140px; padding: 0 3px;
+    }
+    .round-header-ed {
+      text-align: center; font-size: 0.5rem; color: #475569; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.5px; padding: 0.2rem 0;
+    }
+    .game-slot-ed {
+      flex: 1; display: flex; align-items: center;
+    }
+    .game-cell-ed {
+      background: #0f1f36; border: 1px solid #1e3450; border-radius: 6px;
+      width: 100%; margin: 2px 4px; overflow: hidden;
+    }
+    .team-btn-ed {
+      display: flex; align-items: center; gap: 4px; width: 100%;
+      padding: 5px 8px; border: none; background: transparent;
+      color: #64748b; font-size: 0.65rem; font-family: inherit; font-weight: 500;
+      cursor: pointer; transition: all 0.12s; text-align: left;
+    }
+    .team-btn-ed + .team-btn-ed { border-top: 1px solid #0a1628; }
+    .team-btn-ed:hover:not(.empty) { background: rgba(45, 90, 143, 0.2); color: #fff; }
+    .team-btn-ed.selected {
+      background: rgba(74, 222, 128, 0.1); color: #4ade80; font-weight: 700;
+    }
+    .team-btn-ed.empty {
+      cursor: default; color: #2a3a50; font-style: italic;
+    }
+    .team-btn-ed .seed-ed {
+      font-size: 0.5rem; color: #475569; min-width: 14px; text-align: right;
+    }
+    .team-btn-ed.selected .seed-ed { color: #2d7a4a; }
+    .team-btn-ed .tname-ed { flex: 1; }
+
+    /* Final Four section */
+    .ff-section-ed {
+      display: flex; gap: 1rem; justify-content: center; align-items: flex-start;
+      flex-wrap: wrap; margin-top: 1rem; padding-top: 1rem;
+      border-top: 1px solid #1e3450;
+    }
+    .ff-game-ed {
+      min-width: 160px;
+    }
+    .ff-label-ed {
+      text-align: center; font-size: 0.55rem; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: #f4a020; margin-bottom: 0.3rem; opacity: 0.7;
+    }
+    .champ-label-ed {
+      text-align: center; font-size: 0.65rem; font-weight: 900; letter-spacing: 2px;
+      text-transform: uppercase; color: #ffd700; margin-bottom: 0.3rem;
+      text-shadow: 0 0 12px rgba(255,215,0,0.3);
+    }
+
+    /* Bracket connecting lines — left-flowing regions (East, South) */
+    .region-rounds-ed:not(.region-right) > .round-col-ed:not(:first-child) .game-slot-ed { position: relative; }
+    .region-rounds-ed:not(.region-right) > .round-col-ed:not(:first-child) .game-slot-ed::before {
+      content: ''; position: absolute; left: 0; top: 25%; bottom: 25%; width: 8px;
+      border-left: 2px solid #1e3a5a; border-top: 2px solid #1e3a5a;
+      border-bottom: 2px solid #1e3a5a; border-radius: 3px 0 0 3px;
+    }
+    /* Bracket connecting lines — right-flowing regions (West, Midwest) */
+    .region-right > .round-col-ed:not(:first-child) .game-slot-ed { position: relative; }
+    .region-right > .round-col-ed:not(:first-child) .game-slot-ed::before {
+      content: ''; position: absolute; right: 0; top: 25%; bottom: 25%; width: 8px;
+      border-right: 2px solid #1e3a5a; border-top: 2px solid #1e3a5a;
+      border-bottom: 2px solid #1e3a5a; border-radius: 0 3px 3px 0;
+    }
+    /* Align right-side regions to the right */
+    .region-right { justify-content: flex-end; }
+
+    /* Raw JSON */
+    .json-editor {
+      width: 100%; min-height: 400px; background: #0a1425; border: 1px solid #1e3450;
+      border-radius: 8px; color: #94a3b8; padding: 0.75rem;
+      font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.7rem;
+      line-height: 1.5; resize: vertical; tab-size: 2;
+    }
+    .json-editor:focus { outline: none; border-color: #f4a020; }
+    .json-error { color: #ef4444; font-size: 0.7rem; margin-top: 0.3rem; }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back">Back to Bracket</a>
+  <h1>Dev Editor</h1>
+
+  <div class="action-bar">
+    <button class="action-btn primary" onclick="downloadGames()">Download games.json</button>
+    <button class="action-btn primary" onclick="downloadPicks()">Download picks.json</button>
+    <button class="action-btn warn" onclick="loadFromDisk()">Reload from Disk</button>
+    <span class="status-msg" id="status-msg"></span>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('games')">Games</div>
+    <div class="tab" onclick="switchTab('picks')">Picks</div>
+    <div class="tab" onclick="switchTab('games-raw')">Raw games.json</div>
+    <div class="tab" onclick="switchTab('picks-raw')">Raw picks.json</div>
+  </div>
+
+  <div class="panel active" id="panel-games"></div>
+  <div class="panel" id="panel-picks"></div>
+  <div class="panel" id="panel-games-raw">
+    <textarea class="json-editor" id="games-raw-editor"></textarea>
+    <div class="json-error" id="games-raw-error"></div>
+  </div>
+  <div class="panel" id="panel-picks-raw">
+    <textarea class="json-editor" id="picks-raw-editor"></textarea>
+    <div class="json-error" id="picks-raw-error"></div>
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════════════
+    // DATA
+    // ═══════════════════════════════════════════════
+    let gamesData = null;
+    let picksData = null;
+    let selectedPerson = null;
+
+    const ROUND_LABELS = {
+      round1: "Round of 64", round2: "Round of 32", sweet16: "Sweet 16",
+      elite8: "Elite 8", final4: "Final Four", championship: "Championship",
+    };
+    const ROUND_SHORT = {
+      round1: "R64", round2: "R32", sweet16: "S16", elite8: "E8",
+    };
+    const PERSON_COLORS = {
+      "Ben": "#3b82f6", "Charlotte": "#ec4899", "Jason": "#f59e0b", "Andrea": "#8b5cf6",
+      "Nathan": "#10b981", "Nana": "#f97316", "Brent": "#06b6d4", "Susun": "#ef4444",
+      "Jack": "#84cc16",
+    };
+    const ALL_REGIONS = ["East", "West", "South", "Midwest"];
+    const REGION_PICK_OFFSETS = {
+      East:    { round1: 0,  round2: 0,  sweet16: 0, elite8: 0 },
+      West:    { round1: 8,  round2: 4,  sweet16: 2, elite8: 1 },
+      South:   { round1: 16, round2: 8,  sweet16: 4, elite8: 2 },
+      Midwest: { round1: 24, round2: 12, sweet16: 6, elite8: 3 },
+    };
+    const REGION_ROUNDS = ["round1", "round2", "sweet16", "elite8"];
+    const GAMES_PER_ROUND = { round1: 8, round2: 4, sweet16: 2, elite8: 1 };
+
+    async function loadData() {
+      const [g, p] = await Promise.all([
+        fetch("data/games.json", {cache: "no-store"}).then(r => r.json()),
+        fetch("data/picks.json", {cache: "no-store"}).then(r => r.json()),
+      ]);
+      gamesData = g;
+      picksData = p;
+      if (!selectedPerson && picksData.members.length > 0) {
+        selectedPerson = picksData.members[0].name;
+      }
+      renderGamesEditor();
+      renderPicksBracket();
+      syncRawEditors();
+    }
+
+    function getMember(name) {
+      return picksData.members.find(m => m.name === name);
+    }
+
+    // ═══════════════════════════════════════════════
+    // BRACKET STRUCTURE FOR PICKS
+    // ═══════════════════════════════════════════════
+
+    /**
+     * For a given person, build the bracket tree showing their picks
+     * and what the valid options are at each slot.
+     * Returns per-region: { round1: [{team1, seed1, team2, seed2, picked}], round2: [...], ... }
+     */
+    function buildPersonBracket(member, region) {
+      const rounds = {};
+      const r1Offset = REGION_PICK_OFFSETS[region].round1;
+
+      // R1: matchups from games.json
+      const r1Slots = [];
+      for (let i = 0; i < 8; i++) {
+        const gameId = r1Offset + i + 1;
+        const g = gamesData.games.find(gm => gm.id === gameId);
+        const pickIdx = REGION_PICK_OFFSETS[region].round1 + i;
+        const picked = member.picks.round1?.[pickIdx] || null;
+        const slot = {
+          team1: g?.team1 || "TBD", seed1: g?.seed1 ?? null,
+          team2: g?.team2 || "TBD", seed2: g?.seed2 ?? null,
+          picked,
+          pickRound: "round1", pickIndex: pickIdx,
+        };
+        // If this game has play-in options (e.g. Miami (Ohio) vs SMU),
+        // store them so the editor can show all choices
+        if (g?.playInOptions) {
+          slot.playInOptions = g.playInOptions;
+          slot.playInSeed = g.seed2; // the play-in seed
+        }
+        r1Slots.push(slot);
+      }
+      rounds.round1 = r1Slots;
+
+      // R2+: matchups from previous round picks
+      let prevSlots = r1Slots;
+      for (let ri = 1; ri < REGION_ROUNDS.length; ri++) {
+        const roundKey = REGION_ROUNDS[ri];
+        const numGames = GAMES_PER_ROUND[roundKey];
+        const slots = [];
+        for (let i = 0; i < numGames; i++) {
+          const p1 = prevSlots[i * 2];
+          const p2 = prevSlots[i * 2 + 1];
+          // The two options are the picks from parent slots
+          const t1 = p1?.picked || null;
+          const t2 = p2?.picked || null;
+          // Inherit seed from parent (handle play-in picks where picked team may not be team1/team2)
+          const getSeed = (parent, team) => {
+            if (!team || !parent) return null;
+            if (team === parent.team1) return parent.seed1;
+            if (team === parent.team2) return parent.seed2;
+            if (parent.playInSeed != null) return parent.playInSeed; // play-in pick
+            return null;
+          };
+          const s1 = getSeed(p1, t1);
+          const s2 = getSeed(p2, t2);
+
+          const pickIdx = REGION_PICK_OFFSETS[region][roundKey] + i;
+          let picked = member.picks[roundKey]?.[pickIdx] || null;
+          // Validate: picked must be one of the two options (or null)
+          if (picked && picked !== t1 && picked !== t2) picked = null;
+
+          slots.push({
+            team1: t1, seed1: s1,
+            team2: t2, seed2: s2,
+            picked,
+            pickRound: roundKey, pickIndex: pickIdx,
+          });
+        }
+        rounds[roundKey] = slots;
+        prevSlots = slots;
+      }
+
+      return rounds;
+    }
+
+    function buildPersonFinalFour(member) {
+      // Get E8 winners from each region
+      const regionBrackets = {};
+      for (const r of ALL_REGIONS) {
+        regionBrackets[r] = buildPersonBracket(member, r);
+      }
+
+      const eastPick = regionBrackets.East.elite8[0]?.picked || null;
+      const southPick = regionBrackets.South.elite8[0]?.picked || null;
+      const westPick = regionBrackets.West.elite8[0]?.picked || null;
+      const midwestPick = regionBrackets.Midwest.elite8[0]?.picked || null;
+
+      // Semi 1: East vs South
+      let ff0Pick = member.picks.final4?.[0] || null;
+      if (ff0Pick && ff0Pick !== eastPick && ff0Pick !== southPick) ff0Pick = null;
+
+      // Semi 2: West vs Midwest
+      let ff1Pick = member.picks.final4?.[1] || null;
+      if (ff1Pick && ff1Pick !== westPick && ff1Pick !== midwestPick) ff1Pick = null;
+
+      // Championship
+      let champPick = member.picks.championship?.[0] || null;
+      if (champPick && champPick !== ff0Pick && champPick !== ff1Pick) champPick = null;
+
+      return {
+        semi1: { team1: eastPick, team2: southPick, picked: ff0Pick, pickRound: "final4", pickIndex: 0 },
+        semi2: { team1: westPick, team2: midwestPick, picked: ff1Pick, pickRound: "final4", pickIndex: 1 },
+        champ: { team1: ff0Pick, team2: ff1Pick, picked: champPick, pickRound: "championship", pickIndex: 0 },
+        regionBrackets,
+      };
+    }
+
+    // ═══════════════════════════════════════════════
+    // PICK MUTATION (with cascade)
+    // ═══════════════════════════════════════════════
+
+    function setPick(memberName, round, index, team) {
+      const member = getMember(memberName);
+      if (!member) return;
+
+      const oldPick = member.picks[round][index];
+      member.picks[round][index] = team;
+
+      // Cascade: if the old pick was used in later rounds, clear those
+      if (oldPick && oldPick !== team) {
+        cascadeClear(member, round, index, oldPick);
+      }
+
+      syncRawEditors();
+      renderPicksBracket();
+      flash(team ? `${memberName}: ${team}` : `${memberName}: cleared`);
+    }
+
+    function cascadeClear(member, changedRound, changedIndex, oldTeam) {
+      // Walk forward through rounds and clear any pick that was the oldTeam
+      // and depended on the changed slot
+      const allRounds = ["round1", "round2", "sweet16", "elite8", "final4", "championship"];
+      const startIdx = allRounds.indexOf(changedRound);
+
+      for (let ri = startIdx + 1; ri < allRounds.length; ri++) {
+        const round = allRounds[ri];
+        const picks = member.picks[round];
+        if (!picks) continue;
+        for (let i = 0; i < picks.length; i++) {
+          if (picks[i] === oldTeam) {
+            picks[i] = null;
+          }
+        }
+      }
+    }
+
+    // ═══════════════════════════════════════════════
+    // RENDER: PICKS BRACKET
+    // ═══════════════════════════════════════════════
+
+    function renderPicksBracket() {
+      const container = document.getElementById("panel-picks");
+      if (!picksData || !selectedPerson) { container.innerHTML = ""; return; }
+
+      const member = getMember(selectedPerson);
+      if (!member) return;
+
+      let html = '';
+
+      // Person tabs
+      html += '<div class="person-tabs">';
+      for (const m of picksData.members) {
+        const color = PERSON_COLORS[m.name] || '#888';
+        const active = m.name === selectedPerson ? 'active' : '';
+        const borderColor = m.name === selectedPerson ? color : '';
+        html += `<div class="person-tab ${active}" style="${active ? 'border-color:'+color : ''}"
+          onclick="selectPerson('${escAttr(m.name)}')">
+          <span class="ptab-dot" style="background:${color}"></span>${m.name}</div>`;
+      }
+      html += '</div>';
+
+      // Build bracket data
+      const ff = buildPersonFinalFour(member);
+
+      // Render each region
+      const RIGHT_REGIONS = new Set(["West", "Midwest"]);
+      for (const region of ALL_REGIONS) {
+        const rb = ff.regionBrackets[region];
+        const isRight = RIGHT_REGIONS.has(region);
+        html += `<div class="region-bracket-ed">`;
+        html += `<div class="region-label-ed">${region}</div>`;
+        html += `<div class="region-rounds-ed${isRight ? ' region-right' : ''}">`;
+
+        const roundOrder = isRight ? [...REGION_ROUNDS].reverse() : REGION_ROUNDS;
+        for (const roundKey of roundOrder) {
+          const slots = rb[roundKey];
+          html += `<div class="round-col-ed">`;
+          html += `<div class="round-header-ed">${ROUND_SHORT[roundKey]}</div>`;
+          for (const slot of slots) {
+            html += renderPickSlot(slot, member.name);
+          }
+          html += `</div>`;
+        }
+
+        html += `</div></div>`;
+      }
+
+      // Final Four + Championship
+      html += `<div class="ff-section-ed">`;
+      html += `<div class="ff-game-ed"><div class="ff-label-ed">Semi: East vs South</div>`;
+      html += renderPickSlot(ff.semi1, member.name);
+      html += `</div>`;
+      html += `<div class="ff-game-ed"><div class="champ-label-ed">Championship</div>`;
+      html += renderPickSlot(ff.champ, member.name);
+      html += `</div>`;
+      html += `<div class="ff-game-ed"><div class="ff-label-ed">Semi: West vs Midwest</div>`;
+      html += renderPickSlot(ff.semi2, member.name);
+      html += `</div>`;
+      html += `</div>`;
+
+      container.innerHTML = html;
+    }
+
+    function renderPickSlot(slot, memberName) {
+      // Build list of teams to show as buttons
+      const teams = [];
+
+      if (slot.playInOptions) {
+        // Play-in game: team1 is fixed, team2 has multiple options
+        teams.push({ name: slot.team1, seed: slot.seed1 });
+        for (const opt of slot.playInOptions) {
+          teams.push({ name: opt, seed: slot.playInSeed });
+        }
+      } else {
+        teams.push({ name: slot.team1, seed: slot.seed1 });
+        teams.push({ name: slot.team2, seed: slot.seed2 });
+      }
+
+      let html = `<div class="game-slot-ed"><div class="game-cell-ed">`;
+      for (const t of teams) {
+        const isEmpty = !t.name;
+        const isSelected = t.name && slot.picked === t.name;
+        const cls = isEmpty ? 'team-btn-ed empty' : (isSelected ? 'team-btn-ed selected' : 'team-btn-ed');
+
+        if (isEmpty) {
+          html += `<div class="${cls}"><span class="tname-ed">—</span></div>`;
+        } else {
+          const newVal = isSelected ? 'null' : `'${escAttr(t.name)}'`;
+          html += `<div class="${cls}" onclick="setPick('${escAttr(memberName)}','${slot.pickRound}',${slot.pickIndex},${newVal})">`;
+          if (t.seed != null) html += `<span class="seed-ed">${t.seed}</span>`;
+          html += `<span class="tname-ed">${escHtml(t.name)}</span>`;
+          html += `</div>`;
+        }
+      }
+      html += `</div></div>`;
+      return html;
+    }
+
+    function selectPerson(name) {
+      selectedPerson = name;
+      renderPicksBracket();
+    }
+
+    // ═══════════════════════════════════════════════
+    // RENDER: GAMES EDITOR (unchanged)
+    // ═══════════════════════════════════════════════
+
+    function renderGamesEditor() {
+      const container = document.getElementById("panel-games");
+      let html = '<div class="game-editor-grid">';
+      for (const game of gamesData.games) {
+        const statusClass = game.status === "final" ? "final" : game.status === "live" ? "live" : "";
+        html += `
+          <div class="game-edit-card ${statusClass}" data-id="${game.id}">
+            <div class="gec-header">
+              <span>Game ${game.id} · ${game.region || ''} · ${ROUND_LABELS[game.round] || game.round}</span>
+              <select class="status-select" onchange="setStatus(${game.id}, this.value)">
+                <option value="upcoming" ${game.status==='upcoming'?'selected':''}>Upcoming</option>
+                <option value="live" ${game.status==='live'?'selected':''}>Live</option>
+                <option value="final" ${game.status==='final'?'selected':''}>Final</option>
+              </select>
+            </div>
+            <div class="gec-row">
+              <label>${game.seed1 ? '('+game.seed1+') ' : ''}${game.team1}</label>
+              <input type="number" value="${game.score1 ?? ''}" onchange="setScore(${game.id}, 1, this.value)" placeholder="-">
+              <button class="winner-btn ${game.winner===game.team1?'selected':''}" onclick="setWinner(${game.id}, '${escAttr(game.team1)}')">W</button>
+            </div>
+            <div class="gec-row">
+              <label>${game.seed2 ? '('+game.seed2+') ' : ''}${game.team2}</label>
+              <input type="number" value="${game.score2 ?? ''}" onchange="setScore(${game.id}, 2, this.value)" placeholder="-">
+              <button class="winner-btn ${game.winner===game.team2?'selected':''}" onclick="setWinner(${game.id}, '${escAttr(game.team2)}')">W</button>
+            </div>
+          </div>`;
+      }
+      html += '</div>';
+      container.innerHTML = html;
+    }
+
+    // ═══════════════════════════════════════════════
+    // GAME MUTATIONS
+    // ═══════════════════════════════════════════════
+
+    function findGame(id) { return gamesData.games.find(g => g.id === id); }
+
+    function setStatus(id, status) {
+      const g = findGame(id);
+      if (g) { g.status = status; syncRawEditors(); renderGamesEditor(); flash("Status updated"); }
+    }
+    function setScore(id, teamNum, val) {
+      const g = findGame(id);
+      if (!g) return;
+      const score = val === '' ? null : parseInt(val);
+      if (teamNum === 1) g.score1 = score; else g.score2 = score;
+      syncRawEditors(); flash("Score updated");
+    }
+    function setWinner(id, team) {
+      const g = findGame(id);
+      if (!g) return;
+      g.winner = g.winner === team ? null : team;
+      if (g.winner) g.status = "final";
+      syncRawEditors(); renderGamesEditor();
+      flash("Winner " + (g.winner ? "set: " + g.winner : "cleared"));
+    }
+
+    // ═══════════════════════════════════════════════
+    // UTILS
+    // ═══════════════════════════════════════════════
+
+    function escAttr(s) { return s ? s.replace(/'/g, "\\'").replace(/"/g, '&quot;') : ''; }
+    function escHtml(s) {
+      if (!s) return '';
+      const d = document.createElement('div'); d.textContent = s; return d.innerHTML;
+    }
+
+    function syncRawEditors() {
+      gamesData.lastUpdated = new Date().toISOString();
+      document.getElementById("games-raw-editor").value = JSON.stringify(gamesData, null, 2);
+      document.getElementById("picks-raw-editor").value = JSON.stringify(picksData, null, 2);
+    }
+
+    function downloadJSON(data, filename) {
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = filename; a.click();
+      URL.revokeObjectURL(url);
+    }
+    function downloadGames() {
+      try { gamesData = JSON.parse(document.getElementById("games-raw-editor").value); } catch(e) {}
+      gamesData.lastUpdated = new Date().toISOString();
+      downloadJSON(gamesData, "games.json");
+      flash("Downloaded games.json — move it to data/");
+    }
+    function downloadPicks() {
+      try { picksData = JSON.parse(document.getElementById("picks-raw-editor").value); } catch(e) {}
+      downloadJSON(picksData, "picks.json");
+      flash("Downloaded picks.json — move it to data/");
+    }
+    function loadFromDisk() { loadData(); flash("Reloaded from disk"); }
+
+    function flash(msg) {
+      const el = document.getElementById("status-msg");
+      el.textContent = msg; el.classList.add("show");
+      setTimeout(() => el.classList.remove("show"), 2500);
+    }
+
+    function switchTab(name) {
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+      event.target.classList.add("active");
+      document.getElementById("panel-" + name).classList.add("active");
+      if (name === "games-raw") syncRawEditors();
+      if (name === "picks-raw") syncRawEditors();
+      if (name === "games") { try { gamesData = JSON.parse(document.getElementById("games-raw-editor").value); } catch(e) {} renderGamesEditor(); }
+      if (name === "picks") { try { picksData = JSON.parse(document.getElementById("picks-raw-editor").value); } catch(e) {} renderPicksBracket(); }
+    }
+
+    // ═══════════════════════════════════════════════
+    // INIT
+    // ═══════════════════════════════════════════════
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadData();
+      for (const type of ["games", "picks"]) {
+        document.getElementById(type + "-raw-editor").addEventListener("input", () => {
+          try {
+            JSON.parse(document.getElementById(type + "-raw-editor").value);
+            document.getElementById(type + "-raw-error").textContent = "";
+          } catch(e) {
+            document.getElementById(type + "-raw-error").textContent = "JSON error: " + e.message;
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
