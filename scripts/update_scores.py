@@ -357,7 +357,12 @@ def main():
                 mapped = KALSHI_TEAM_MAP.get(suffix)
                 price = market.get("last_price", market.get("yes_bid"))
                 if mapped and price is not None:
-                    odds[mapped] = round(price * 100)
+                    # Kalshi prices: if < 1 it's decimal (0.83 = 83%),
+                    # if >= 1 it's already cents (83 = 83%)
+                    if price < 1:
+                        odds[mapped] = round(price * 100)
+                    else:
+                        odds[mapped] = round(price)
 
             if odds:
                 t1_odds = odds.get(game["team1"])

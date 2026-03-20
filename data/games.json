@@ -39,8 +39,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 8300,
-      "odds2": 1800
+      "odds1": 83,
+      "odds2": 18
     },
     {
       "id": 4,
@@ -93,8 +93,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 6800,
-      "odds2": 3300
+      "odds1": 68,
+      "odds2": 33
     },
     {
       "id": 8,
@@ -108,8 +108,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 9600,
-      "odds2": 400
+      "odds1": 96,
+      "odds2": 4
     },
     {
       "id": 9,
@@ -136,8 +136,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 4700,
-      "odds2": 5500
+      "odds1": 47,
+      "odds2": 55
     },
     {
       "id": 11,
@@ -190,8 +190,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 9400,
-      "odds2": 700
+      "odds1": 94,
+      "odds2": 7
     },
     {
       "id": 15,
@@ -205,7 +205,7 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 5500
+      "odds1": 55
     },
     {
       "id": 16,
@@ -232,8 +232,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 9900,
-      "odds2": 200
+      "odds1": 99,
+      "odds2": 2
     },
     {
       "id": 18,
@@ -247,8 +247,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 4600,
-      "odds2": 5500
+      "odds1": 46,
+      "odds2": 55
     },
     {
       "id": 19,
@@ -301,7 +301,7 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 9900,
+      "odds1": 99,
       "odds2": 100
     },
     {
@@ -329,7 +329,7 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 9900,
+      "odds1": 99,
       "odds2": 100
     },
     {
@@ -357,8 +357,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 1100,
-      "odds2": 9000
+      "odds1": 11,
+      "odds2": 90
     },
     {
       "id": 27,
@@ -372,8 +372,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 7400,
-      "odds2": 2700
+      "odds1": 74,
+      "odds2": 27
     },
     {
       "id": 28,
@@ -387,8 +387,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 8600,
-      "odds2": 1500
+      "odds1": 86,
+      "odds2": 15
     },
     {
       "id": 29,
@@ -419,8 +419,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 9400,
-      "odds2": 700
+      "odds1": 94,
+      "odds2": 7
     },
     {
       "id": 31,
@@ -434,8 +434,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 5800,
-      "odds2": 4200
+      "odds1": 58,
+      "odds2": 42
     },
     {
       "id": 32,
@@ -449,8 +449,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 9700,
-      "odds2": 400
+      "odds1": 97,
+      "odds2": 4
     }
   ]
 }
