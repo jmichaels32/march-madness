@@ -477,33 +477,7 @@ function renderGameCell(slot, eliminated, roundKey) {
     nameEl.textContent = t.name || "TBD";
     row.appendChild(nameEl);
 
-    // Score or odds
-    const scoreVal = slot.status === "live"
-      ? (t.isTeam1 ? slot.liveScore1 : slot.liveScore2)
-      : (t.isTeam1 ? slot.score1 : slot.score2);
-    if (scoreVal != null) {
-      const scoreEl = document.createElement("span");
-      scoreEl.className = "team-score";
-      scoreEl.textContent = scoreVal;
-      row.appendChild(scoreEl);
-    }
-
-    // Odds badge for active games
-    const odds = t.isTeam1 ? slot.odds1 : slot.odds2;
-    if (odds != null && slot.status !== "final") {
-      const oddsEl = document.createElement("span");
-      oddsEl.className = "team-odds";
-      if (odds >= 60) oddsEl.classList.add("favored");
-      else if (odds <= 40) oddsEl.classList.add("underdog");
-      oddsEl.textContent = `${odds}%`;
-      row.appendChild(oddsEl);
-      // Tint the row background based on odds
-      if (odds >= 50) {
-        row.style.background = `rgba(74, 222, 128, ${(odds - 50) * 0.003})`;
-      }
-    }
-
-    // Pick dots for this team
+    // Pick dots (after name, before score so score stays far-right)
     const dotsContainer = document.createElement("span");
     dotsContainer.className = "pick-dots";
     for (const [person, pickedTeam] of Object.entries(slot.picks)) {
@@ -518,6 +492,31 @@ function renderGameCell(slot, eliminated, roundKey) {
       }
     }
     row.appendChild(dotsContainer);
+
+    // Odds badge for active games
+    const odds = t.isTeam1 ? slot.odds1 : slot.odds2;
+    if (odds != null && slot.status !== "final") {
+      const oddsEl = document.createElement("span");
+      oddsEl.className = "team-odds";
+      if (odds >= 60) oddsEl.classList.add("favored");
+      else if (odds <= 40) oddsEl.classList.add("underdog");
+      oddsEl.textContent = `${odds}%`;
+      row.appendChild(oddsEl);
+      if (odds >= 50) {
+        row.style.background = `rgba(74, 222, 128, ${(odds - 50) * 0.003})`;
+      }
+    }
+
+    // Score (always far-right, fixed width)
+    const scoreVal = slot.status === "live"
+      ? (t.isTeam1 ? slot.liveScore1 : slot.liveScore2)
+      : (t.isTeam1 ? slot.score1 : slot.score2);
+    if (scoreVal != null) {
+      const scoreEl = document.createElement("span");
+      scoreEl.className = "team-score";
+      scoreEl.textContent = scoreVal;
+      row.appendChild(scoreEl);
+    }
 
     cell.appendChild(row);
   }
@@ -909,7 +908,7 @@ function renderMiniBracket(regionBrackets, finalFour, eliminated) {
   requestAnimationFrame(() => {
     const scrollEl = container.closest(".mini-bracket-scroll");
     if (scrollEl) {
-      const scaledHeight = container.offsetHeight * 0.55;
+      const scaledHeight = container.offsetHeight * 0.7;
       scrollEl.style.height = scaledHeight + "px";
     }
   });

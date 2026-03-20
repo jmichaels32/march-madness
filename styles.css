@@ -254,11 +254,13 @@ header .subtitle {
   font-weight: 500;
 }
 .team-score {
-  font-weight: 700;
+  font-weight: 800;
+  font-size: 0.7rem;
   font-variant-numeric: tabular-nums;
-  min-width: 18px;
+  min-width: 22px;
   text-align: right;
-  color: #64748b;
+  color: #94a3b8;
+  flex-shrink: 0;
 }
 .team-row.winner .team-score { color: #4ade80; }
 
@@ -770,7 +772,7 @@ header .subtitle {
 .mini-bracket {
   display: flex;
   min-width: 1200px;
-  transform: scale(0.55);
+  transform: scale(0.7);
   transform-origin: top left;
   width: 1200px;
 }
