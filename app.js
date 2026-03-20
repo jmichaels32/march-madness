@@ -282,11 +282,47 @@ function showPicksPopover(slot, eliminated, cellEl) {
   const popover = document.createElement("div");
   popover.className = "picks-popover";
 
-  // Header: team1 vs team2
+  // Header: score line or team1 vs team2
   const header = document.createElement("div");
   header.className = "popover-header";
-  header.textContent = `${slot.team1} vs ${slot.team2}`;
+
+  if (slot.score1 != null && slot.score2 != null) {
+    // Show score line
+    const s1 = document.createElement("span");
+    s1.className = "popover-score-team" + (slot.status === "final" && slot.winner === slot.team1 ? " winner" : "");
+    s1.textContent = `${slot.seed1 ? `(${slot.seed1}) ` : ""}${slot.team1}  ${slot.score1}`;
+
+    const dash = document.createElement("span");
+    dash.className = "popover-score-dash";
+    dash.textContent = " – ";
+
+    const s2 = document.createElement("span");
+    s2.className = "popover-score-team" + (slot.status === "final" && slot.winner === slot.team2 ? " winner" : "");
+    s2.textContent = `${slot.score2}  ${slot.team2}${slot.seed2 ? ` (${slot.seed2})` : ""}`;
+
+    header.appendChild(s1);
+    header.appendChild(dash);
+    header.appendChild(s2);
+  } else {
+    header.textContent = `${slot.team1} vs ${slot.team2}`;
+  }
   popover.appendChild(header);
+
+  // Status + odds line
+  const statusLine = document.createElement("div");
+  statusLine.className = "popover-status";
+  if (slot.status === "final") {
+    statusLine.textContent = "Final";
+    statusLine.classList.add("final");
+  } else if (slot.status === "live") {
+    statusLine.textContent = slot.clock || "Live";
+    statusLine.classList.add("live");
+  } else if (slot.odds1 != null && slot.odds2 != null) {
+    statusLine.textContent = `Win probability: ${slot.team1} ${slot.odds1}% – ${slot.team2} ${slot.odds2}%`;
+  } else {
+    statusLine.textContent = "Upcoming";
+  }
+  popover.appendChild(statusLine);
 
   // Group picks by team
   const byTeam = {};

@@ -478,6 +478,32 @@ header .subtitle {
   border-bottom: 1px solid rgba(45, 74, 111, 0.5);
   text-align: center;
 }
+.popover-score-team {
+  color: #94a3b8;
+  font-size: 0.65rem;
+}
+.popover-score-team.winner {
+  color: #4ade80;
+  font-weight: 800;
+}
+.popover-score-dash {
+  color: #475569;
+}
+.popover-status {
+  text-align: center;
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 0.4rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid rgba(45, 74, 111, 0.3);
+}
+.popover-status.final {
+  color: #64748b;
+}
+.popover-status.live {
+  color: #fca5a5;
+}
 .popover-team-group {
   margin-bottom: 0.45rem;
 }
