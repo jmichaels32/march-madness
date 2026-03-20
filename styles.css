@@ -1110,12 +1110,6 @@ header .subtitle {
   text-align: center;
   margin-bottom: 0.25rem;
 }
-.risk-subtitle {
-  font-size: 0.7rem;
-  font-weight: 400;
-  color: #64748b;
-  margin-left: 0.5rem;
-}
 .risk-desc {
   text-align: center;
   font-size: 0.75rem;

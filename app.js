@@ -1315,14 +1315,14 @@ function renderRiskAnalysis(regionBrackets, finalFour, picksData, eliminated) {
       bars.className = "risk-bars";
       bars.innerHTML = `
         <div class="risk-bar-row">
-          <span class="risk-bar-label">Market</span>
+          <span class="risk-bar-label">Odds</span>
           <div class="risk-bar-track">
             <div class="risk-bar-fill market" style="width:${mktPct}%"></div>
           </div>
           <span class="risk-bar-val">${mktPct}%</span>
         </div>
         <div class="risk-bar-row">
-          <span class="risk-bar-label">Family</span>
+          <span class="risk-bar-label">Us</span>
           <div class="risk-bar-track">
             <div class="risk-bar-fill family" style="width:${famPct}%"></div>
           </div>
@@ -1355,16 +1355,12 @@ function renderRiskAnalysis(regionBrackets, finalFour, picksData, eliminated) {
     footer.className = "risk-card-footer";
     footer.innerHTML = `
       <div class="risk-metric">
-        <span class="risk-metric-label">KL Divergence</span>
-        <span class="risk-metric-val">${r.kl.toFixed(3)} bits</span>
-      </div>
-      <div class="risk-metric">
-        <span class="risk-metric-label">P(Wrong)</span>
+        <span class="risk-metric-label">Chance We're Wrong</span>
         <span class="risk-metric-val">${Math.round(r.pctWrong * 100)}%</span>
       </div>
       <div class="risk-metric">
-        <span class="risk-metric-label">Exp. Wrong</span>
-        <span class="risk-metric-val">${r.expectedWrong.toFixed(1)} / ${r.totalPickers}</span>
+        <span class="risk-metric-label">Expected Wrong Picks</span>
+        <span class="risk-metric-val">${r.expectedWrong.toFixed(1)} of ${r.totalPickers}</span>
       </div>
       <div class="risk-danger-bar">
         <div class="risk-danger-fill" style="width:${dangerPct}%"></div>
