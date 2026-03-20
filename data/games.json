@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T03:47:59Z",
+  "lastUpdated": "2026-03-20T03:52:16Z",
   "games": [
     {
       "id": 1,
@@ -9,8 +9,8 @@
       "team1": "Duke",
       "seed2": 16,
       "team2": "Siena",
-      "score1": null,
-      "score2": null,
+      "score1": 71,
+      "score2": 65,
       "status": "final",
       "winner": "Duke"
     },
@@ -22,8 +22,8 @@
       "team1": "Ohio St",
       "seed2": 9,
       "team2": "TCU",
-      "score1": null,
-      "score2": null,
+      "score1": 64,
+      "score2": 66,
       "status": "final",
       "winner": "TCU"
     },
@@ -63,8 +63,8 @@
       "team1": "Louisville",
       "seed2": 11,
       "team2": "South Florida",
-      "score1": null,
-      "score2": null,
+      "score1": 83,
+      "score2": 79,
       "status": "final",
       "winner": "Louisville"
     },
@@ -76,8 +76,8 @@
       "team1": "Michigan St",
       "seed2": 14,
       "team2": "North Dakota St",
-      "score1": null,
-      "score2": null,
+      "score1": 92,
+      "score2": 67,
       "status": "final",
       "winner": "Michigan St"
     },
@@ -147,8 +147,8 @@
       "team1": "Wisconsin",
       "seed2": 12,
       "team2": "High Point",
-      "score1": null,
-      "score2": null,
+      "score1": 82,
+      "score2": 83,
       "status": "final",
       "winner": "High Point"
     },
@@ -160,8 +160,8 @@
       "team1": "Arkansas",
       "seed2": 13,
       "team2": "Hawaii",
-      "score1": null,
-      "score2": null,
+      "score1": 97,
+      "score2": 78,
       "status": "final",
       "winner": "Arkansas"
     },
@@ -173,8 +173,8 @@
       "team1": "BYU",
       "seed2": 11,
       "team2": "Texas",
-      "score1": null,
-      "score2": null,
+      "score1": 71,
+      "score2": 79,
       "status": "final",
       "winner": "Texas"
     },
@@ -186,12 +186,12 @@
       "team1": "Gonzaga",
       "seed2": 14,
       "team2": "Kennesaw St",
-      "score1": null,
-      "score2": null,
-      "status": "upcoming",
+      "score1": 42,
+      "score2": 38,
+      "status": "live",
       "winner": null,
-      "odds1": 96,
-      "odds2": 4
+      "odds1": 93,
+      "odds2": 7
     },
     {
       "id": 15,
@@ -259,8 +259,8 @@
       "team1": "Vanderbilt",
       "seed2": 12,
       "team2": "McNeese",
-      "score1": null,
-      "score2": null,
+      "score1": 78,
+      "score2": 68,
       "status": "final",
       "winner": "Vanderbilt"
     },
@@ -272,8 +272,8 @@
       "team1": "Nebraska",
       "seed2": 13,
       "team2": "Troy",
-      "score1": null,
-      "score2": null,
+      "score1": 76,
+      "score2": 47,
       "status": "final",
       "winner": "Nebraska"
     },
@@ -285,8 +285,8 @@
       "team1": "North Carolina",
       "seed2": 11,
       "team2": "VCU",
-      "score1": null,
-      "score2": null,
+      "score1": 78,
+      "score2": 82,
       "status": "final",
       "winner": "VCU"
     },
@@ -298,12 +298,10 @@
       "team1": "Illinois",
       "seed2": 14,
       "team2": "Penn",
-      "score1": null,
-      "score2": null,
-      "status": "upcoming",
-      "winner": null,
-      "odds1": 99,
-      "odds2": 1
+      "score1": 105,
+      "score2": 70,
+      "status": "final",
+      "winner": "Illinois"
     },
     {
       "id": 23,
@@ -313,8 +311,8 @@
       "team1": "Saint Mary's",
       "seed2": 10,
       "team2": "Texas A&M",
-      "score1": null,
-      "score2": null,
+      "score1": 50,
+      "score2": 63,
       "status": "final",
       "winner": "Texas A&M"
     },
@@ -326,9 +324,9 @@
       "team1": "Houston",
       "seed2": 15,
       "team2": "Idaho",
-      "score1": null,
-      "score2": null,
-      "status": "upcoming",
+      "score1": 59,
+      "score2": 33,
+      "status": "live",
       "winner": null,
       "odds1": 99,
       "odds2": 1
@@ -341,8 +339,8 @@
       "team1": "Michigan",
       "seed2": 16,
       "team2": "Howard",
-      "score1": null,
-      "score2": null,
+      "score1": 101,
+      "score2": 80,
       "status": "final",
       "winner": "Michigan"
     },
@@ -354,9 +352,9 @@
       "team1": "Georgia",
       "seed2": 9,
       "team2": "Saint Louis",
-      "score1": null,
-      "score2": null,
-      "status": "upcoming",
+      "score1": 54,
+      "score2": 89,
+      "status": "live",
       "winner": null,
       "odds1": 1,
       "odds2": 99
@@ -450,8 +448,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 96,
-      "odds2": 4
+      "odds1": 97,
+      "odds2": 3
     },
     {
       "id": 33,
@@ -495,8 +493,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 38,
-      "odds2": 62
+      "odds1": 37,
+      "odds2": 63
     },
     {
       "id": 36,
