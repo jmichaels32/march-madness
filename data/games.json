@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T18:24:26Z",
+  "lastUpdated": "2026-03-20T18:46:04Z",
   "games": [
     {
       "id": 1,
@@ -54,8 +54,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 90,
-      "odds2": 10
+      "odds1": 89,
+      "odds2": 11
     },
     {
       "id": 5,
@@ -207,8 +207,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 53,
-      "odds2": 47
+      "odds1": 52,
+      "odds2": 48
     },
     {
       "id": 16,
@@ -222,8 +222,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 97,
-      "odds2": 3
+      "odds1": 98,
+      "odds2": 2
     },
     {
       "id": 17,
@@ -367,12 +367,12 @@
       "team1": "Texas Tech",
       "seed2": 12,
       "team2": "Akron",
-      "score1": 66,
-      "score2": 60,
+      "score1": 89,
+      "score2": 70,
       "status": "live",
       "winner": null,
-      "odds1": 81,
-      "odds2": 19
+      "odds1": 99,
+      "odds2": 1
     },
     {
       "id": 28,
@@ -420,8 +420,8 @@
       "score2": 26,
       "status": "live",
       "winner": null,
-      "odds1": 89,
-      "odds2": 11
+      "odds1": 73,
+      "odds2": 27
     },
     {
       "id": 31,
@@ -431,12 +431,10 @@
       "team1": "Kentucky",
       "seed2": 10,
       "team2": "Santa Clara",
-      "score1": 79,
-      "score2": 79,
-      "status": "live",
-      "winner": null,
-      "odds1": 66,
-      "odds2": 34
+      "score1": 89,
+      "score2": 84,
+      "status": "final",
+      "winner": "Kentucky"
     },
     {
       "id": 32,
@@ -450,8 +448,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 97,
-      "odds2": 3
+      "odds1": 98,
+      "odds2": 2
     },
     {
       "id": 33,
@@ -555,8 +553,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 87,
-      "odds2": 13
+      "odds1": 88,
+      "odds2": 12
     },
     {
       "id": 40,
