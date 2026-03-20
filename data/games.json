@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T06:05:19Z",
+  "lastUpdated": "2026-03-20T17:10:14Z",
   "games": [
     {
       "id": 1,
@@ -140,8 +140,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 46,
-      "odds2": 54
+      "odds1": 47,
+      "odds2": 53
     },
     {
       "id": 11,
@@ -207,8 +207,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 55,
-      "odds2": 45
+      "odds1": 54,
+      "odds2": 46
     },
     {
       "id": 16,
@@ -252,8 +252,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 46,
-      "odds2": 54
+      "odds1": 47,
+      "odds2": 53
     },
     {
       "id": 19,
@@ -367,12 +367,12 @@
       "team1": "Texas Tech",
       "seed2": 12,
       "team2": "Akron",
-      "score1": null,
-      "score2": null,
-      "status": "upcoming",
+      "score1": 29,
+      "score2": 22,
+      "status": "live",
       "winner": null,
-      "odds1": 75,
-      "odds2": 25
+      "odds1": 80,
+      "odds2": 20
     },
     {
       "id": 28,
@@ -435,8 +435,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 59,
-      "odds2": 41
+      "odds1": 54,
+      "odds2": 46
     },
     {
       "id": 32,
@@ -465,8 +465,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 58,
-      "odds2": 42
+      "odds1": 56,
+      "odds2": 44
     },
     {
       "id": 34,
@@ -480,8 +480,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 85,
-      "odds2": 15
+      "odds1": 86,
+      "odds2": 14
     },
     {
       "id": 35,
@@ -495,8 +495,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 38,
-      "odds2": 62
+      "odds1": 37,
+      "odds2": 63
     },
     {
       "id": 36,
@@ -510,8 +510,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 17,
-      "odds2": 83
+      "odds1": 15,
+      "odds2": 85
     },
     {
       "id": 37,
@@ -525,8 +525,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 21,
-      "odds2": 79
+      "odds1": 17,
+      "odds2": 83
     },
     {
       "id": 38,
@@ -540,8 +540,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 22,
-      "odds2": 78
+      "odds1": 19,
+      "odds2": 81
     },
     {
       "id": 39,
@@ -570,8 +570,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 34,
-      "odds2": 66
+      "odds1": 32,
+      "odds2": 68
     }
   ]
 }
