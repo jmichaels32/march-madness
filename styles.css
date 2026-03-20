@@ -1092,7 +1092,7 @@ header .subtitle {
 .mini-bracket {
   display: flex;
   min-width: 1200px;
-  transform: scale(0.7);
+  transform: scale(0.85);
   transform-origin: top left;
   width: 1200px;
 }
