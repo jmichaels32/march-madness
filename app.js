@@ -868,6 +868,15 @@ function renderMiniBracket(regionBrackets, finalFour, eliminated) {
     rightSide.appendChild(renderRegion(r, regionBrackets[r], eliminated, "right"));
   }
   container.appendChild(rightSide);
+
+  // After render, fix the scroll container height to match scaled content
+  requestAnimationFrame(() => {
+    const scrollEl = container.closest(".mini-bracket-scroll");
+    if (scrollEl) {
+      const scaledHeight = container.offsetHeight * 0.55;
+      scrollEl.style.height = scaledHeight + "px";
+    }
+  });
 }
 
 function renderMobileLeaderboard(standings, gamesData) {

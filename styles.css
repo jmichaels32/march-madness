@@ -729,6 +729,7 @@ header .subtitle {
 }
 .mini-bracket-scroll {
   overflow-x: auto;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
   scrollbar-color: #1e3450 transparent;
@@ -737,15 +738,15 @@ header .subtitle {
 .mini-bracket-scroll::-webkit-scrollbar { height: 4px; }
 .mini-bracket-scroll::-webkit-scrollbar-thumb { background: #1e3450; border-radius: 2px; }
 
-/* The mini bracket reuses the desktop .bracket structure but scaled down */
+/* The mini bracket reuses the desktop .bracket structure but scaled down.
+   We use a wrapper trick: the inner element is full-size but scaled,
+   and the outer scroll container clips it. JS sets the correct height. */
 .mini-bracket {
   display: flex;
   min-width: 1200px;
   transform: scale(0.55);
   transform-origin: top left;
-  /* Compensate for scale so container shrinks to match */
   width: 1200px;
-  margin-bottom: -45%;
 }
 
 /* ── Responsive ─────────────────────────────── */
