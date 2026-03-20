@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T19:08:08Z",
+  "lastUpdated": "2026-03-20T19:27:02Z",
   "games": [
     {
       "id": 1,
@@ -110,8 +110,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 95,
-      "odds2": 5
+      "odds1": 96,
+      "odds2": 4
     },
     {
       "id": 9,
@@ -121,8 +121,8 @@
       "team1": "Arizona",
       "seed2": 16,
       "team2": "Long Island",
-      "score1": 66,
-      "score2": 41,
+      "score1": 78,
+      "score2": 48,
       "status": "live",
       "winner": null,
       "odds1": 99,
@@ -140,8 +140,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 47,
-      "odds2": 53
+      "odds1": 46,
+      "odds2": 54
     },
     {
       "id": 11,
@@ -222,8 +222,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 98,
-      "odds2": 2
+      "odds1": 97,
+      "odds2": 3
     },
     {
       "id": 17,
@@ -237,8 +237,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 98,
-      "odds2": 2
+      "odds1": 99,
+      "odds2": 1
     },
     {
       "id": 18,
@@ -380,12 +380,12 @@
       "team1": "Alabama",
       "seed2": 13,
       "team2": "Hofstra",
-      "score1": null,
-      "score2": null,
-      "status": "upcoming",
+      "score1": 8,
+      "score2": 2,
+      "status": "live",
       "winner": null,
-      "odds1": 86,
-      "odds2": 14
+      "odds1": 91,
+      "odds2": 9
     },
     {
       "id": 29,
@@ -414,12 +414,12 @@
       "team1": "Virginia",
       "seed2": 14,
       "team2": "Wright St",
-      "score1": 43,
-      "score2": 43,
+      "score1": 58,
+      "score2": 56,
       "status": "live",
       "winner": null,
-      "odds1": 84,
-      "odds2": 16
+      "odds1": 78,
+      "odds2": 22
     },
     {
       "id": 31,
@@ -442,12 +442,12 @@
       "team1": "Iowa St",
       "seed2": 15,
       "team2": "Tennessee St",
-      "score1": null,
-      "score2": null,
-      "status": "upcoming",
+      "score1": 20,
+      "score2": 7,
+      "status": "live",
       "winner": null,
-      "odds1": 97,
-      "odds2": 3
+      "odds1": 99,
+      "odds2": 1
     },
     {
       "id": 33,
