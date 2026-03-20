@@ -223,12 +223,19 @@ function computeStandings(picksData, gamesData) {
   const winners = {};
   const eliminated = buildEliminatedSet(gamesData.games);
   for (const r of ROUND_ORDER) winners[r] = new Set();
+  // Count decided games per round (to know total possible)
+  const decidedPerRound = {};
+  for (const r of ROUND_ORDER) decidedPerRound[r] = 0;
   for (const g of gamesData.games) {
-    if (g.status === "final" && g.winner) winners[g.round].add(g.winner);
+    if (g.status === "final" && g.winner) {
+      winners[g.round].add(g.winner);
+      decidedPerRound[g.round]++;
+    }
   }
 
   return picksData.members.map(member => {
     let total = 0;
+    let correct = 0, wrong = 0, pending = 0;
     const roundScores = {};
     for (const round of ROUND_ORDER) {
       let rs = 0;
@@ -237,12 +244,28 @@ function computeStandings(picksData, gamesData) {
         if (!team) continue;
         if (winners[round].has(team)) {
           rs += SCORING[round];
+          correct++;
+        } else if (eliminated.has(team)) {
+          wrong++;
+        } else {
+          pending++;
         }
       }
       roundScores[round] = rs;
       total += rs;
     }
-    return { name: member.name, total, roundScores };
+    // Max possible = current total + pending picks * their round values
+    let maxPossible = total;
+    for (const round of ROUND_ORDER) {
+      const picks = member.picks[round] || [];
+      for (const team of picks) {
+        if (!team) continue;
+        if (!winners[round].has(team) && !eliminated.has(team)) {
+          maxPossible += SCORING[round];
+        }
+      }
+    }
+    return { name: member.name, total, roundScores, correct, wrong, pending, maxPossible };
   }).sort((a, b) => b.total - a.total);
 }
 
@@ -684,31 +707,72 @@ function renderLegend(picksData) {
   }
 }
 
+function renderLeaderboardCard(container, s, rank) {
+  const card = document.createElement("div");
+  card.className = `lb-card rank-${rank}`;
+
+  const color = PERSON_COLORS[s.name] || "#888";
+  const maxScore = s.maxPossible || s.total;
+  const barWidth = maxScore > 0 ? (s.total / maxScore) * 100 : 0;
+
+  const rankLabels = { 1: "1st", 2: "2nd", 3: "3rd" };
+  const rankText = rankLabels[rank] || `${rank}th`;
+
+  card.innerHTML = `
+    <div class="lb-card-left">
+      <div class="lb-card-rank">${rankText}</div>
+      <div class="lb-card-dot" style="background:${color}; box-shadow: 0 0 8px ${color}44"></div>
+      <div class="lb-card-info">
+        <div class="lb-card-name" style="color:${color}">${esc(s.name)}</div>
+        <div class="lb-card-record">
+          <span class="lb-stat correct">${s.correct}</span>
+          <span class="lb-stat wrong">${s.wrong}</span>
+          <span class="lb-stat pending">${s.pending}</span>
+        </div>
+      </div>
+    </div>
+    <div class="lb-card-right">
+      <div class="lb-card-score">${s.total}</div>
+      <div class="lb-card-max">of ${maxScore}</div>
+    </div>
+  `;
+
+  // Progress bar
+  const barContainer = document.createElement("div");
+  barContainer.className = "lb-bar";
+  const barFill = document.createElement("div");
+  barFill.className = "lb-bar-fill";
+  barFill.style.width = barWidth + "%";
+  barFill.style.background = `linear-gradient(90deg, ${color}88, ${color})`;
+  barContainer.appendChild(barFill);
+  card.appendChild(barContainer);
+
+  // Round breakdown row
+  const rounds = document.createElement("div");
+  rounds.className = "lb-rounds";
+  const roundLabels = { round1: "R64", round2: "R32", sweet16: "S16", elite8: "E8", final4: "F4", championship: "Ch" };
+  for (const rk of ROUND_ORDER) {
+    const val = s.roundScores[rk] || 0;
+    const chip = document.createElement("span");
+    chip.className = "lb-round-chip" + (val > 0 ? " has-pts" : "");
+    chip.innerHTML = `<span class="lb-round-label">${roundLabels[rk]}</span><span class="lb-round-val">${val}</span>`;
+    rounds.appendChild(chip);
+  }
+  card.appendChild(rounds);
+
+  container.appendChild(card);
+}
+
 function renderLeaderboard(standings, gamesData) {
-  const tbody = document.getElementById("leaderboard-body");
-  tbody.innerHTML = "";
+  const container = document.getElementById("leaderboard-body");
+  container.innerHTML = "";
 
   const updatedEl = document.getElementById("last-updated");
   if (gamesData.lastUpdated) {
     updatedEl.textContent = `Updated: ${new Date(gamesData.lastUpdated).toLocaleString()}`;
   }
 
-  standings.forEach((s, i) => {
-    const tr = document.createElement("tr");
-    tr.className = `rank-${i + 1}`;
-    tr.innerHTML = `
-      <td class="lb-rank">${i + 1}</td>
-      <td class="lb-name"><span class="lb-name-dot" style="background:${PERSON_COLORS[s.name] || '#888'}"></span>${esc(s.name)}</td>
-      <td class="r-align lb-round-score">${s.roundScores.round1 || 0}</td>
-      <td class="r-align lb-round-score">${s.roundScores.round2 || 0}</td>
-      <td class="r-align lb-round-score">${s.roundScores.sweet16 || 0}</td>
-      <td class="r-align lb-round-score">${s.roundScores.elite8 || 0}</td>
-      <td class="r-align lb-round-score">${s.roundScores.final4 || 0}</td>
-      <td class="r-align lb-round-score">${s.roundScores.championship || 0}</td>
-      <td class="r-align lb-score">${s.total}</td>
-    `;
-    tbody.appendChild(tr);
-  });
+  standings.forEach((s, i) => renderLeaderboardCard(container, s, i + 1));
 }
 
 // =============================================================
@@ -1091,31 +1155,16 @@ function renderMiniBracket(regionBrackets, finalFour, eliminated) {
 }
 
 function renderMobileLeaderboard(standings, gamesData) {
-  const tbody = document.getElementById("mobile-leaderboard-body");
-  if (!tbody) return;
-  tbody.innerHTML = "";
+  const container = document.getElementById("mobile-leaderboard-body");
+  if (!container) return;
+  container.innerHTML = "";
 
   const updatedEl = document.getElementById("mobile-last-updated");
   if (updatedEl && gamesData.lastUpdated) {
     updatedEl.textContent = `Updated: ${new Date(gamesData.lastUpdated).toLocaleString()}`;
   }
 
-  standings.forEach((s, i) => {
-    const tr = document.createElement("tr");
-    tr.className = `rank-${i + 1}`;
-    tr.innerHTML = `
-      <td class="lb-rank">${i + 1}</td>
-      <td class="lb-name"><span class="lb-name-dot" style="background:${PERSON_COLORS[s.name] || '#888'}"></span>${esc(s.name)}</td>
-      <td class="r-align lb-round-score">${s.roundScores.round1 || 0}</td>
-      <td class="r-align lb-round-score">${s.roundScores.round2 || 0}</td>
-      <td class="r-align lb-round-score">${s.roundScores.sweet16 || 0}</td>
-      <td class="r-align lb-round-score">${s.roundScores.elite8 || 0}</td>
-      <td class="r-align lb-round-score">${s.roundScores.final4 || 0}</td>
-      <td class="r-align lb-round-score">${s.roundScores.championship || 0}</td>
-      <td class="r-align lb-score">${s.total}</td>
-    `;
-    tbody.appendChild(tr);
-  });
+  standings.forEach((s, i) => renderLeaderboardCard(container, s, i + 1));
 }
 
 // =============================================================

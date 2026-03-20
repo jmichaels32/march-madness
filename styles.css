@@ -378,7 +378,7 @@ header .subtitle {
 
 /* ── Leaderboard ────────────────────────────── */
 .leaderboard {
-  max-width: 750px;
+  max-width: 650px;
   margin: 0 auto 3rem;
   padding: 0 1rem;
 }
@@ -396,67 +396,171 @@ header .subtitle {
   font-size: 0.65rem;
   margin-bottom: 0.75rem;
 }
-.leaderboard-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  background: rgba(15, 31, 54, 0.6);
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid #1e3450;
-}
-.leaderboard-table th,
-.leaderboard-table td {
-  padding: 0.6rem 0.5rem;
-  text-align: left;
-  font-size: 0.75rem;
-}
-.leaderboard-table th {
-  background: #0d1f35;
-  color: #64748b;
-  font-size: 0.6rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
 .r-align { text-align: right !important; }
-.leaderboard-table tbody tr {
-  border-bottom: 1px solid rgba(30, 52, 80, 0.5);
-  transition: background 0.15s;
-}
-.leaderboard-table tbody tr:last-child { border-bottom: none; }
-.leaderboard-table tbody tr:hover { background: rgba(30, 52, 80, 0.4); }
 
-.lb-rank {
-  font-weight: 800;
-  color: #f4a020;
-  width: 2rem;
+.lb-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
-.lb-name {
+
+.lb-card {
+  background: linear-gradient(145deg, #0f1f36, #162a48);
+  border: 1px solid #1e3450;
+  border-radius: 10px;
+  padding: 0.7rem 0.85rem 0.55rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.lb-card:hover {
+  border-color: #2d5a8f;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+.lb-card.rank-1 {
+  border-color: rgba(255, 215, 0, 0.35);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.08);
+}
+.lb-card.rank-2 {
+  border-color: rgba(192, 192, 192, 0.3);
+}
+.lb-card.rank-3 {
+  border-color: rgba(205, 127, 50, 0.3);
+}
+
+.lb-card-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.lb-card-rank {
+  font-size: 0.65rem;
+  font-weight: 800;
+  min-width: 24px;
+  color: #475569;
+  text-align: center;
+}
+.rank-1 .lb-card-rank { color: #ffd700; font-size: 0.75rem; }
+.rank-2 .lb-card-rank { color: #c0c0c0; }
+.rank-3 .lb-card-rank { color: #cd7f32; }
+
+.lb-card-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.lb-card-info {
+  flex: 1;
+  min-width: 0;
+}
+.lb-card-name {
+  font-size: 0.85rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+.lb-card-record {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.15rem;
+}
+.lb-stat {
+  font-size: 0.6rem;
   font-weight: 600;
 }
-.lb-name-dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  margin-right: 6px;
-  vertical-align: middle;
-  box-shadow: 0 0 4px rgba(255,255,255,0.1);
+.lb-stat.correct { color: #4ade80; }
+.lb-stat.correct::before { content: "✓ "; }
+.lb-stat.wrong { color: #f87171; }
+.lb-stat.wrong::before { content: "✗ "; }
+.lb-stat.pending { color: #64748b; }
+.lb-stat.pending::before { content: "… "; }
+
+.lb-card-right {
+  text-align: right;
+  flex-shrink: 0;
 }
-.lb-score {
-  font-weight: 800;
-  font-size: 0.95rem !important;
+.lb-card-score {
+  font-size: 1.4rem;
+  font-weight: 900;
   font-variant-numeric: tabular-nums;
+  line-height: 1;
+  color: #e2e8f0;
 }
-.lb-round-score {
+.rank-1 .lb-card-score { color: #ffd700; }
+.lb-card-max {
+  font-size: 0.55rem;
   color: #475569;
-  font-variant-numeric: tabular-nums;
+  font-weight: 600;
 }
 
-.rank-1 .lb-rank { color: #ffd700; }
-.rank-2 .lb-rank { color: #c0c0c0; }
-.rank-3 .lb-rank { color: #cd7f32; }
+/* Make top row a flex row */
+.lb-card-left,
+.lb-card-right {
+  display: flex;
+}
+.lb-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.lb-card-left {
+  flex: 1;
+  min-width: 0;
+}
+.lb-card-right {
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* Progress bar */
+.lb-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(30, 52, 80, 0.6);
+  border-radius: 2px;
+  margin-top: 0.4rem;
+  overflow: hidden;
+}
+.lb-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s ease-out;
+}
+
+/* Round breakdown */
+.lb-rounds {
+  width: 100%;
+  display: flex;
+  gap: 0.3rem;
+  margin-top: 0.35rem;
+}
+.lb-round-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  padding: 0.2rem 0;
+  border-radius: 4px;
+  background: rgba(15, 23, 42, 0.4);
+}
+.lb-round-chip.has-pts {
+  background: rgba(59, 130, 246, 0.1);
+}
+.lb-round-label {
+  font-size: 0.45rem;
+  font-weight: 600;
+  color: #475569;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.lb-round-val {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #64748b;
+  font-variant-numeric: tabular-nums;
+}
+.lb-round-chip.has-pts .lb-round-val {
+  color: #93c5fd;
+}
 
 /* ── Picks popover ─────────────────────────── */
 .picks-popover {
@@ -1023,8 +1127,9 @@ header .subtitle {
   .mobile-bracket { display: block; }
 
   .leaderboard { padding: 0 0.5rem; }
-  .leaderboard-table th,
-  .leaderboard-table td { padding: 0.5rem 0.35rem; font-size: 0.7rem; }
+  .lb-card-name { font-size: 0.75rem; }
+  .lb-card-score { font-size: 1.1rem; }
+  .lb-round-chip { padding: 0.15rem 0; }
   .picks-popover { min-width: 180px; max-width: 280px; }
   .desktop-filter-bar { display: none; }
 }

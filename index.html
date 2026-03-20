@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>March Madness 2026 — Family Bracket Challenge</title>
-  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="styles.css?v=12">
 </head>
 <body>
   <header>
@@ -18,22 +18,7 @@
   <section class="leaderboard mobile-leaderboard" id="mobile-leaderboard-section">
     <h2>Leaderboard</h2>
     <div class="last-updated" id="mobile-last-updated"></div>
-    <table class="leaderboard-table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Name</th>
-          <th class="r-align">R1</th>
-          <th class="r-align">R2</th>
-          <th class="r-align">S16</th>
-          <th class="r-align">E8</th>
-          <th class="r-align">F4</th>
-          <th class="r-align">Ch</th>
-          <th class="r-align">Total</th>
-        </tr>
-      </thead>
-      <tbody id="mobile-leaderboard-body"></tbody>
-    </table>
+    <div class="lb-cards" id="mobile-leaderboard-body"></div>
   </section>
 
   <!-- Mobile: mini bracket overview -->
@@ -61,25 +46,10 @@
   <section class="leaderboard desktop-only" id="leaderboard-section">
     <h2>Leaderboard</h2>
     <div class="last-updated" id="last-updated"></div>
-    <table class="leaderboard-table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Name</th>
-          <th class="r-align">R1</th>
-          <th class="r-align">R2</th>
-          <th class="r-align">S16</th>
-          <th class="r-align">E8</th>
-          <th class="r-align">F4</th>
-          <th class="r-align">Ch</th>
-          <th class="r-align">Total</th>
-        </tr>
-      </thead>
-      <tbody id="leaderboard-body"></tbody>
-    </table>
+    <div class="lb-cards" id="leaderboard-body"></div>
   </section>
 
   <!-- <a href="dev.html" class="dev-link">Dev Editor</a> -->
-  <script src="app.js?v=11"></script>
+  <script src="app.js?v=12"></script>
 </body>
 </html>
