@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T21:33:23Z",
+  "lastUpdated": "2026-03-20T21:48:26Z",
   "games": [
     {
       "id": 1,
@@ -110,8 +110,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 95,
-      "odds2": 5
+      "odds1": 96,
+      "odds2": 4
     },
     {
       "id": 9,
@@ -134,12 +134,12 @@
       "team1": "Villanova",
       "seed2": 9,
       "team2": "Utah St",
-      "score1": 48,
-      "score2": 38,
+      "score1": 58,
+      "score2": 54,
       "status": "live",
       "winner": null,
-      "odds1": 78,
-      "odds2": 22
+      "odds1": 65,
+      "odds2": 35
     },
     {
       "id": 11,
@@ -235,8 +235,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 98,
-      "odds2": 2
+      "odds1": 99,
+      "odds2": 1
     },
     {
       "id": 18,
@@ -395,8 +395,8 @@
         "Miami (Ohio)",
         "SMU"
       ],
-      "score1": 37,
-      "score2": 23,
+      "score1": 51,
+      "score2": 32,
       "status": "live",
       "winner": null,
       "odds1": 99,
@@ -560,6 +560,36 @@
       "winner": null,
       "odds1": 31,
       "odds2": 69
+    },
+    {
+      "id": 41,
+      "round": "round2",
+      "region": "Midwest",
+      "seed1": 7,
+      "seed2": 2,
+      "team1": "Kentucky",
+      "team2": "Iowa St",
+      "score1": null,
+      "score2": null,
+      "status": "upcoming",
+      "winner": null,
+      "odds1": 6,
+      "odds2": 94
+    },
+    {
+      "id": 42,
+      "round": "round2",
+      "region": "Midwest",
+      "seed1": 5,
+      "seed2": 4,
+      "team1": "Texas Tech",
+      "team2": "Alabama",
+      "score1": null,
+      "score2": null,
+      "status": "upcoming",
+      "winner": null,
+      "odds1": 57,
+      "odds2": 43
     }
   ]
 }
