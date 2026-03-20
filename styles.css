@@ -209,7 +209,7 @@ header .subtitle {
   box-shadow: 0 2px 12px rgba(0,0,0,0.3);
 }
 .game-cell.has-result {
-  border-color: rgba(74, 222, 128, 0.3);
+  border-color: rgba(59, 130, 246, 0.3);
 }
 .game-cell.live {
   border-color: #dc2626;
@@ -229,15 +229,15 @@ header .subtitle {
   border-top: 1px solid rgba(13, 31, 53, 0.8);
 }
 .team-row.winner {
-  background: rgba(74, 222, 128, 0.12);
-  border-left: 2px solid #4ade80;
+  background: rgba(59, 130, 246, 0.12);
+  border-left: 2px solid #60a5fa;
 }
 .team-row.winner .team-name {
   font-weight: 700;
-  color: #4ade80;
+  color: #93c5fd;
 }
 .team-row.winner .seed {
-  color: #4ade80;
+  color: #60a5fa;
 }
 .team-row.loser {
   opacity: 0.35;
@@ -266,7 +266,7 @@ header .subtitle {
   color: #94a3b8;
   flex-shrink: 0;
 }
-.team-row.winner .team-score { color: #4ade80; }
+.team-row.winner .team-score { color: #60a5fa; }
 
 /* ── Odds badges ───────────────────────────── */
 .team-odds {
@@ -489,7 +489,7 @@ header .subtitle {
   font-size: 0.65rem;
 }
 .popover-score-team.winner {
-  color: #4ade80;
+  color: #93c5fd;
   font-weight: 800;
 }
 .popover-score-dash {
@@ -529,7 +529,7 @@ header .subtitle {
   margin-bottom: 0.2rem;
 }
 .popover-team-label.winner {
-  color: #4ade80;
+  color: #93c5fd;
 }
 .popover-team-label.loser {
   color: #64748b;
@@ -634,7 +634,7 @@ header .subtitle {
   margin-bottom: 0.5rem;
   overflow: hidden;
 }
-.mobile-game-card.has-result { border-color: rgba(74, 222, 128, 0.3); }
+.mobile-game-card.has-result { border-color: rgba(59, 130, 246, 0.3); }
 .mobile-game-card.live {
   border-color: #dc2626;
   box-shadow: 0 0 10px rgba(220, 38, 38, 0.2);
@@ -647,15 +647,15 @@ header .subtitle {
   border-top: 1px solid rgba(13, 31, 53, 0.8);
 }
 .mobile-team-row.winner {
-  background: rgba(74, 222, 128, 0.12);
-  border-left: 3px solid #4ade80;
+  background: rgba(59, 130, 246, 0.12);
+  border-left: 3px solid #60a5fa;
 }
 .mobile-team-row.winner .mobile-team-name {
-  color: #4ade80;
+  color: #93c5fd;
   font-weight: 700;
 }
 .mobile-team-row.winner .mobile-seed {
-  color: #4ade80;
+  color: #60a5fa;
 }
 .mobile-team-row.loser {
   opacity: 0.35;
@@ -689,7 +689,7 @@ header .subtitle {
   color: #64748b;
   font-variant-numeric: tabular-nums;
 }
-.mobile-team-row.winner .mobile-team-score { color: #4ade80; }
+.mobile-team-row.winner .mobile-team-score { color: #60a5fa; }
 
 .mobile-team-odds {
   font-size: 0.65rem;
