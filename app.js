@@ -236,40 +236,28 @@ function computeStandings(picksData, gamesData) {
     }
   }
 
+  // Total possible points across all rounds (63 games total)
+  const totalPossible = 32*1 + 16*2 + 8*4 + 4*8 + 2*16 + 1*32; // = 192
+
   return picksData.members.map(member => {
-    let total = 0;
-    let correct = 0, wrong = 0, pending = 0;
-    const roundScores = {};
+    let earned = 0;
+    let lost = 0;
+    let pendingPts = 0;
     for (const round of ROUND_ORDER) {
-      let rs = 0;
       const picks = member.picks[round] || [];
       for (const team of picks) {
         if (!team) continue;
         if (winners[round].has(team)) {
-          rs += SCORING[round];
-          correct++;
+          earned += SCORING[round];
         } else if (eliminated.has(team)) {
-          wrong++;
+          lost += SCORING[round];
         } else {
-          pending++;
-        }
-      }
-      roundScores[round] = rs;
-      total += rs;
-    }
-    // Max possible = current total + pending picks * their round values
-    let maxPossible = total;
-    for (const round of ROUND_ORDER) {
-      const picks = member.picks[round] || [];
-      for (const team of picks) {
-        if (!team) continue;
-        if (!winners[round].has(team) && !eliminated.has(team)) {
-          maxPossible += SCORING[round];
+          pendingPts += SCORING[round];
         }
       }
     }
-    return { name: member.name, total, roundScores, correct, wrong, pending, maxPossible };
-  }).sort((a, b) => b.total - a.total);
+    return { name: member.name, earned, lost, pending: pendingPts, total: totalPossible };
+  }).sort((a, b) => b.earned - a.earned);
 }
 
 // =============================================================
@@ -715,53 +703,22 @@ function renderLeaderboardCard(container, s, rank) {
   card.className = `lb-card rank-${rank}`;
 
   const color = PERSON_COLORS[s.name] || "#888";
-  const maxScore = s.maxPossible || s.total;
-  const barWidth = maxScore > 0 ? (s.total / maxScore) * 100 : 0;
-
-  const rankLabels = { 1: "1st", 2: "2nd", 3: "3rd" };
-  const rankText = rankLabels[rank] || `${rank}th`;
+  const total = s.total; // 192
+  const earnedPct = (s.earned / total) * 100;
+  const lostPct = (s.lost / total) * 100;
+  const pendingPct = (s.pending / total) * 100;
 
   card.innerHTML = `
-    <div class="lb-card-left">
-      <div class="lb-card-rank">${rankText}</div>
-      <div class="lb-card-dot" style="background:${color}; box-shadow: 0 0 8px ${color}44"></div>
-      <div class="lb-card-info">
-        <div class="lb-card-name" style="color:${color}">${esc(s.name)}</div>
-        <div class="lb-card-record">
-          <span class="lb-stat correct">${s.correct}</span>
-          <span class="lb-stat wrong">${s.wrong}</span>
-          <span class="lb-stat pending">${s.pending}</span>
-        </div>
-      </div>
+    <div class="lb-card-header">
+      <span class="lb-card-name" style="color:${color}">${esc(s.name)}</span>
+      <span class="lb-card-pts">${s.earned}<span class="lb-card-pts-label"> pts</span></span>
     </div>
-    <div class="lb-card-right">
-      <div class="lb-card-score">${s.total}</div>
-      <div class="lb-card-max">of ${maxScore}</div>
+    <div class="lb-bar">
+      <div class="lb-bar-earned" style="width:${earnedPct}%"></div>
+      <div class="lb-bar-lost" style="width:${lostPct}%"></div>
+      <div class="lb-bar-pending" style="width:${pendingPct}%"></div>
     </div>
   `;
-
-  // Progress bar
-  const barContainer = document.createElement("div");
-  barContainer.className = "lb-bar";
-  const barFill = document.createElement("div");
-  barFill.className = "lb-bar-fill";
-  barFill.style.width = barWidth + "%";
-  barFill.style.background = `linear-gradient(90deg, ${color}88, ${color})`;
-  barContainer.appendChild(barFill);
-  card.appendChild(barContainer);
-
-  // Round breakdown row
-  const rounds = document.createElement("div");
-  rounds.className = "lb-rounds";
-  const roundLabels = { round1: "R64", round2: "R32", sweet16: "S16", elite8: "E8", final4: "F4", championship: "Ch" };
-  for (const rk of ROUND_ORDER) {
-    const val = s.roundScores[rk] || 0;
-    const chip = document.createElement("span");
-    chip.className = "lb-round-chip" + (val > 0 ? " has-pts" : "");
-    chip.innerHTML = `<span class="lb-round-label">${roundLabels[rk]}</span><span class="lb-round-val">${val}</span>`;
-    rounds.appendChild(chip);
-  }
-  card.appendChild(rounds);
 
   container.appendChild(card);
 }
