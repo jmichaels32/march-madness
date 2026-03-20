@@ -508,9 +508,7 @@ function renderGameCell(slot, eliminated, roundKey) {
     }
 
     // Score (always far-right, fixed width)
-    const scoreVal = slot.status === "live"
-      ? (t.isTeam1 ? slot.liveScore1 : slot.liveScore2)
-      : (t.isTeam1 ? slot.score1 : slot.score2);
+    const scoreVal = t.isTeam1 ? slot.score1 : slot.score2;
     if (scoreVal != null) {
       const scoreEl = document.createElement("span");
       scoreEl.className = "team-score";
@@ -783,10 +781,8 @@ function renderMobileGameCard(slot, eliminated) {
     nameEl.textContent = t.name || "TBD";
     info.appendChild(nameEl);
 
-    // Score
-    const scoreVal = slot.status === "live"
-      ? (t.isTeam1 ? slot.liveScore1 : slot.liveScore2)
-      : (t.isTeam1 ? slot.score1 : slot.score2);
+    // Score (use score1/score2 — ESPN populates these for live and final)
+    const scoreVal = t.isTeam1 ? slot.score1 : slot.score2;
     if (scoreVal != null) {
       const scoreEl = document.createElement("span");
       scoreEl.className = "mobile-team-score";
@@ -794,7 +790,7 @@ function renderMobileGameCard(slot, eliminated) {
       info.appendChild(scoreEl);
     }
 
-    // Odds badge
+    // Odds badge (show alongside score for live games, not just instead of)
     const odds = t.isTeam1 ? slot.odds1 : slot.odds2;
     if (odds != null && slot.status !== "final") {
       const oddsEl = document.createElement("span");
