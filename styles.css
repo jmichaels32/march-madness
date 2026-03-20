@@ -209,7 +209,7 @@ header .subtitle {
   box-shadow: 0 2px 12px rgba(0,0,0,0.3);
 }
 .game-cell.has-result {
-  border-color: #2d4a6f;
+  border-color: rgba(74, 222, 128, 0.3);
 }
 .game-cell.live {
   border-color: #dc2626;
@@ -229,14 +229,18 @@ header .subtitle {
   border-top: 1px solid rgba(13, 31, 53, 0.8);
 }
 .team-row.winner {
-  background: rgba(74, 222, 128, 0.06);
+  background: rgba(74, 222, 128, 0.12);
+  border-left: 2px solid #4ade80;
 }
 .team-row.winner .team-name {
   font-weight: 700;
-  color: #fff;
+  color: #4ade80;
+}
+.team-row.winner .seed {
+  color: #4ade80;
 }
 .team-row.loser {
-  opacity: 0.4;
+  opacity: 0.35;
 }
 .seed {
   font-size: 0.5rem;
@@ -630,7 +634,7 @@ header .subtitle {
   margin-bottom: 0.5rem;
   overflow: hidden;
 }
-.mobile-game-card.has-result { border-color: #2d4a6f; }
+.mobile-game-card.has-result { border-color: rgba(74, 222, 128, 0.3); }
 .mobile-game-card.live {
   border-color: #dc2626;
   box-shadow: 0 0 10px rgba(220, 38, 38, 0.2);
@@ -643,10 +647,18 @@ header .subtitle {
   border-top: 1px solid rgba(13, 31, 53, 0.8);
 }
 .mobile-team-row.winner {
-  background: rgba(74, 222, 128, 0.06);
+  background: rgba(74, 222, 128, 0.12);
+  border-left: 3px solid #4ade80;
+}
+.mobile-team-row.winner .mobile-team-name {
+  color: #4ade80;
+  font-weight: 700;
+}
+.mobile-team-row.winner .mobile-seed {
+  color: #4ade80;
 }
 .mobile-team-row.loser {
-  opacity: 0.4;
+  opacity: 0.35;
 }
 
 .mobile-team-info {
