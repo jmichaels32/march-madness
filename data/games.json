@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T03:52:16Z",
+  "lastUpdated": "2026-03-20T03:54:43Z",
   "games": [
     {
       "id": 1,
@@ -186,12 +186,12 @@
       "team1": "Gonzaga",
       "seed2": 14,
       "team2": "Kennesaw St",
-      "score1": 42,
-      "score2": 38,
+      "score1": 43,
+      "score2": 39,
       "status": "live",
       "winner": null,
-      "odds1": 93,
-      "odds2": 7
+      "odds1": 90,
+      "odds2": 10
     },
     {
       "id": 15,
@@ -205,8 +205,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 55,
-      "odds2": 45
+      "odds1": 54,
+      "odds2": 46
     },
     {
       "id": 16,
@@ -325,7 +325,7 @@
       "seed2": 15,
       "team2": "Idaho",
       "score1": 59,
-      "score2": 33,
+      "score2": 35,
       "status": "live",
       "winner": null,
       "odds1": 99,
@@ -353,7 +353,7 @@
       "seed2": 9,
       "team2": "Saint Louis",
       "score1": 54,
-      "score2": 89,
+      "score2": 91,
       "status": "live",
       "winner": null,
       "odds1": 1,
@@ -493,8 +493,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 37,
-      "odds2": 63
+      "odds1": 38,
+      "odds2": 62
     },
     {
       "id": 36,
@@ -510,6 +510,19 @@
       "winner": null,
       "odds1": 16,
       "odds2": 84
+    },
+    {
+      "id": 37,
+      "round": "round2",
+      "region": "South",
+      "seed1": 11,
+      "seed2": 3,
+      "team1": "VCU",
+      "team2": "Illinois",
+      "score1": null,
+      "score2": null,
+      "status": "upcoming",
+      "winner": null
     }
   ]
 }
