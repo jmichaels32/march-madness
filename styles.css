@@ -153,7 +153,7 @@ header .subtitle {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  min-width: 150px;
+  min-width: 170px;
   padding: 0 2px;
 }
 
@@ -198,7 +198,7 @@ header .subtitle {
   border: 1px solid #1e3450;
   border-radius: 6px;
   margin: 3px 6px;
-  font-size: 0.8rem;
+  font-size: 1rem;
   overflow: hidden;
   width: 100%;
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -220,9 +220,9 @@ header .subtitle {
 .team-row {
   display: flex;
   align-items: center;
-  padding: 5px 7px;
-  gap: 5px;
-  min-height: 26px;
+  padding: 6px 8px;
+  gap: 6px;
+  min-height: 30px;
   transition: background 0.15s;
 }
 .team-row + .team-row {
@@ -243,10 +243,10 @@ header .subtitle {
   opacity: 0.35;
 }
 .seed {
-  font-size: 0.65rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: #475569;
-  min-width: 16px;
+  min-width: 18px;
   text-align: right;
 }
 .team-name {
@@ -259,7 +259,7 @@ header .subtitle {
 }
 .team-score {
   font-weight: 800;
-  font-size: 0.85rem;
+  font-size: 1.05rem;
   font-variant-numeric: tabular-nums;
   min-width: 22px;
   text-align: right;
@@ -270,7 +270,7 @@ header .subtitle {
 
 /* ── Odds badges ───────────────────────────── */
 .team-odds {
-  font-size: 0.65rem;
+  font-size: 0.8rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   padding: 1px 4px;
