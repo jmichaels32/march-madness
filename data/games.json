@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T17:31:01Z",
+  "lastUpdated": "2026-03-20T17:51:08Z",
   "games": [
     {
       "id": 1,
@@ -54,8 +54,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 90,
-      "odds2": 10
+      "odds1": 89,
+      "odds2": 11
     },
     {
       "id": 5,
@@ -121,9 +121,9 @@
       "team1": "Arizona",
       "seed2": 16,
       "team2": "Long Island",
-      "score1": null,
-      "score2": null,
-      "status": "upcoming",
+      "score1": 19,
+      "score2": 6,
+      "status": "live",
       "winner": null,
       "odds1": 99,
       "odds2": 1
@@ -252,8 +252,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 46,
-      "odds2": 54
+      "odds1": 47,
+      "odds2": 53
     },
     {
       "id": 19,
@@ -416,12 +416,12 @@
       "team1": "Virginia",
       "seed2": 14,
       "team2": "Wright St",
-      "score1": null,
-      "score2": null,
-      "status": "upcoming",
+      "score1": 0,
+      "score2": 0,
+      "status": "live",
       "winner": null,
-      "odds1": 94,
-      "odds2": 6
+      "odds1": 95,
+      "odds2": 5
     },
     {
       "id": 31,
@@ -431,12 +431,12 @@
       "team1": "Kentucky",
       "seed2": 10,
       "team2": "Santa Clara",
-      "score1": 44,
-      "score2": 42,
+      "score1": 55,
+      "score2": 56,
       "status": "live",
       "winner": null,
-      "odds1": 64,
-      "odds2": 36
+      "odds1": 50,
+      "odds2": 50
     },
     {
       "id": 32,
@@ -555,8 +555,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 87,
-      "odds2": 13
+      "odds1": 88,
+      "odds2": 12
     },
     {
       "id": 40,
