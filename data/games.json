@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T03:18:08Z",
+  "lastUpdated": "2026-03-20T03:22:36Z",
   "games": [
     {
       "id": 1,
@@ -38,7 +38,9 @@
       "score1": null,
       "score2": null,
       "status": "upcoming",
-      "winner": null
+      "winner": null,
+      "odds1": 8300,
+      "odds2": 1800
     },
     {
       "id": 4,
@@ -90,7 +92,9 @@
       "score1": null,
       "score2": null,
       "status": "upcoming",
-      "winner": null
+      "winner": null,
+      "odds1": 6800,
+      "odds2": 3300
     },
     {
       "id": 8,
@@ -103,7 +107,9 @@
       "score1": null,
       "score2": null,
       "status": "upcoming",
-      "winner": null
+      "winner": null,
+      "odds1": 9600,
+      "odds2": 400
     },
     {
       "id": 9,
@@ -129,7 +135,9 @@
       "score1": null,
       "score2": null,
       "status": "upcoming",
-      "winner": null
+      "winner": null,
+      "odds1": 4700,
+      "odds2": 5500
     },
     {
       "id": 11,
@@ -154,8 +162,8 @@
       "team2": "Hawaii",
       "score1": null,
       "score2": null,
-      "status": "upcoming",
-      "winner": null
+      "status": "final",
+      "winner": "Arkansas"
     },
     {
       "id": 13,
@@ -181,7 +189,9 @@
       "score1": null,
       "score2": null,
       "status": "upcoming",
-      "winner": null
+      "winner": null,
+      "odds1": 9400,
+      "odds2": 700
     },
     {
       "id": 15,
@@ -194,7 +204,8 @@
       "score1": null,
       "score2": null,
       "status": "upcoming",
-      "winner": null
+      "winner": null,
+      "odds1": 5500
     },
     {
       "id": 16,
@@ -220,7 +231,9 @@
       "score1": null,
       "score2": null,
       "status": "upcoming",
-      "winner": null
+      "winner": null,
+      "odds1": 9900,
+      "odds2": 200
     },
     {
       "id": 18,
@@ -233,7 +246,9 @@
       "score1": null,
       "score2": null,
       "status": "upcoming",
-      "winner": null
+      "winner": null,
+      "odds1": 4600,
+      "odds2": 5500
     },
     {
       "id": 19,
@@ -285,7 +300,9 @@
       "score1": null,
       "score2": null,
       "status": "upcoming",
-      "winner": null
+      "winner": null,
+      "odds1": 9900,
+      "odds2": 100
     },
     {
       "id": 23,
@@ -311,7 +328,9 @@
       "score1": null,
       "score2": null,
       "status": "upcoming",
-      "winner": null
+      "winner": null,
+      "odds1": 9900,
+      "odds2": 100
     },
     {
       "id": 25,
@@ -337,7 +356,9 @@
       "score1": null,
       "score2": null,
       "status": "upcoming",
-      "winner": null
+      "winner": null,
+      "odds1": 1100,
+      "odds2": 9000
     },
     {
       "id": 27,
@@ -350,7 +371,9 @@
       "score1": null,
       "score2": null,
       "status": "upcoming",
-      "winner": null
+      "winner": null,
+      "odds1": 7400,
+      "odds2": 2700
     },
     {
       "id": 28,
@@ -363,7 +386,9 @@
       "score1": null,
       "score2": null,
       "status": "upcoming",
-      "winner": null
+      "winner": null,
+      "odds1": 8600,
+      "odds2": 1500
     },
     {
       "id": 29,
@@ -393,7 +418,9 @@
       "score1": null,
       "score2": null,
       "status": "upcoming",
-      "winner": null
+      "winner": null,
+      "odds1": 9400,
+      "odds2": 700
     },
     {
       "id": 31,
@@ -406,7 +433,9 @@
       "score1": null,
       "score2": null,
       "status": "upcoming",
-      "winner": null
+      "winner": null,
+      "odds1": 5800,
+      "odds2": 4200
     },
     {
       "id": 32,
@@ -419,7 +448,9 @@
       "score1": null,
       "score2": null,
       "status": "upcoming",
-      "winner": null
+      "winner": null,
+      "odds1": 9700,
+      "odds2": 400
     }
   ]
 }
