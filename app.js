@@ -287,47 +287,72 @@ function showPicksPopover(slot, eliminated, cellEl) {
   const popover = document.createElement("div");
   popover.className = "picks-popover";
 
-  // Header: score line or team1 vs team2
-  const header = document.createElement("div");
-  header.className = "popover-header";
+  const isGameFinal = slot.status === "final" && slot.winner;
+  const isGameLive = isLive(slot);
 
-  if (slot.score1 != null && slot.score2 != null) {
-    // Show score line
-    const s1 = document.createElement("span");
-    s1.className = "popover-score-team" + (slot.status === "final" && slot.winner === slot.team1 ? " winner" : "");
-    s1.textContent = `${slot.seed1 ? `(${slot.seed1}) ` : ""}${slot.team1}  ${slot.score1}`;
-
-    const dash = document.createElement("span");
-    dash.className = "popover-score-dash";
-    dash.textContent = " – ";
-
-    const s2 = document.createElement("span");
-    s2.className = "popover-score-team" + (slot.status === "final" && slot.winner === slot.team2 ? " winner" : "");
-    s2.textContent = `${slot.score2}  ${slot.team2}${slot.seed2 ? ` (${slot.seed2})` : ""}`;
-
-    header.appendChild(s1);
-    header.appendChild(dash);
-    header.appendChild(s2);
+  // ── Status badge ──
+  const statusBadge = document.createElement("div");
+  statusBadge.className = "pop-status-badge";
+  if (isGameFinal) {
+    statusBadge.textContent = "FINAL";
+    statusBadge.classList.add("final");
+  } else if (isGameLive) {
+    statusBadge.textContent = "LIVE";
+    statusBadge.classList.add("live");
   } else {
-    header.textContent = `${slot.team1} vs ${slot.team2}`;
+    statusBadge.textContent = "UPCOMING";
   }
-  popover.appendChild(header);
+  popover.appendChild(statusBadge);
 
-  // Status + odds line
-  const statusLine = document.createElement("div");
-  statusLine.className = "popover-status";
-  if (slot.status === "final") {
-    statusLine.textContent = "Final";
-    statusLine.classList.add("final");
-  } else if (isLive(slot)) {
-    statusLine.textContent = "Live";
-    statusLine.classList.add("live");
-  } else if (slot.odds1 != null && slot.odds2 != null) {
-    statusLine.textContent = `Win probability: ${slot.team1} ${slot.odds1}% – ${slot.team2} ${slot.odds2}%`;
-  } else {
-    statusLine.textContent = "Upcoming";
+  // ── Scoreboard: two team rows ──
+  const teams = [
+    { name: slot.team1, seed: slot.seed1, score: slot.score1, odds: slot.odds1, isWinner: isGameFinal && slot.winner === slot.team1 },
+    { name: slot.team2, seed: slot.seed2, score: slot.score2, odds: slot.odds2, isWinner: isGameFinal && slot.winner === slot.team2 },
+  ];
+
+  const scoreboard = document.createElement("div");
+  scoreboard.className = "pop-scoreboard";
+
+  for (const t of teams) {
+    const row = document.createElement("div");
+    row.className = "pop-team-row" + (t.isWinner ? " winner" : "") +
+      (isGameFinal && !t.isWinner ? " loser" : "");
+
+    const seedEl = document.createElement("span");
+    seedEl.className = "pop-seed";
+    seedEl.textContent = t.seed != null ? t.seed : "";
+    row.appendChild(seedEl);
+
+    const nameEl = document.createElement("span");
+    nameEl.className = "pop-team-name";
+    nameEl.textContent = t.name || "TBD";
+    row.appendChild(nameEl);
+
+    // Odds
+    if (t.odds != null && !isGameFinal) {
+      const oddsEl = document.createElement("span");
+      oddsEl.className = "pop-odds";
+      if (t.odds >= 60) oddsEl.classList.add("favored");
+      else if (t.odds <= 40) oddsEl.classList.add("underdog");
+      oddsEl.textContent = `${t.odds}%`;
+      row.appendChild(oddsEl);
+    }
+
+    // Score
+    const scoreEl = document.createElement("span");
+    scoreEl.className = "pop-score";
+    scoreEl.textContent = t.score != null ? t.score : "–";
+    row.appendChild(scoreEl);
+
+    scoreboard.appendChild(row);
   }
-  popover.appendChild(statusLine);
+  popover.appendChild(scoreboard);
+
+  // ── Picks section ──
+  const picksHeader = document.createElement("div");
+  picksHeader.className = "pop-picks-header";
+  picksHeader.textContent = "Picks";
+  popover.appendChild(picksHeader);
 
   // Group picks by team
   const byTeam = {};
@@ -344,33 +369,32 @@ function showPicksPopover(slot, eliminated, cellEl) {
     }
   }
 
-  // Show each team's pickers, team1 first then team2 then any others
   const teamOrder = [slot.team1, slot.team2, ...Object.keys(byTeam).filter(t => t !== slot.team1 && t !== slot.team2)];
   for (const team of teamOrder) {
     const pickers = byTeam[team];
     if (!pickers || pickers.length === 0) continue;
 
     const teamGroup = document.createElement("div");
-    teamGroup.className = "popover-team-group";
+    teamGroup.className = "pop-pick-group";
 
     const teamLabel = document.createElement("div");
-    teamLabel.className = "popover-team-label";
-    const isWinner = slot.status === "final" && slot.winner === team;
-    const isLoser = slot.status === "final" && slot.winner && slot.winner !== team;
-    if (isWinner) teamLabel.classList.add("winner");
-    if (isLoser) teamLabel.classList.add("loser");
+    teamLabel.className = "pop-pick-team";
+    const isW = isGameFinal && slot.winner === team;
+    const isL = isGameFinal && slot.winner && slot.winner !== team;
+    if (isW) teamLabel.classList.add("winner");
+    if (isL) teamLabel.classList.add("loser");
     teamLabel.textContent = team;
     teamGroup.appendChild(teamLabel);
 
     const pickersList = document.createElement("div");
-    pickersList.className = "popover-pickers";
+    pickersList.className = "pop-pick-names";
     for (const name of pickers) {
       const pickerEl = document.createElement("span");
-      pickerEl.className = "popover-picker";
+      pickerEl.className = "pop-picker";
       const status = getPickStatus(slot, slot.picks[name], eliminated);
       pickerEl.classList.add(status);
       const dot = document.createElement("span");
-      dot.className = "popover-picker-dot";
+      dot.className = "pop-picker-dot";
       dot.style.backgroundColor = PERSON_COLORS[name] || "#888";
       pickerEl.appendChild(dot);
       pickerEl.appendChild(document.createTextNode(name));
@@ -382,18 +406,18 @@ function showPicksPopover(slot, eliminated, cellEl) {
 
   if (noPick.length > 0) {
     const noPickGroup = document.createElement("div");
-    noPickGroup.className = "popover-team-group no-pick";
+    noPickGroup.className = "pop-pick-group no-pick";
     const label = document.createElement("div");
-    label.className = "popover-team-label";
+    label.className = "pop-pick-team";
     label.textContent = "No pick";
     noPickGroup.appendChild(label);
     const list = document.createElement("div");
-    list.className = "popover-pickers";
+    list.className = "pop-pick-names";
     for (const name of noPick) {
       const el = document.createElement("span");
-      el.className = "popover-picker pending";
+      el.className = "pop-picker pending";
       const dot = document.createElement("span");
-      dot.className = "popover-picker-dot";
+      dot.className = "pop-picker-dot";
       dot.style.backgroundColor = PERSON_COLORS[name] || "#888";
       dot.style.opacity = "0.3";
       el.appendChild(dot);
@@ -442,11 +466,27 @@ function showPicksPopover(slot, eliminated, cellEl) {
 // GAME CELL RENDERING
 // =============================================================
 
+function getFilterStatus(slot, eliminated, person) {
+  if (!person) return null;
+  const pick = slot.picks[person];
+  if (!pick) return "no-pick";
+  const status = getPickStatus(slot, pick, eliminated);
+  if (status === "correct") return "correct";
+  if (status === "wrong") return "wrong";
+  return "pending";
+}
+
 function renderGameCell(slot, eliminated, roundKey) {
   const cell = document.createElement("div");
   cell.className = "game-cell";
   if (slot.status === "final") cell.classList.add("has-result");
   if (isLive(slot)) cell.classList.add("live");
+
+  // Apply person filter classes
+  if (filterPerson) {
+    const fs = getFilterStatus(slot, eliminated, filterPerson);
+    if (fs) cell.classList.add(`filter-${fs}`);
+  }
 
   // Click to show picks popover
   cell.addEventListener("click", (e) => {
@@ -467,6 +507,11 @@ function renderGameCell(slot, eliminated, roundKey) {
     const isLoser = slot.status === "final" && slot.winner && slot.winner !== t.name;
     if (isWinner) row.classList.add("winner");
     if (isLoser) row.classList.add("loser");
+
+    // Mark the team this person picked
+    if (filterPerson && slot.picks[filterPerson] === t.name) {
+      row.classList.add("person-picked");
+    }
 
     // Seed
     if (t.seed != null) {
@@ -507,7 +552,7 @@ function renderGameCell(slot, eliminated, roundKey) {
       else if (odds <= 40) oddsEl.classList.add("underdog");
       oddsEl.textContent = `${odds}%`;
       row.appendChild(oddsEl);
-      if (odds >= 50) {
+      if (odds >= 50 && !filterPerson) {
         row.style.background = `rgba(74, 222, 128, ${(odds - 50) * 0.003})`;
       }
     }
@@ -671,7 +716,7 @@ function renderLeaderboard(standings, gamesData) {
 // =============================================================
 
 let mobileSelectedRegion = "East";
-let mobileFilterPerson = null; // null = show all
+let filterPerson = null; // null = show all
 
 function renderMobileRegionTabs() {
   const container = document.getElementById("mobile-region-tabs");
@@ -760,6 +805,12 @@ function renderMobileGameCard(slot, eliminated) {
   if (slot.status === "final") card.classList.add("has-result");
   if (isLive(slot)) card.classList.add("live");
 
+  // Apply person filter classes
+  if (filterPerson) {
+    const fs = getFilterStatus(slot, eliminated, filterPerson);
+    if (fs) card.classList.add(`filter-${fs}`);
+  }
+
   const teams = [
     { name: slot.team1, seed: slot.seed1, isTeam1: true },
     { name: slot.team2, seed: slot.seed2, isTeam1: false },
@@ -805,7 +856,7 @@ function renderMobileGameCard(slot, eliminated) {
       else if (odds <= 40) oddsEl.classList.add("underdog");
       oddsEl.textContent = `${odds}%`;
       info.appendChild(oddsEl);
-      if (odds >= 50) {
+      if (odds >= 50 && !filterPerson) {
         row.style.background = `rgba(74, 222, 128, ${(odds - 50) * 0.003})`;
       }
     }
@@ -822,10 +873,10 @@ function renderMobileGameCard(slot, eliminated) {
         const status = getPickStatus(slot, pickedTeam, eliminated);
         chip.classList.add(status);
         // Dim non-filtered people when filter is active
-        if (mobileFilterPerson && person !== mobileFilterPerson) {
+        if (filterPerson && person !== filterPerson) {
           chip.classList.add("dimmed");
         }
-        if (mobileFilterPerson && person === mobileFilterPerson) {
+        if (filterPerson && person === filterPerson) {
           chip.classList.add("highlighted");
         }
         const dot = document.createElement("span");
@@ -839,7 +890,7 @@ function renderMobileGameCard(slot, eliminated) {
     row.appendChild(pickers);
 
     // When filtering, highlight the team row if this person picked this team
-    if (mobileFilterPerson && slot.picks[mobileFilterPerson] === t.name) {
+    if (filterPerson && slot.picks[filterPerson] === t.name) {
       row.classList.add("person-picked");
     }
 
@@ -849,46 +900,63 @@ function renderMobileGameCard(slot, eliminated) {
   return card;
 }
 
-function renderMobileFilterBar() {
-  const bar = document.getElementById("mobile-filter-bar");
+function onFilterChange() {
+  renderFilterBars();
+  renderMobilePersonSummary();
+  renderMobileRegionContent();
+  // Re-render desktop bracket with filter applied
+  if (_mobileRenderData) {
+    const { regionBrackets, finalFour, eliminated } = _mobileRenderData;
+    renderBracket(regionBrackets, finalFour, eliminated);
+    renderMiniBracket(regionBrackets, finalFour, eliminated);
+  }
+}
+
+function renderFilterBar(containerId) {
+  const bar = document.getElementById(containerId);
   if (!bar) return;
   bar.innerHTML = "";
 
   const label = document.createElement("span");
   label.className = "filter-label";
-  label.textContent = "Filter by:";
+  label.textContent = "Filter:";
   bar.appendChild(label);
 
   // "All" button
   const allBtn = document.createElement("button");
-  allBtn.className = "filter-btn" + (mobileFilterPerson === null ? " active" : "");
+  allBtn.className = "filter-btn" + (filterPerson === null ? " active" : "");
   allBtn.textContent = "All";
   allBtn.addEventListener("click", () => {
-    mobileFilterPerson = null;
-    renderMobileFilterBar();
-    renderMobilePersonSummary();
-    renderMobileRegionContent();
+    filterPerson = null;
+    onFilterChange();
   });
   bar.appendChild(allBtn);
 
   // Person buttons
   for (const name of Object.keys(PERSON_COLORS)) {
     const btn = document.createElement("button");
-    btn.className = "filter-btn" + (mobileFilterPerson === name ? " active" : "");
-    btn.style.borderColor = mobileFilterPerson === name ? PERSON_COLORS[name] : "transparent";
+    btn.className = "filter-btn" + (filterPerson === name ? " active" : "");
+    btn.style.borderColor = filterPerson === name ? PERSON_COLORS[name] : "transparent";
     const dot = document.createElement("span");
     dot.className = "filter-dot";
     dot.style.backgroundColor = PERSON_COLORS[name];
     btn.appendChild(dot);
     btn.appendChild(document.createTextNode(name));
     btn.addEventListener("click", () => {
-      mobileFilterPerson = mobileFilterPerson === name ? null : name;
-      renderMobileFilterBar();
-      renderMobilePersonSummary();
-      renderMobileRegionContent();
+      filterPerson = filterPerson === name ? null : name;
+      onFilterChange();
     });
     bar.appendChild(btn);
   }
+}
+
+function renderFilterBars() {
+  renderFilterBar("mobile-filter-bar");
+  renderFilterBar("desktop-filter-bar");
+}
+
+function renderMobileFilterBar() {
+  renderFilterBars();
 }
 
 function renderMobilePersonSummary() {
@@ -896,10 +964,10 @@ function renderMobilePersonSummary() {
   if (!container) return;
   container.innerHTML = "";
 
-  if (!mobileFilterPerson || !_mobileRenderData) return;
+  if (!filterPerson || !_mobileRenderData) return;
 
   const { regionBrackets, finalFour, eliminated } = _mobileRenderData;
-  const person = mobileFilterPerson;
+  const person = filterPerson;
 
   // Count correct, wrong, pending picks across all rounds
   let correct = 0, wrong = 0, pending = 0, total = 0;
@@ -1069,7 +1137,11 @@ async function refresh() {
     const finalFour = buildFinalFour(regionBrackets, games, picks, gameLookup);
     const standings = computeStandings(picks, games);
 
+    // Store data for filter re-renders
+    _mobileRenderData = { regionBrackets, finalFour, eliminated };
+
     renderLegend(picks);
+    renderFilterBars();
     renderBracket(regionBrackets, finalFour, eliminated);
     renderLeaderboard(standings, games);
     renderMobileBracket(regionBrackets, finalFour, eliminated);

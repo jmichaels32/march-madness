@@ -464,84 +464,140 @@ header .subtitle {
   z-index: 1000;
   background: linear-gradient(145deg, #0f1f36, #162a48);
   border: 1px solid #2d5a8f;
-  border-radius: 10px;
-  padding: 0.7rem 0.85rem;
-  min-width: 180px;
-  max-width: 280px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(45, 90, 143, 0.3);
+  border-radius: 12px;
+  padding: 0;
+  min-width: 220px;
+  max-width: 320px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(45, 90, 143, 0.3);
   animation: popoverIn 0.15s ease-out;
+  overflow: hidden;
 }
 @keyframes popoverIn {
   from { opacity: 0; transform: translateY(4px) scale(0.97); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
-.popover-header {
-  font-size: 0.7rem;
+
+/* ── Popover status badge ── */
+.pop-status-badge {
+  text-align: center;
+  font-size: 0.55rem;
   font-weight: 700;
-  color: #f4a020;
-  margin-bottom: 0.5rem;
-  padding-bottom: 0.35rem;
-  border-bottom: 1px solid rgba(45, 74, 111, 0.5);
-  text-align: center;
-}
-.popover-score-team {
-  color: #94a3b8;
-  font-size: 0.65rem;
-}
-.popover-score-team.winner {
-  color: #93c5fd;
-  font-weight: 800;
-}
-.popover-score-dash {
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
   color: #475569;
+  padding: 0.4rem 0.5rem 0.3rem;
+  background: rgba(13, 25, 42, 0.6);
 }
-.popover-status {
-  text-align: center;
+.pop-status-badge.final { color: #64748b; }
+.pop-status-badge.live {
+  color: #fca5a5;
+  animation: pulse 2s infinite;
+}
+
+/* ── Popover scoreboard ── */
+.pop-scoreboard {
+  padding: 0.2rem 0;
+}
+.pop-team-row {
+  display: flex;
+  align-items: center;
+  padding: 0.45rem 0.75rem;
+  gap: 0.5rem;
+  transition: background 0.15s;
+}
+.pop-team-row + .pop-team-row {
+  border-top: 1px solid rgba(30, 52, 80, 0.5);
+}
+.pop-team-row.winner {
+  background: rgba(59, 130, 246, 0.12);
+}
+.pop-team-row.loser {
+  opacity: 0.4;
+}
+.pop-seed {
   font-size: 0.55rem;
   font-weight: 600;
   color: #475569;
-  margin-bottom: 0.4rem;
-  padding-bottom: 0.3rem;
-  border-bottom: 1px solid rgba(45, 74, 111, 0.3);
+  min-width: 16px;
+  text-align: right;
 }
-.popover-status.final {
+.pop-team-row.winner .pop-seed { color: #60a5fa; }
+.pop-team-name {
+  flex: 1;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pop-team-row.winner .pop-team-name {
+  color: #93c5fd;
+  font-weight: 800;
+}
+.pop-odds {
+  font-size: 0.6rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  padding: 1px 5px;
+  border-radius: 3px;
   color: #64748b;
+  background: rgba(30, 52, 80, 0.5);
 }
-.popover-status.live {
-  color: #fca5a5;
+.pop-odds.favored {
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.12);
 }
-.popover-team-group {
-  margin-bottom: 0.45rem;
+.pop-odds.underdog {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.12);
 }
-.popover-team-group:last-child {
-  margin-bottom: 0;
+.pop-score {
+  font-size: 1rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  min-width: 28px;
+  text-align: right;
+  color: #94a3b8;
 }
-.popover-team-group.no-pick {
+.pop-team-row.winner .pop-score { color: #60a5fa; }
+
+/* ── Popover picks section ── */
+.pop-picks-header {
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #475569;
+  padding: 0.4rem 0.75rem 0.25rem;
+  border-top: 1px solid rgba(30, 52, 80, 0.5);
+}
+.pop-pick-group {
+  padding: 0.25rem 0.75rem 0.35rem;
+}
+.pop-pick-group:last-child { padding-bottom: 0.5rem; }
+.pop-pick-group.no-pick {
   opacity: 0.5;
-  margin-top: 0.3rem;
-  padding-top: 0.3rem;
-  border-top: 1px solid rgba(45, 74, 111, 0.3);
+  border-top: 1px solid rgba(30, 52, 80, 0.3);
 }
-.popover-team-label {
+.pop-pick-team {
   font-size: 0.65rem;
   font-weight: 700;
   color: #cbd5e1;
   margin-bottom: 0.2rem;
 }
-.popover-team-label.winner {
-  color: #93c5fd;
-}
-.popover-team-label.loser {
+.pop-pick-team.winner { color: #93c5fd; }
+.pop-pick-team.loser {
   color: #64748b;
   text-decoration: line-through;
   opacity: 0.6;
 }
-.popover-pickers {
+.pop-pick-names {
   display: flex;
   flex-wrap: wrap;
   gap: 0.3rem;
 }
-.popover-picker {
+.pop-picker {
   display: flex;
   align-items: center;
   gap: 0.25rem;
@@ -552,15 +608,19 @@ header .subtitle {
   padding: 0.15rem 0.4rem;
   border-radius: 4px;
 }
-.popover-picker.correct {
+.pop-picker.correct {
   color: #4ade80;
   background: rgba(74, 222, 128, 0.08);
 }
-.popover-picker.wrong {
+.pop-picker.wrong {
   color: #64748b;
   opacity: 0.5;
 }
-.popover-picker-dot {
+.pop-picker.pending {
+  color: #64748b;
+  opacity: 0.5;
+}
+.pop-picker-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
@@ -830,6 +890,80 @@ header .subtitle {
   border-left: 3px solid #f4a020;
 }
 
+/* ── Desktop filter bar ──────────────────── */
+.desktop-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  flex-wrap: wrap;
+}
+
+/* ── Person filter coloring (shared desktop + mobile) ── */
+.game-cell.filter-correct {
+  border-color: #22c55e;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.25);
+}
+.game-cell.filter-correct .team-row.person-picked {
+  background: rgba(34, 197, 94, 0.15);
+  border-left: 2px solid #22c55e;
+}
+.game-cell.filter-correct .team-row.person-picked .team-name {
+  color: #4ade80;
+  font-weight: 700;
+}
+.game-cell.filter-wrong {
+  border-color: #ef4444;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.2);
+}
+.game-cell.filter-wrong .team-row.person-picked {
+  background: rgba(239, 68, 68, 0.12);
+  border-left: 2px solid #ef4444;
+}
+.game-cell.filter-wrong .team-row.person-picked .team-name {
+  color: #f87171;
+  font-weight: 700;
+}
+.game-cell.filter-pending {
+  border-color: #475569;
+}
+.game-cell.filter-no-pick {
+  opacity: 0.25;
+}
+
+/* Mobile filter coloring */
+.mobile-game-card.filter-correct {
+  border-color: #22c55e;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.2);
+}
+.mobile-game-card.filter-correct .mobile-team-row.person-picked {
+  background: rgba(34, 197, 94, 0.15);
+  border-left: 3px solid #22c55e;
+}
+.mobile-game-card.filter-correct .mobile-team-row.person-picked .mobile-team-name {
+  color: #4ade80;
+  font-weight: 700;
+}
+.mobile-game-card.filter-wrong {
+  border-color: #ef4444;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.2);
+}
+.mobile-game-card.filter-wrong .mobile-team-row.person-picked {
+  background: rgba(239, 68, 68, 0.12);
+  border-left: 3px solid #ef4444;
+}
+.mobile-game-card.filter-wrong .mobile-team-row.person-picked .mobile-team-name {
+  color: #f87171;
+  font-weight: 700;
+}
+.mobile-game-card.filter-pending {
+  border-color: #475569;
+}
+.mobile-game-card.filter-no-pick {
+  opacity: 0.25;
+}
+
 /* ── Mini bracket (mobile overview) ─────────── */
 .mini-bracket-wrapper {
   display: none;
@@ -891,5 +1025,6 @@ header .subtitle {
   .leaderboard { padding: 0 0.5rem; }
   .leaderboard-table th,
   .leaderboard-table td { padding: 0.5rem 0.35rem; font-size: 0.7rem; }
-  .picks-popover { min-width: 160px; max-width: 260px; }
+  .picks-popover { min-width: 180px; max-width: 280px; }
+  .desktop-filter-bar { display: none; }
 }
