@@ -811,110 +811,63 @@ function renderMobileBracket(regionBrackets, finalFour, eliminated) {
 // MINI BRACKET (mobile overview)
 // =============================================================
 
-function abbrevTeam(name) {
-  if (!name || name === "TBD") return "TBD";
-  // Common abbreviations for display
-  const abbrevs = {
-    "Duke": "DUKE", "Siena": "SIEN", "Ohio St": "OSU", "TCU": "TCU",
-    "St. John's": "SJU", "Northern Iowa": "UNI", "Kansas": "KU", "Cal Baptist": "CBU",
-    "Louisville": "LOU", "South Florida": "USF", "Michigan St": "MSU", "North Dakota St": "NDSU",
-    "UCLA": "UCLA", "UCF": "UCF", "UConn": "UCON", "Furman": "FUR",
-    "Arizona": "ARIZ", "Long Island": "LIU", "Villanova": "NOVA", "Utah St": "USU",
-    "Wisconsin": "WISC", "High Point": "HP", "Arkansas": "ARK", "Hawaii": "HAW",
-    "BYU": "BYU", "Texas": "TEX", "Gonzaga": "GONZ", "Kennesaw St": "KENN",
-    "Miami (FL)": "MIA", "Missouri": "MIZZ", "Purdue": "PUR", "Queens (N.C.)": "QU",
-    "Florida": "FLA", "Prairie View A&M": "PVAM", "Clemson": "CLEM", "Iowa": "IOWA",
-    "Vanderbilt": "VAN", "McNeese": "MCN", "Nebraska": "NEB", "Troy": "TROY",
-    "North Carolina": "UNC", "VCU": "VCU", "Illinois": "ILL", "Penn": "PENN",
-    "Saint Mary's": "SMC", "Texas A&M": "TAMU", "Houston": "HOU", "Idaho": "IDHO",
-    "Michigan": "MICH", "Howard": "HOW", "Georgia": "UGA", "Saint Louis": "SLU",
-    "Texas Tech": "TTU", "Akron": "AKR", "Alabama": "BAMA", "Hofstra": "HOF",
-    "Tennessee": "TENN", "Miami (Ohio)": "MOHI", "SMU": "SMU", "Virginia": "UVA",
-    "Wright St": "WRST", "Kentucky": "UK", "Iowa St": "ISU", "Santa Clara": "SCU",
-    "Tennessee St": "TNST",
-  };
-  return abbrevs[name] || name.substring(0, 4).toUpperCase();
-}
-
 function renderMiniBracket(regionBrackets, finalFour, eliminated) {
   const container = document.getElementById("mini-bracket");
   if (!container) return;
   container.innerHTML = "";
 
-  // Build left side (East, South) and right side (West, Midwest)
+  // Reuse the exact desktop bracket structure, just inside the mini wrapper
+  // Left side: East, South
   const leftSide = document.createElement("div");
-  leftSide.className = "mini-side";
-  for (const region of ["East", "South"]) {
-    leftSide.appendChild(renderMiniRegion(region, regionBrackets[region], eliminated));
+  leftSide.className = "bracket-side left";
+  for (const r of REGIONS_LEFT) {
+    leftSide.appendChild(renderRegion(r, regionBrackets[r], eliminated, "left"));
   }
-
-  const rightSide = document.createElement("div");
-  rightSide.className = "mini-side";
-  for (const region of ["West", "Midwest"]) {
-    rightSide.appendChild(renderMiniRegion(region, regionBrackets[region], eliminated));
-  }
-
-  // Center: Final Four
-  const center = document.createElement("div");
-  center.className = "mini-center";
-
-  center.appendChild(renderMiniGame(finalFour.semi1, "SF"));
-  center.appendChild(renderMiniGame(finalFour.champ, "CH"));
-  center.appendChild(renderMiniGame(finalFour.semi2, "SF"));
-
   container.appendChild(leftSide);
+
+  // Center: Final Four + Championship
+  const center = document.createElement("div");
+  center.className = "bracket-center";
+
+  const ff1Label = document.createElement("div");
+  ff1Label.className = "ff-label";
+  ff1Label.textContent = "Semifinal";
+  center.appendChild(ff1Label);
+
+  const ff1Cell = document.createElement("div");
+  ff1Cell.className = "center-game";
+  ff1Cell.appendChild(renderGameCell(finalFour.semi1, eliminated, "final4"));
+  center.appendChild(ff1Cell);
+
+  const champLabel = document.createElement("div");
+  champLabel.className = "champ-label";
+  champLabel.textContent = "Championship";
+  center.appendChild(champLabel);
+
+  const champCell = document.createElement("div");
+  champCell.className = "center-game";
+  champCell.appendChild(renderGameCell(finalFour.champ, eliminated, "championship"));
+  center.appendChild(champCell);
+
+  const ff2Label = document.createElement("div");
+  ff2Label.className = "ff-label";
+  ff2Label.textContent = "Semifinal";
+  center.appendChild(ff2Label);
+
+  const ff2Cell = document.createElement("div");
+  ff2Cell.className = "center-game";
+  ff2Cell.appendChild(renderGameCell(finalFour.semi2, eliminated, "final4"));
+  center.appendChild(ff2Cell);
+
   container.appendChild(center);
+
+  // Right side: West, Midwest
+  const rightSide = document.createElement("div");
+  rightSide.className = "bracket-side right";
+  for (const r of REGIONS_RIGHT) {
+    rightSide.appendChild(renderRegion(r, regionBrackets[r], eliminated, "right"));
+  }
   container.appendChild(rightSide);
-}
-
-function renderMiniRegion(regionName, regionData, eliminated) {
-  const el = document.createElement("div");
-  el.className = "mini-region";
-
-  const label = document.createElement("div");
-  label.className = "mini-region-label";
-  label.textContent = regionName;
-  el.appendChild(label);
-
-  const rounds = document.createElement("div");
-  rounds.className = "mini-region-rounds";
-
-  const roundKeys = ["round1", "round2", "sweet16", "elite8"];
-  for (const rk of roundKeys) {
-    const col = document.createElement("div");
-    col.className = "mini-round-col";
-    for (const slot of (regionData[rk] || [])) {
-      col.appendChild(renderMiniGame(slot));
-    }
-    rounds.appendChild(col);
-  }
-
-  el.appendChild(rounds);
-  return el;
-}
-
-function renderMiniGame(slot, tag) {
-  const game = document.createElement("div");
-  game.className = "mini-game";
-  if (slot.status === "final") game.classList.add("final");
-
-  for (const t of [
-    { name: slot.team1, seed: slot.seed1 },
-    { name: slot.team2, seed: slot.seed2 },
-  ]) {
-    const row = document.createElement("div");
-    row.className = "mini-team";
-    const isWinner = slot.status === "final" && slot.winner === t.name;
-    const isLoser = slot.status === "final" && slot.winner && slot.winner !== t.name;
-    if (isWinner) row.classList.add("winner");
-    if (isLoser) row.classList.add("loser");
-
-    const text = t.seed != null ? `${t.seed} ${abbrevTeam(t.name)}` : abbrevTeam(t.name);
-    row.textContent = text;
-    game.appendChild(row);
-  }
-
-  return game;
 }
 
 function renderMobileLeaderboard(standings, gamesData) {
