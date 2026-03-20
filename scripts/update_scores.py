@@ -359,14 +359,23 @@ def main():
                 if mapped and price is not None:
                     # Kalshi prices: if < 1 it's decimal (0.83 = 83%),
                     # if >= 1 it's already cents (83 = 83%)
-                    if price < 1:
-                        odds[mapped] = round(price * 100)
-                    else:
-                        odds[mapped] = round(price)
+                    pct = round(price * 100) if price < 1 else round(price)
+                    odds[mapped] = min(pct, 99)  # Cap at 99%
 
             if odds:
                 t1_odds = odds.get(game["team1"])
                 t2_odds = odds.get(game["team2"])
+                # If we have both, ensure they sum to 100
+                if t1_odds is not None and t2_odds is not None:
+                    total = t1_odds + t2_odds
+                    if total != 100:
+                        # Normalize: keep the higher-confidence one, derive the other
+                        t2_odds = 100 - t1_odds
+                elif t1_odds is not None:
+                    t2_odds = 100 - t1_odds
+                elif t2_odds is not None:
+                    t1_odds = 100 - t2_odds
+
                 if t1_odds is not None and t1_odds != game.get("odds1"):
                     game["odds1"] = t1_odds
                     updated = True

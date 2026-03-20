@@ -40,7 +40,7 @@
       "status": "upcoming",
       "winner": null,
       "odds1": 83,
-      "odds2": 18
+      "odds2": 17
     },
     {
       "id": 4,
@@ -94,7 +94,7 @@
       "status": "upcoming",
       "winner": null,
       "odds1": 68,
-      "odds2": 33
+      "odds2": 32
     },
     {
       "id": 8,
@@ -137,7 +137,7 @@
       "status": "upcoming",
       "winner": null,
       "odds1": 47,
-      "odds2": 55
+      "odds2": 53
     },
     {
       "id": 11,
@@ -191,7 +191,7 @@
       "status": "upcoming",
       "winner": null,
       "odds1": 94,
-      "odds2": 7
+      "odds2": 6
     },
     {
       "id": 15,
@@ -205,7 +205,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 55
+      "odds1": 55,
+      "odds2": 45
     },
     {
       "id": 16,
@@ -233,7 +234,7 @@
       "status": "upcoming",
       "winner": null,
       "odds1": 99,
-      "odds2": 2
+      "odds2": 1
     },
     {
       "id": 18,
@@ -248,7 +249,7 @@
       "status": "upcoming",
       "winner": null,
       "odds1": 46,
-      "odds2": 55
+      "odds2": 54
     },
     {
       "id": 19,
@@ -302,7 +303,7 @@
       "status": "upcoming",
       "winner": null,
       "odds1": 99,
-      "odds2": 100
+      "odds2": 1
     },
     {
       "id": 23,
@@ -330,7 +331,7 @@
       "status": "upcoming",
       "winner": null,
       "odds1": 99,
-      "odds2": 100
+      "odds2": 1
     },
     {
       "id": 25,
@@ -358,7 +359,7 @@
       "status": "upcoming",
       "winner": null,
       "odds1": 11,
-      "odds2": 90
+      "odds2": 89
     },
     {
       "id": 27,
@@ -373,7 +374,7 @@
       "status": "upcoming",
       "winner": null,
       "odds1": 74,
-      "odds2": 27
+      "odds2": 26
     },
     {
       "id": 28,
@@ -388,7 +389,7 @@
       "status": "upcoming",
       "winner": null,
       "odds1": 86,
-      "odds2": 15
+      "odds2": 14
     },
     {
       "id": 29,
@@ -420,7 +421,7 @@
       "status": "upcoming",
       "winner": null,
       "odds1": 94,
-      "odds2": 7
+      "odds2": 6
     },
     {
       "id": 31,
@@ -450,7 +451,7 @@
       "status": "upcoming",
       "winner": null,
       "odds1": 97,
-      "odds2": 4
+      "odds2": 3
     }
   ]
 }
