@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T04:02:31Z",
+  "lastUpdated": "2026-03-20T04:10:00Z",
   "games": [
     {
       "id": 1,
@@ -53,7 +53,9 @@
       "score1": null,
       "score2": null,
       "status": "upcoming",
-      "winner": null
+      "winner": null,
+      "odds1": 90,
+      "odds2": 10
     },
     {
       "id": 5,
@@ -122,7 +124,9 @@
       "score1": null,
       "score2": null,
       "status": "upcoming",
-      "winner": null
+      "winner": null,
+      "odds1": 98,
+      "odds2": 2
     },
     {
       "id": 10,
@@ -186,12 +190,12 @@
       "team1": "Gonzaga",
       "seed2": 14,
       "team2": "Kennesaw St",
-      "score1": 48,
-      "score2": 42,
+      "score1": 57,
+      "score2": 46,
       "status": "live",
       "winner": null,
-      "odds1": 92,
-      "odds2": 8
+      "odds1": 97,
+      "odds2": 3
     },
     {
       "id": 15,
@@ -219,7 +223,9 @@
       "score1": null,
       "score2": null,
       "status": "upcoming",
-      "winner": null
+      "winner": null,
+      "odds1": 98,
+      "odds2": 2
     },
     {
       "id": 17,
@@ -233,8 +239,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 99,
-      "odds2": 1
+      "odds1": 98,
+      "odds2": 2
     },
     {
       "id": 18,
@@ -324,8 +330,8 @@
       "team1": "Houston",
       "seed2": 15,
       "team2": "Idaho",
-      "score1": 67,
-      "score2": 38,
+      "score1": 78,
+      "score2": 45,
       "status": "live",
       "winner": null,
       "odds1": 99,
@@ -352,8 +358,8 @@
       "team1": "Georgia",
       "seed2": 9,
       "team2": "Saint Louis",
-      "score1": 59,
-      "score2": 97,
+      "score1": 71,
+      "score2": 100,
       "status": "live",
       "winner": null,
       "odds1": 1,
@@ -386,8 +392,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 85,
-      "odds2": 15
+      "odds1": 86,
+      "odds2": 14
     },
     {
       "id": 29,
@@ -523,8 +529,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 0,
-      "odds2": 100
+      "odds1": 31,
+      "odds2": 69
     }
   ]
 }
