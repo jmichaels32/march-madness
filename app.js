@@ -240,23 +240,30 @@ function computeStandings(picksData, gamesData) {
   const totalPossible = 32*1 + 16*2 + 8*4 + 4*8 + 2*16 + 1*32; // = 192
 
   return picksData.members.map(member => {
-    let earned = 0;
-    let lost = 0;
-    let pendingPts = 0;
+    let earned = 0, lost = 0, pendingPts = 0;
+    let correctPicks = 0, wrongPicks = 0, pendingPicks = 0;
+    const roundScores = {};
     for (const round of ROUND_ORDER) {
+      let rs = 0;
       const picks = member.picks[round] || [];
       for (const team of picks) {
         if (!team) continue;
         if (winners[round].has(team)) {
           earned += SCORING[round];
+          rs += SCORING[round];
+          correctPicks++;
         } else if (eliminated.has(team)) {
           lost += SCORING[round];
+          wrongPicks++;
         } else {
           pendingPts += SCORING[round];
+          pendingPicks++;
         }
       }
+      roundScores[round] = rs;
     }
-    return { name: member.name, earned, lost, pending: pendingPts, total: totalPossible };
+    return { name: member.name, earned, lost, pending: pendingPts, total: totalPossible,
+             correctPicks, wrongPicks, pendingPicks, roundScores };
   }).sort((a, b) => b.earned - a.earned);
 }
 
@@ -706,19 +713,65 @@ function renderLeaderboardCard(container, s, rank) {
   const total = s.total; // 192
   const earnedPct = (s.earned / total) * 100;
   const lostPct = (s.lost / total) * 100;
-  const pendingPct = (s.pending / total) * 100;
+  // Gray fills the middle (everything not earned or lost)
+  const grayPct = 100 - earnedPct - lostPct;
 
-  card.innerHTML = `
-    <div class="lb-card-header">
-      <span class="lb-card-name" style="color:${color}">${esc(s.name)}</span>
-      <span class="lb-card-pts">${s.earned}<span class="lb-card-pts-label"> pts</span></span>
-    </div>
-    <div class="lb-bar">
-      <div class="lb-bar-earned" style="width:${earnedPct}%"></div>
-      <div class="lb-bar-lost" style="width:${lostPct}%"></div>
-      <div class="lb-bar-pending" style="width:${pendingPct}%"></div>
-    </div>
+  // Header row
+  const header = document.createElement("div");
+  header.className = "lb-card-header";
+  header.innerHTML = `
+    <span class="lb-card-name" style="color:${color}">${esc(s.name)}</span>
+    <span class="lb-card-pts">${s.earned}<span class="lb-card-pts-label"> pts</span></span>
   `;
+  card.appendChild(header);
+
+  // Bar: green from left, gray middle, red from right
+  const bar = document.createElement("div");
+  bar.className = "lb-bar";
+  bar.innerHTML = `
+    <div class="lb-bar-earned" style="width:${earnedPct}%"></div>
+    <div class="lb-bar-pending" style="width:${grayPct}%"></div>
+    <div class="lb-bar-lost" style="width:${lostPct}%"></div>
+  `;
+  card.appendChild(bar);
+
+  // Expandable detail section (hidden by default)
+  const detail = document.createElement("div");
+  detail.className = "lb-detail";
+
+  const maxPossible = s.earned + s.pending;
+  const correctPicks = s.correctPicks;
+  const wrongPicks = s.wrongPicks;
+  const pendingPicks = s.pendingPicks;
+
+  const roundLabels = { round1: "R64", round2: "R32", sweet16: "S16", elite8: "E8", final4: "F4", championship: "Ch" };
+  let roundsHTML = "";
+  for (const rk of ROUND_ORDER) {
+    const val = s.roundScores[rk] || 0;
+    const cls = val > 0 ? "has-pts" : "";
+    roundsHTML += `<span class="lb-round-chip ${cls}"><span class="lb-round-label">${roundLabels[rk]}</span><span class="lb-round-val">${val}</span></span>`;
+  }
+
+  detail.innerHTML = `
+    <div class="lb-detail-stats">
+      <span class="lb-detail-stat earned">${s.earned} earned</span>
+      <span class="lb-detail-stat lost">${s.lost} lost</span>
+      <span class="lb-detail-stat pending">${s.pending} pending</span>
+      <span class="lb-detail-stat max">max ${maxPossible}</span>
+    </div>
+    <div class="lb-detail-picks">
+      <span class="lb-pick-stat correct">${correctPicks} correct</span>
+      <span class="lb-pick-stat wrong">${wrongPicks} wrong</span>
+      <span class="lb-pick-stat pending">${pendingPicks} pending</span>
+    </div>
+    <div class="lb-rounds">${roundsHTML}</div>
+  `;
+  card.appendChild(detail);
+
+  // Toggle expand on click
+  card.addEventListener("click", () => {
+    card.classList.toggle("expanded");
+  });
 
   container.appendChild(card);
 }
