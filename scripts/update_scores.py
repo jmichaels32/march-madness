@@ -6,10 +6,10 @@ Runs as a GitHub Actions cron job.
 
 import json
 import os
+import re
 import sys
 import time
 import base64
-import hashlib
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
@@ -19,12 +19,109 @@ from urllib.error import HTTPError
 KALSHI_BASE = "https://api.elections.kalshi.com/trade-api/v2"
 SERIES_TICKER = "KXNCAAMBGAME"
 
+# Tournament date range (only process games in this window)
+TOURNAMENT_START = "2026-03-19"
+TOURNAMENT_END = "2026-04-10"
+
 # Paths
 GAMES_JSON = Path(__file__).parent.parent / "data" / "games.json"
 
-# Mapping from Kalshi event title team names → our games.json team names
-# Kalshi uses names like "Michigan St." and we use "Michigan St" (no period sometimes)
-# We'll match by normalizing both sides
+# Kalshi team abbreviation → our games.json team name
+# Built from observing Kalshi event tickers and titles
+KALSHI_TEAM_MAP = {
+    # East region
+    "DUKE": "Duke",
+    "SIENA": "Siena",
+    "SIE": "Siena",
+    "OSU": "Ohio St",
+    "TCU": "TCU",
+    "SJU": "St. John's",
+    "UNI": "Northern Iowa",
+    "KU": "Kansas",
+    "KAN": "Kansas",
+    "CBU": "Cal Baptist",
+    "CALB": "Cal Baptist",
+    "LOU": "Louisville",
+    "USF": "South Florida",
+    "MSU": "Michigan St",
+    "NDSU": "North Dakota St",
+    "UCLA": "UCLA",
+    "UCF": "UCF",
+    "UCONN": "UConn",
+    "CONN": "UConn",
+    "FUR": "Furman",
+    # West region
+    "ARIZ": "Arizona",
+    "ARI": "Arizona",
+    "LIU": "Long Island",
+    "VILL": "Villanova",
+    "USU": "Utah St",
+    "WIS": "Wisconsin",
+    "HP": "High Point",
+    "ARK": "Arkansas",
+    "HAW": "Hawaii",
+    "BYU": "BYU",
+    "TEX": "Texas",
+    "GONZ": "Gonzaga",
+    "GU": "Gonzaga",
+    "KENN": "Kennesaw St",
+    "KSU": "Kennesaw St",
+    "MIA": "Miami (FL)",
+    "MIAF": "Miami (FL)",
+    "MIZ": "Missouri",
+    "MOU": "Missouri",
+    "PUR": "Purdue",
+    "QUEEN": "Queens (N.C.)",
+    "QU": "Queens (N.C.)",
+    # South region
+    "FLA": "Florida",
+    "PV": "Prairie View A&M",
+    "PVAM": "Prairie View A&M",
+    "CLEM": "Clemson",
+    "IOWA": "Iowa",
+    "VAN": "Vanderbilt",
+    "MCNS": "McNeese",
+    "MCN": "McNeese",
+    "NEB": "Nebraska",
+    "TROY": "Troy",
+    "UNC": "North Carolina",
+    "VCU": "VCU",
+    "ILL": "Illinois",
+    "PENN": "Penn",
+    "SMC": "Saint Mary's",
+    "TXAM": "Texas A&M",
+    "TAM": "Texas A&M",
+    "HOU": "Houston",
+    "HOUST": "Houston",
+    "IDHO": "Idaho",
+    "IDAH": "Idaho",
+    # Midwest region
+    "MICH": "Michigan",
+    "HOW": "Howard",
+    "UGA": "Georgia",
+    "GA": "Georgia",
+    "SLU": "Saint Louis",
+    "TTU": "Texas Tech",
+    "AKR": "Akron",
+    "BAMA": "Alabama",
+    "ALA": "Alabama",
+    "HOFS": "Hofstra",
+    "HOF": "Hofstra",
+    "TENN": "Tennessee",
+    "MOH": "Miami (Ohio)",
+    "MOHI": "Miami (Ohio)",
+    "SMU": "SMU",
+    "UVA": "Virginia",
+    "VA": "Virginia",
+    "WRST": "Wright St",
+    "UK": "Kentucky",
+    "KEN": "Kentucky",
+    "ISU": "Iowa St",
+    "IAST": "Iowa St",
+    "SC": "Santa Clara",
+    "SCU": "Santa Clara",
+    "TNST": "Tennessee St",
+}
 
 
 def sign_request(private_key_pem: str, api_key_id: str, method: str, path: str) -> dict:
@@ -60,7 +157,6 @@ def sign_request(private_key_pem: str, api_key_id: str, method: str, path: str) 
 
 def kalshi_get(path: str, private_key_pem: str, api_key_id: str) -> dict:
     """Make authenticated GET request to Kalshi API."""
-    # Sign without query params
     sign_path = path.split("?")[0]
     headers = sign_request(private_key_pem, api_key_id, "GET", sign_path)
     headers["Accept"] = "application/json"
@@ -77,39 +173,104 @@ def kalshi_get(path: str, private_key_pem: str, api_key_id: str) -> dict:
         raise
 
 
-def normalize_team_name(name: str) -> str:
+def kalshi_get_unauthenticated(path: str) -> dict:
+    """Make unauthenticated GET request to Kalshi public API."""
+    url = f"https://api.elections.kalshi.com/v1{path}"
+    req = Request(url, headers={"Accept": "application/json"}, method="GET")
+    with urlopen(req) as resp:
+        return json.loads(resp.read().decode())
+
+
+def parse_event_date(event_ticker: str) -> str | None:
+    """Extract date from ticker like KXNCAAMBGAME-26MAR19TCUOSU → 2026-03-19."""
+    m = re.search(r"-(\d{2})(MAR|APR)(\d{2})", event_ticker)
+    if not m:
+        return None
+    year = f"20{m.group(1)}"
+    month = "03" if m.group(2) == "MAR" else "04"
+    day = m.group(3)
+    return f"{year}-{month}-{day}"
+
+
+def is_tournament_date(date_str: str) -> bool:
+    """Check if date falls within tournament window."""
+    return TOURNAMENT_START <= date_str <= TOURNAMENT_END
+
+
+def resolve_winner_from_markets(markets: list, event_title: str) -> str | None:
+    """
+    Find the winner from settled markets.
+    Returns the full team name from the event title.
+    """
+    # Parse teams from event title ("TCU at Ohio St.")
+    parts = event_title.split(" at ")
+    if len(parts) != 2:
+        return None
+    away_name = parts[0].strip().rstrip(".")
+    home_name = parts[1].strip().rstrip(".")
+
+    for market in markets:
+        if market.get("result") != "yes":
+            continue
+
+        # Get ticker suffix (team abbreviation)
+        ticker = market.get("ticker", market.get("ticker_name", ""))
+        # Ticker format: KXNCAAMBGAME-26MAR19TCUOSU-TCU
+        suffix = ticker.rsplit("-", 1)[-1].upper() if "-" in ticker else ""
+
+        # Map suffix to our team name
+        mapped = KALSHI_TEAM_MAP.get(suffix)
+        if mapped:
+            return mapped
+
+        # Fallback: try to match suffix against event title teams
+        if suffix and suffix.upper() in away_name.upper().replace(" ", "").replace(".", ""):
+            return away_name
+        if suffix and suffix.upper() in home_name.upper().replace(" ", "").replace(".", ""):
+            return home_name
+
+        # Last resort: use market title if it has "Winner" format
+        market_title = market.get("title", "")
+        if "Winner" in market_title:
+            winner_name = market_title.replace("Winner", "").strip().rstrip(".")
+            if winner_name:
+                return winner_name
+
+    return None
+
+
+def normalize(name: str) -> str:
     """Normalize team name for comparison."""
-    return (
-        name.strip()
-        .rstrip(".")
-        .replace("(FL)", "(FL)")
-        .replace("(OH)", "(Ohio)")
-    )
+    return name.strip().rstrip(".").lower()
 
 
-def extract_teams_from_title(title: str) -> tuple:
-    """Extract team names from Kalshi event title like 'TCU at Duke'."""
-    parts = title.split(" at ")
-    if len(parts) == 2:
-        return normalize_team_name(parts[0]), normalize_team_name(parts[1])
-    return None, None
+def find_matching_game(games: list, winner_name: str, event_title: str) -> dict | None:
+    """Find the game in games.json that contains the winner team."""
+    # Parse both teams from event title
+    parts = event_title.split(" at ")
+    if len(parts) != 2:
+        return None
+    away = parts[0].strip().rstrip(".")
+    home = parts[1].strip().rstrip(".")
 
+    # Map both Kalshi names to our names
+    away_mapped = None
+    home_mapped = None
 
-def find_matching_game(games: list, team1_kalshi: str, team2_kalshi: str) -> dict | None:
-    """Find the game in games.json that matches the Kalshi event teams."""
+    # Try direct normalization match
     for game in games:
-        g_team1 = normalize_team_name(game["team1"])
-        g_team2 = normalize_team_name(game["team2"])
-        t1 = normalize_team_name(team1_kalshi)
-        t2 = normalize_team_name(team2_kalshi)
+        t1 = normalize(game["team1"])
+        t2 = normalize(game["team2"])
+        a = normalize(away)
+        h = normalize(home)
 
-        # Match in either order
-        if (t1 == g_team1 and t2 == g_team2) or (t1 == g_team2 and t2 == g_team1):
-            return game
-        # Fuzzy: check if one contains the other (handles "St. John's" vs "St. John's")
-        if (t1 in g_team1 or g_team1 in t1) and (t2 in g_team2 or g_team2 in t2):
-            return game
-        if (t1 in g_team2 or g_team2 in t1) and (t2 in g_team1 or g_team1 in t2):
+        # Both teams must match (in either order)
+        match1 = (a == t1 or a in t1 or t1 in a)
+        match2 = (h == t2 or h in t2 or t2 in h)
+        match3 = (a == t2 or a in t2 or t2 in a)
+        match4 = (h == t1 or h in t1 or t1 in h)
+
+        if (match1 and match2) or (match3 and match4):
             return game
 
     return None
@@ -119,87 +280,63 @@ def main():
     api_key_id = os.environ.get("KALSHI_API_KEY_ID", "")
     private_key_pem = os.environ.get("KALSHI_PRIVATE_KEY", "")
 
-    if not api_key_id or not private_key_pem:
-        print("Missing KALSHI_API_KEY_ID or KALSHI_PRIVATE_KEY env vars", file=sys.stderr)
-        sys.exit(1)
-
     # Load current games.json
     with open(GAMES_JSON) as f:
         games_data = json.load(f)
 
     games = games_data["games"]
 
-    # Fetch all NCAA game events from Kalshi
-    path = f"/events?series_ticker={SERIES_TICKER}&limit=200&with_nested_markets=true"
+    # Fetch events from Kalshi (public API works for reading)
     try:
-        resp = kalshi_get(path, private_key_pem, api_key_id)
+        resp = kalshi_get_unauthenticated(
+            f"/events?series_ticker={SERIES_TICKER}&limit=200&with_nested_markets=true"
+        )
     except Exception as e:
         print(f"Failed to fetch Kalshi events: {e}", file=sys.stderr)
         sys.exit(1)
 
     events = resp.get("events", [])
-    print(f"Found {len(events)} Kalshi NCAA events")
+    print(f"Fetched {len(events)} Kalshi NCAA events")
+
+    # Filter to tournament dates only
+    tournament_events = []
+    for event in events:
+        ticker = event.get("ticker", "")
+        event_date = parse_event_date(ticker)
+        if event_date and is_tournament_date(event_date):
+            tournament_events.append(event)
+
+    print(f"Filtered to {len(tournament_events)} tournament-date events")
 
     updated = False
-    for event in events:
+    for event in tournament_events:
         title = event.get("title", "")
+        ticker = event.get("ticker", "")
         markets = event.get("markets", [])
 
-        away_team, home_team = extract_teams_from_title(title)
-        if not away_team or not home_team:
-            print(f"  Skipping event (can't parse title): {title}")
+        # Only process settled events
+        any_settled = any(m.get("result") in ("yes", "no") for m in markets)
+        if not any_settled:
+            continue
+
+        # Find the winner
+        winner = resolve_winner_from_markets(markets, title)
+        if not winner:
+            print(f"  Could not determine winner for: {title}")
             continue
 
         # Find matching game in our data
-        game = find_matching_game(games, away_team, home_team)
+        game = find_matching_game(games, winner, title)
         if not game:
-            print(f"  No match for: {title} ({away_team} vs {home_team})")
-            continue
-
-        # Check if any market has settled with result "yes"
-        winner = None
-        for market in markets:
-            if market.get("result") == "yes":
-                # The market ticker_name or title tells us who won
-                # Market ticker ends with team abbreviation
-                market_title = market.get("title", "")
-                # Title format: "Duke Winner" or "TCU Winner"
-                winner_name = market_title.replace(" Winner", "").strip()
-                if winner_name:
-                    winner = winner_name
-                    break
-
-        if not winner:
-            # Check market status - if still active, game is either upcoming or live
-            any_active = any(m.get("status") == "active" for m in markets)
-            any_finalized = any(m.get("status") == "finalized" for m in markets)
-
-            if any_active and not any_finalized:
-                # Check last_price to see if game might be in progress
-                # (prices near 0.95+ or 0.05- suggest game is nearly decided)
-                # For now, just mark as upcoming unless we have better signal
-                if game["status"] != "upcoming":
-                    pass  # Don't downgrade status
-            continue
-
-        # Map Kalshi winner name back to our games.json team name
-        matched_winner = None
-        for team_field in ["team1", "team2"]:
-            our_name = game[team_field]
-            kalshi_name = normalize_team_name(winner)
-            our_normalized = normalize_team_name(our_name)
-            if kalshi_name == our_normalized or kalshi_name in our_normalized or our_normalized in kalshi_name:
-                matched_winner = our_name
-                break
-
-        if not matched_winner:
-            print(f"  Winner '{winner}' doesn't match teams in game: {game['team1']} vs {game['team2']}")
+            event_date = parse_event_date(ticker)
+            print(f"  No match for: {title} (date: {event_date}, winner: {winner})")
             continue
 
         # Update game if changed
-        if game["winner"] != matched_winner or game["status"] != "final":
-            print(f"  Updating: {game['team1']} vs {game['team2']} → Winner: {matched_winner}")
-            game["winner"] = matched_winner
+        if game["winner"] != winner or game["status"] != "final":
+            old_winner = game.get("winner", "none")
+            print(f"  Updating: {game['team1']} vs {game['team2']} → Winner: {winner} (was: {old_winner})")
+            game["winner"] = winner
             game["status"] = "final"
             updated = True
 
