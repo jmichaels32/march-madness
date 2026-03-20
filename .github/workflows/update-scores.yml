@@ -1,9 +1,9 @@
 name: Update Scores from Kalshi
 
 on:
-  # Run every 3 minutes during tournament game windows (5pm-1am ET, Mar-Apr)
+  # Run every 3 minutes during tournament game windows (noon-1am ET, Mar-Apr)
   schedule:
-    - cron: '*/3 21-23,0-5 * 3-4 *'  # UTC: 9pm-5am = 5pm-1am ET
+    - cron: '*/3 16-23,0-5 * 3-4 *'  # UTC: 4pm-5am = noon-1am ET
   # Allow manual trigger
   workflow_dispatch:
 
