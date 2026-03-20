@@ -257,13 +257,18 @@ function esc(str) {
   return d.innerHTML;
 }
 
+function isLive(slot) {
+  // If we have scores but no winner, the game is in progress
+  return slot.score1 != null && slot.score2 != null && !slot.winner;
+}
+
 function getPickStatus(slot, team, eliminated) {
   if (!team || team === "TBD") return "pending";
   if (slot.status === "final" && slot.winner) {
     return team === slot.winner ? "correct" : "wrong";
   }
   if (eliminated.has(team)) return "wrong";
-  if (slot.status === "live") return "live";
+  if (isLive(slot)) return "live";
   return "pending";
 }
 
@@ -314,8 +319,8 @@ function showPicksPopover(slot, eliminated, cellEl) {
   if (slot.status === "final") {
     statusLine.textContent = "Final";
     statusLine.classList.add("final");
-  } else if (slot.status === "live") {
-    statusLine.textContent = slot.clock || "Live";
+  } else if (isLive(slot)) {
+    statusLine.textContent = "Live";
     statusLine.classList.add("live");
   } else if (slot.odds1 != null && slot.odds2 != null) {
     statusLine.textContent = `Win probability: ${slot.team1} ${slot.odds1}% – ${slot.team2} ${slot.odds2}%`;
@@ -441,7 +446,7 @@ function renderGameCell(slot, eliminated, roundKey) {
   const cell = document.createElement("div");
   cell.className = "game-cell";
   if (slot.status === "final") cell.classList.add("has-result");
-  if (slot.status === "live") cell.classList.add("live");
+  if (isLive(slot)) cell.classList.add("live");
 
   // Click to show picks popover
   cell.addEventListener("click", (e) => {
@@ -520,7 +525,7 @@ function renderGameCell(slot, eliminated, roundKey) {
   }
 
   // Status badge for live/upcoming
-  if (slot.status === "live" && slot.clock) {
+  if (isLive(slot) && slot.clock) {
     const badge = document.createElement("div");
     badge.className = "game-status-badge live";
     badge.textContent = slot.clock;
@@ -752,7 +757,7 @@ function renderMobileGameCard(slot, eliminated) {
   const card = document.createElement("div");
   card.className = "mobile-game-card";
   if (slot.status === "final") card.classList.add("has-result");
-  if (slot.status === "live") card.classList.add("live");
+  if (isLive(slot)) card.classList.add("live");
 
   const teams = [
     { name: slot.team1, seed: slot.seed1, isTeam1: true },
