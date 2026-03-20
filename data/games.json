@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T17:30:27Z",
+  "lastUpdated": "2026-03-20T17:31:01Z",
   "games": [
     {
       "id": 1,
@@ -252,8 +252,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 47,
-      "odds2": 53
+      "odds1": 46,
+      "odds2": 54
     },
     {
       "id": 19,
@@ -431,12 +431,12 @@
       "team1": "Kentucky",
       "seed2": 10,
       "team2": "Santa Clara",
-      "score1": 41,
-      "score2": 40,
+      "score1": 44,
+      "score2": 42,
       "status": "live",
       "winner": null,
-      "odds1": 69,
-      "odds2": 31
+      "odds1": 64,
+      "odds2": 36
     },
     {
       "id": 32,
