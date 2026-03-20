@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T22:46:35Z",
+  "lastUpdated": "2026-03-20T22:59:42Z",
   "games": [
     {
       "id": 1,
@@ -244,12 +244,12 @@
       "team1": "Clemson",
       "seed2": 9,
       "team2": "Iowa",
-      "score1": null,
-      "score2": null,
-      "status": "upcoming",
+      "score1": 4,
+      "score2": 8,
+      "status": "live",
       "winner": null,
-      "odds1": 47,
-      "odds2": 53
+      "odds1": 39,
+      "odds2": 61
     },
     {
       "id": 19,
@@ -554,8 +554,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 32,
-      "odds2": 68
+      "odds1": 31,
+      "odds2": 69
     },
     {
       "id": 41,
@@ -569,8 +569,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 36,
-      "odds2": 64
+      "odds1": 35,
+      "odds2": 65
     },
     {
       "id": 42,
@@ -586,6 +586,36 @@
       "winner": null,
       "odds1": 50,
       "odds2": 50
+    },
+    {
+      "id": 43,
+      "round": "round2",
+      "region": "West",
+      "seed1": 1,
+      "seed2": 9,
+      "team1": "Arizona",
+      "team2": "Utah St",
+      "score1": null,
+      "score2": null,
+      "status": "upcoming",
+      "winner": null,
+      "odds1": 0,
+      "odds2": 100
+    },
+    {
+      "id": 44,
+      "round": "round2",
+      "region": "Midwest",
+      "seed1": 6,
+      "seed2": 3,
+      "team1": "Tennessee",
+      "team2": "Virginia",
+      "score1": null,
+      "score2": null,
+      "status": "upcoming",
+      "winner": null,
+      "odds1": 60,
+      "odds2": 40
     }
   ]
 }
