@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T17:12:02Z",
+  "lastUpdated": "2026-03-20T17:13:17Z",
   "games": [
     {
       "id": 1,
@@ -237,8 +237,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 98,
-      "odds2": 2
+      "odds1": 99,
+      "odds2": 1
     },
     {
       "id": 18,
@@ -368,11 +368,11 @@
       "seed2": 12,
       "team2": "Akron",
       "score1": 29,
-      "score2": 22,
+      "score2": 23,
       "status": "live",
       "winner": null,
-      "odds1": 80,
-      "odds2": 20
+      "odds1": 77,
+      "odds2": 23
     },
     {
       "id": 28,
