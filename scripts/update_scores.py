@@ -54,6 +54,7 @@ KALSHI_TEAM_MAP = {
     "SJU": "St. John's", "UNI": "Northern Iowa",
     "KU": "Kansas", "KAN": "Kansas",
     "CBU": "Cal Baptist", "CALB": "Cal Baptist",
+    "CALIFORNIA BAPTIST": "Cal Baptist",
     "LOU": "Louisville", "USF": "South Florida",
     "MSU": "Michigan St", "NDSU": "North Dakota St",
     "UCLA": "UCLA", "UCF": "UCF",
@@ -71,6 +72,7 @@ KALSHI_TEAM_MAP = {
     "MIZ": "Missouri", "MOU": "Missouri",
     "PUR": "Purdue",
     "QUEEN": "Queens (N.C.)", "QU": "Queens (N.C.)",
+    "QUEENS UNIVERSITY": "Queens (N.C.)",
     # South region
     "FLA": "Florida",
     "PV": "Prairie View A&M", "PVAM": "Prairie View A&M",
@@ -294,27 +296,42 @@ def build_frontier(games: list) -> list[dict]:
 
 # ─── Kalshi matching ──────────────────────────────────────────
 
+def kalshi_title_to_teams(title: str) -> tuple[str, str] | None:
+    """Parse Kalshi event title and map team names via KALSHI_TEAM_MAP."""
+    parts = title.split(" at ")
+    if len(parts) != 2:
+        return None
+    raw_away = parts[0].strip().rstrip(".")
+    raw_home = parts[1].strip().rstrip(".")
+
+    # Try mapping via KALSHI_TEAM_MAP (title often uses abbreviations like "LIU")
+    away = KALSHI_TEAM_MAP.get(raw_away.upper(), raw_away)
+    home = KALSHI_TEAM_MAP.get(raw_home.upper(), raw_home)
+
+    return away, home
+
+
 def match_event_to_frontier(event: dict, frontier: list) -> dict | None:
     """
     Match a Kalshi event to a frontier game by checking if both
     teams in the event title match a frontier entry.
     """
-    title = event.get("title", "")
-    parts = title.split(" at ")
-    if len(parts) != 2:
+    parsed = kalshi_title_to_teams(event.get("title", ""))
+    if not parsed:
         return None
-    away = normalize(parts[0])
-    home = normalize(parts[1])
+    away, home = parsed
+    away_n = normalize(away)
+    home_n = normalize(home)
 
     for fg in frontier:
         t1 = normalize(fg["team1"])
         t2 = normalize(fg["team2"])
 
         # Both Kalshi teams must match both frontier teams (in either order)
-        m1 = (away == t1 or away in t1 or t1 in away)
-        m2 = (home == t2 or home in t2 or t2 in home)
-        m3 = (away == t2 or away in t2 or t2 in away)
-        m4 = (home == t1 or home in t1 or t1 in home)
+        m1 = (away_n == t1 or away_n in t1 or t1 in away_n)
+        m2 = (home_n == t2 or home_n in t2 or t2 in home_n)
+        m3 = (away_n == t2 or away_n in t2 or t2 in away_n)
+        m4 = (home_n == t1 or home_n in t1 or t1 in home_n)
 
         if (m1 and m2) or (m3 and m4):
             return fg
