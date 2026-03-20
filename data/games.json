@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T03:54:43Z",
+  "lastUpdated": "2026-03-20T04:01:08Z",
   "games": [
     {
       "id": 1,
@@ -186,12 +186,12 @@
       "team1": "Gonzaga",
       "seed2": 14,
       "team2": "Kennesaw St",
-      "score1": 43,
-      "score2": 39,
+      "score1": 48,
+      "score2": 42,
       "status": "live",
       "winner": null,
-      "odds1": 90,
-      "odds2": 10
+      "odds1": 92,
+      "odds2": 8
     },
     {
       "id": 15,
@@ -205,8 +205,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 54,
-      "odds2": 46
+      "odds1": 55,
+      "odds2": 45
     },
     {
       "id": 16,
@@ -324,8 +324,8 @@
       "team1": "Houston",
       "seed2": 15,
       "team2": "Idaho",
-      "score1": 59,
-      "score2": 35,
+      "score1": 67,
+      "score2": 38,
       "status": "live",
       "winner": null,
       "odds1": 99,
@@ -352,8 +352,8 @@
       "team1": "Georgia",
       "seed2": 9,
       "team2": "Saint Louis",
-      "score1": 54,
-      "score2": 91,
+      "score1": 57,
+      "score2": 95,
       "status": "live",
       "winner": null,
       "odds1": 1,
@@ -386,8 +386,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 86,
-      "odds2": 14
+      "odds1": 85,
+      "odds2": 15
     },
     {
       "id": 29,
@@ -508,8 +508,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 16,
-      "odds2": 84
+      "odds1": 17,
+      "odds2": 83
     },
     {
       "id": 37,
@@ -522,7 +522,9 @@
       "score1": null,
       "score2": null,
       "status": "upcoming",
-      "winner": null
+      "winner": null,
+      "odds1": 0,
+      "odds2": 100
     }
   ]
 }
