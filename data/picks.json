@@ -730,10 +730,10 @@
           "Kansas",
           "Louisville",
           "Michigan St",
-          "UCLA",
+          "UCF",
           "UConn",
           "Arizona",
-          "Villanova",
+          "Utah St",
           "Wisconsin",
           "Arkansas",
           "BYU",
@@ -741,7 +741,7 @@
           "Miami (FL)",
           "Purdue",
           "Florida",
-          "Clemson",
+          "Iowa",
           "Vanderbilt",
           "Nebraska",
           "North Carolina",
@@ -749,7 +749,7 @@
           "Texas A&M",
           "Houston",
           "Michigan",
-          "Georgia",
+          "Saint Louis",
           "Texas Tech",
           "Alabama",
           "Tennessee",
@@ -759,7 +759,7 @@
         ],
         "round2": [
           "Duke",
-          "Kansas",
+          "St. John's",
           "Michigan St",
           "UConn",
           "Arizona",
@@ -767,19 +767,19 @@
           "Gonzaga",
           "Purdue",
           "Florida",
-          "Nebraska",
-          "Illinois",
+          "Vanderbilt",
+          "North Carolina",
           "Houston",
           "Michigan",
-          "Alabama",
-          "Virginia",
+          "Texas Tech",
+          "Tennessee",
           "Iowa St"
         ],
         "sweet16": [
           "Duke",
-          "Michigan St",
+          "UConn",
           "Arizona",
-          "Gonzaga",
+          "Purdue",
           "Florida",
           "Houston",
           "Michigan",
@@ -788,12 +788,12 @@
         "elite8": [
           "Duke",
           "Arizona",
-          "Florida",
+          "Houston",
           "Iowa St"
         ],
         "final4": [
           "Duke",
-          "Iowa St"
+          "Arizona"
         ],
         "championship": [
           "Duke"
