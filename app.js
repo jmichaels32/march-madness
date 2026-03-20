@@ -613,6 +613,197 @@ function renderLeaderboard(standings, gamesData) {
 }
 
 // =============================================================
+// MOBILE BRACKET VIEW
+// =============================================================
+
+let mobileSelectedRegion = "East";
+
+function renderMobileRegionTabs() {
+  const container = document.getElementById("mobile-region-tabs");
+  if (!container) return;
+  container.innerHTML = "";
+  const tabs = ["East", "West", "South", "Midwest", "Final Four"];
+  for (const tab of tabs) {
+    const btn = document.createElement("button");
+    btn.className = "mobile-tab" + (tab === mobileSelectedRegion ? " active" : "");
+    btn.textContent = tab;
+    btn.addEventListener("click", () => {
+      mobileSelectedRegion = tab;
+      renderMobileRegionTabs();
+      renderMobileRegionContent();
+    });
+    container.appendChild(btn);
+  }
+}
+
+let _mobileRenderData = null;
+
+function renderMobileRegionContent() {
+  const container = document.getElementById("mobile-region-content");
+  if (!container || !_mobileRenderData) return;
+  container.innerHTML = "";
+
+  const { regionBrackets, finalFour, eliminated } = _mobileRenderData;
+
+  if (mobileSelectedRegion === "Final Four") {
+    renderMobileFFContent(container, finalFour, eliminated);
+    return;
+  }
+
+  const region = mobileSelectedRegion;
+  const data = regionBrackets[region];
+  if (!data) return;
+
+  const roundKeys = ["round1", "round2", "sweet16", "elite8"];
+  const roundNames = { round1: "Round of 64", round2: "Round of 32", sweet16: "Sweet 16", elite8: "Elite 8" };
+
+  for (const roundKey of roundKeys) {
+    const slots = data[roundKey] || [];
+    if (slots.length === 0) continue;
+
+    const section = document.createElement("div");
+    section.className = "mobile-round";
+
+    const label = document.createElement("div");
+    label.className = "mobile-round-label";
+    label.textContent = roundNames[roundKey];
+    section.appendChild(label);
+
+    for (const slot of slots) {
+      section.appendChild(renderMobileGameCard(slot, eliminated));
+    }
+    container.appendChild(section);
+  }
+}
+
+function renderMobileFFContent(container, finalFour, eliminated) {
+  // Semi 1
+  const s1Label = document.createElement("div");
+  s1Label.className = "mobile-round-label";
+  s1Label.textContent = "Semifinal — East vs South";
+  container.appendChild(s1Label);
+  container.appendChild(renderMobileGameCard(finalFour.semi1, eliminated));
+
+  // Semi 2
+  const s2Label = document.createElement("div");
+  s2Label.className = "mobile-round-label";
+  s2Label.textContent = "Semifinal — West vs Midwest";
+  container.appendChild(s2Label);
+  container.appendChild(renderMobileGameCard(finalFour.semi2, eliminated));
+
+  // Championship
+  const cLabel = document.createElement("div");
+  cLabel.className = "mobile-round-label champ";
+  cLabel.textContent = "Championship";
+  container.appendChild(cLabel);
+  container.appendChild(renderMobileGameCard(finalFour.champ, eliminated));
+}
+
+function renderMobileGameCard(slot, eliminated) {
+  const card = document.createElement("div");
+  card.className = "mobile-game-card";
+  if (slot.status === "final") card.classList.add("has-result");
+  if (slot.status === "live") card.classList.add("live");
+
+  const teams = [
+    { name: slot.team1, seed: slot.seed1, isTeam1: true },
+    { name: slot.team2, seed: slot.seed2, isTeam1: false },
+  ];
+
+  for (const t of teams) {
+    const row = document.createElement("div");
+    row.className = "mobile-team-row";
+    const isWinner = slot.status === "final" && slot.winner === t.name;
+    const isLoser = slot.status === "final" && slot.winner && slot.winner !== t.name;
+    if (isWinner) row.classList.add("winner");
+    if (isLoser) row.classList.add("loser");
+
+    // Seed + name
+    const info = document.createElement("div");
+    info.className = "mobile-team-info";
+    if (t.seed != null) {
+      const seedEl = document.createElement("span");
+      seedEl.className = "mobile-seed";
+      seedEl.textContent = t.seed;
+      info.appendChild(seedEl);
+    }
+    const nameEl = document.createElement("span");
+    nameEl.className = "mobile-team-name";
+    nameEl.textContent = t.name || "TBD";
+    info.appendChild(nameEl);
+
+    // Score
+    const scoreVal = slot.status === "live"
+      ? (t.isTeam1 ? slot.liveScore1 : slot.liveScore2)
+      : (t.isTeam1 ? slot.score1 : slot.score2);
+    if (scoreVal != null) {
+      const scoreEl = document.createElement("span");
+      scoreEl.className = "mobile-team-score";
+      scoreEl.textContent = scoreVal;
+      info.appendChild(scoreEl);
+    }
+    row.appendChild(info);
+
+    // Pickers row
+    const pickers = document.createElement("div");
+    pickers.className = "mobile-pickers";
+    for (const [person, pickedTeam] of Object.entries(slot.picks)) {
+      if (pickedTeam === t.name) {
+        const chip = document.createElement("span");
+        chip.className = "mobile-picker-chip";
+        const status = getPickStatus(slot, pickedTeam, eliminated);
+        chip.classList.add(status);
+        const dot = document.createElement("span");
+        dot.className = "mobile-picker-dot";
+        dot.style.backgroundColor = PERSON_COLORS[person] || "#888";
+        chip.appendChild(dot);
+        chip.appendChild(document.createTextNode(person));
+        pickers.appendChild(chip);
+      }
+    }
+    row.appendChild(pickers);
+
+    card.appendChild(row);
+  }
+
+  return card;
+}
+
+function renderMobileBracket(regionBrackets, finalFour, eliminated) {
+  _mobileRenderData = { regionBrackets, finalFour, eliminated };
+  renderMobileRegionTabs();
+  renderMobileRegionContent();
+}
+
+function renderMobileLeaderboard(standings, gamesData) {
+  const tbody = document.getElementById("mobile-leaderboard-body");
+  if (!tbody) return;
+  tbody.innerHTML = "";
+
+  const updatedEl = document.getElementById("mobile-last-updated");
+  if (updatedEl && gamesData.lastUpdated) {
+    updatedEl.textContent = `Updated: ${new Date(gamesData.lastUpdated).toLocaleString()}`;
+  }
+
+  standings.forEach((s, i) => {
+    const tr = document.createElement("tr");
+    tr.className = `rank-${i + 1}`;
+    tr.innerHTML = `
+      <td class="lb-rank">${i + 1}</td>
+      <td class="lb-name"><span class="lb-name-dot" style="background:${PERSON_COLORS[s.name] || '#888'}"></span>${esc(s.name)}</td>
+      <td class="r-align lb-round-score">${s.roundScores.round1 || 0}</td>
+      <td class="r-align lb-round-score">${s.roundScores.round2 || 0}</td>
+      <td class="r-align lb-round-score">${s.roundScores.sweet16 || 0}</td>
+      <td class="r-align lb-round-score">${s.roundScores.elite8 || 0}</td>
+      <td class="r-align lb-round-score">${s.roundScores.final4 || 0}</td>
+      <td class="r-align lb-round-score">${s.roundScores.championship || 0}</td>
+      <td class="r-align lb-score">${s.total}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// =============================================================
 // MAIN
 // =============================================================
 
@@ -634,6 +825,8 @@ async function refresh() {
     renderLegend(picks);
     renderBracket(regionBrackets, finalFour, eliminated);
     renderLeaderboard(standings, games);
+    renderMobileBracket(regionBrackets, finalFour, eliminated);
+    renderMobileLeaderboard(standings, games);
   } catch (err) {
     console.error("Error:", err);
   }

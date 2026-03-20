@@ -14,12 +14,39 @@
 
   <div class="legend" id="legend"></div>
 
-  <div class="bracket-wrapper">
-    <div class="scroll-hint" id="scroll-hint">Swipe to scroll bracket &rarr;</div>
+  <!-- Mobile: leaderboard first, then tabbed regions -->
+  <section class="leaderboard mobile-leaderboard" id="mobile-leaderboard-section">
+    <h2>Leaderboard</h2>
+    <div class="last-updated" id="mobile-last-updated"></div>
+    <table class="leaderboard-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th class="r-align">R1</th>
+          <th class="r-align">R2</th>
+          <th class="r-align">S16</th>
+          <th class="r-align">E8</th>
+          <th class="r-align">F4</th>
+          <th class="r-align">Ch</th>
+          <th class="r-align">Total</th>
+        </tr>
+      </thead>
+      <tbody id="mobile-leaderboard-body"></tbody>
+    </table>
+  </section>
+
+  <div class="mobile-bracket" id="mobile-bracket">
+    <div class="mobile-region-tabs" id="mobile-region-tabs"></div>
+    <div class="mobile-region-content" id="mobile-region-content"></div>
+  </div>
+
+  <!-- Desktop: full bracket view -->
+  <div class="bracket-wrapper desktop-only">
     <div class="bracket" id="bracket"></div>
   </div>
 
-  <section class="leaderboard" id="leaderboard-section">
+  <section class="leaderboard desktop-only" id="leaderboard-section">
     <h2>Leaderboard</h2>
     <div class="last-updated" id="last-updated"></div>
     <table class="leaderboard-table">
