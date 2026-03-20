@@ -400,8 +400,9 @@ def fetch_espn_scores(games: list) -> bool:
     from datetime import timedelta
     today = datetime.now(timezone.utc)
     dates_to_check = set()
-    for delta in range(0, 3):  # today, yesterday, day before
-        d = today - timedelta(days=delta)
+    # Check today, tomorrow (UTC is ahead of ET), and yesterday
+    for delta in range(-1, 2):
+        d = today + timedelta(days=delta)
         dates_to_check.add(d.strftime("%Y%m%d"))
 
     updated = False
@@ -409,8 +410,9 @@ def fetch_espn_scores(games: list) -> bool:
 
     for date_str in sorted(dates_to_check):
         try:
+            # No groups filter — we match by team name against our games.json
             url = (f"https://site.api.espn.com/apis/site/v2/sports/basketball/"
-                   f"mens-college-basketball/scoreboard?dates={date_str}&groups=100&limit=100")
+                   f"mens-college-basketball/scoreboard?dates={date_str}&limit=100")
             req = Request(url, headers={"Accept": "application/json"})
             with urlopen(req) as resp:
                 data = json.loads(resp.read().decode())
