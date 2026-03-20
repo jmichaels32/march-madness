@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T04:43:26Z",
+  "lastUpdated": "2026-03-20T05:15:45Z",
   "games": [
     {
       "id": 1,
@@ -110,8 +110,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 95,
-      "odds2": 5
+      "odds1": 96,
+      "odds2": 4
     },
     {
       "id": 9,
@@ -222,8 +222,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 97,
-      "odds2": 3
+      "odds1": 98,
+      "odds2": 2
     },
     {
       "id": 17,
@@ -465,8 +465,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 57,
-      "odds2": 43
+      "odds1": 59,
+      "odds2": 41
     },
     {
       "id": 34,
@@ -540,8 +540,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 33,
-      "odds2": 67
+      "odds1": 22,
+      "odds2": 78
     },
     {
       "id": 39,
@@ -555,8 +555,23 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 91,
-      "odds2": 9
+      "odds1": 88,
+      "odds2": 12
+    },
+    {
+      "id": 40,
+      "round": "round2",
+      "region": "West",
+      "seed1": 11,
+      "seed2": 3,
+      "team1": "Texas",
+      "team2": "Gonzaga",
+      "score1": null,
+      "score2": null,
+      "status": "upcoming",
+      "winner": null,
+      "odds1": 35,
+      "odds2": 65
     }
   ]
 }
