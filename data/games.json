@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T19:59:25Z",
+  "lastUpdated": "2026-03-20T20:14:51Z",
   "games": [
     {
       "id": 1,
@@ -134,12 +134,12 @@
       "team1": "Villanova",
       "seed2": 9,
       "team2": "Utah St",
-      "score1": null,
-      "score2": null,
-      "status": "upcoming",
+      "score1": 0,
+      "score2": 0,
+      "status": "live",
       "winner": null,
-      "odds1": 46,
-      "odds2": 54
+      "odds1": 45,
+      "odds2": 55
     },
     {
       "id": 11,
@@ -382,8 +382,8 @@
       "score2": 30,
       "status": "live",
       "winner": null,
-      "odds1": 67,
-      "odds2": 33
+      "odds1": 83,
+      "odds2": 17
     },
     {
       "id": 29,
