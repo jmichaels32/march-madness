@@ -719,6 +719,86 @@
           "Duke"
         ]
       }
+    },
+    {
+      "name": "Pappap",
+      "picks": {
+        "round1": [
+          "Duke",
+          "TCU",
+          "St. John's",
+          "Kansas",
+          "Louisville",
+          "Michigan St",
+          "UCLA",
+          "UConn",
+          "Arizona",
+          "Villanova",
+          "Wisconsin",
+          "Arkansas",
+          "BYU",
+          "Gonzaga",
+          "Miami (FL)",
+          "Purdue",
+          "Florida",
+          "Clemson",
+          "Vanderbilt",
+          "Nebraska",
+          "North Carolina",
+          "Illinois",
+          "Texas A&M",
+          "Houston",
+          "Michigan",
+          "Georgia",
+          "Texas Tech",
+          "Alabama",
+          "Tennessee",
+          "Virginia",
+          "Kentucky",
+          "Iowa St"
+        ],
+        "round2": [
+          "Duke",
+          "Kansas",
+          "Michigan St",
+          "UConn",
+          "Arizona",
+          "Arkansas",
+          "Gonzaga",
+          "Purdue",
+          "Florida",
+          "Nebraska",
+          "Illinois",
+          "Houston",
+          "Michigan",
+          "Alabama",
+          "Virginia",
+          "Iowa St"
+        ],
+        "sweet16": [
+          "Duke",
+          "Michigan St",
+          "Arizona",
+          "Gonzaga",
+          "Florida",
+          "Houston",
+          "Michigan",
+          "Iowa St"
+        ],
+        "elite8": [
+          "Duke",
+          "Arizona",
+          "Florida",
+          "Iowa St"
+        ],
+        "final4": [
+          "Duke",
+          "Iowa St"
+        ],
+        "championship": [
+          "Duke"
+        ]
+      }
     }
   ]
 }

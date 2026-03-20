@@ -17,7 +17,7 @@ const ROUND_ORDER = ["round1", "round2", "sweet16", "elite8", "final4", "champio
 const PERSON_COLORS = {
   "Ben": "#3b82f6", "Charlotte": "#ec4899", "Jason": "#f59e0b", "Andrea": "#8b5cf6",
   "Nathan": "#10b981", "Nana": "#f97316", "Brent": "#06b6d4", "Susun": "#ef4444",
-  "Jack": "#84cc16",
+  "Jack": "#84cc16", "Pappap": "#a78bfa",
 };
 
 const REGIONS_LEFT = ["East", "South"];
