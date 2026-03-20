@@ -145,6 +145,7 @@ function buildRegionBracket(region, gamesData, picksData, gameLookup, eliminated
         score1: g?.score1, score2: g?.score2,
         status: g?.status || "upcoming",
         clock: g?.clock, liveScore1: g?.liveScore1, liveScore2: g?.liveScore2,
+        odds1: g?.odds1 ?? null, odds2: g?.odds2 ?? null,
         picks: {},
       };
 
@@ -182,6 +183,7 @@ function buildFinalFour(regionBrackets, gamesData, picksData, gameLookup) {
       winner: g?.winner || null,
       score1: g?.score1, score2: g?.score2,
       status: g?.status || "upcoming",
+      odds1: g?.odds1 ?? null, odds2: g?.odds2 ?? null,
       picks: {},
     };
     for (const member of picksData.members) {
@@ -205,6 +207,7 @@ function buildFinalFour(regionBrackets, gamesData, picksData, gameLookup) {
     winner: cg?.winner || null,
     score1: cg?.score1, score2: cg?.score2,
     status: cg?.status || "upcoming",
+    odds1: cg?.odds1 ?? null, odds2: cg?.odds2 ?? null,
     picks: {},
   };
   for (const member of picksData.members) {
