@@ -401,6 +401,9 @@ ESPN_TEAM_MAP = {
     "Santa Clara": "Santa Clara",
     "N Carolina": "North Carolina",
     "Miami (OH)": "Miami (Ohio)",
+    "Miami OH": "Miami (Ohio)",
+    "CA Baptist": "Cal Baptist",
+    "St John's": "St. John's",
 }
 
 
@@ -465,9 +468,10 @@ def fetch_espn_scores(games: list) -> bool:
             teams.append({"name": name, "score": score})
 
         # Find matching game in games.json
+        found_match = False
+        et1, et2 = normalize(teams[0]["name"]), normalize(teams[1]["name"])
         for game in games:
             gt1, gt2 = normalize(game["team1"]), normalize(game["team2"])
-            et1, et2 = normalize(teams[0]["name"]), normalize(teams[1]["name"])
 
             matched = False
             if (gt1 == et1 or gt1 in et1 or et1 in gt1) and \
@@ -480,6 +484,7 @@ def fetch_espn_scores(games: list) -> bool:
                 matched = True
 
             if matched:
+                found_match = True
                 if s1 is not None and s1 != game.get("score1"):
                     game["score1"] = s1
                     updated = True
@@ -505,6 +510,9 @@ def fetch_espn_scores(games: list) -> bool:
                         updated = True
                         print(f"  ESPN final: {game['team1']} {s1} - {game['team2']} {s2}")
                 break
+
+        if not found_match:
+            print(f"  ESPN UNMATCHED ({status_name}): {teams[0]['name']} vs {teams[1]['name']}")
 
     return updated
 
