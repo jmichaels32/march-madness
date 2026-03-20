@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T04:28:07Z",
+  "lastUpdated": "2026-03-20T04:43:26Z",
   "games": [
     {
       "id": 1,
@@ -95,8 +95,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 68,
-      "odds2": 32
+      "odds1": 69,
+      "odds2": 31
     },
     {
       "id": 8,
@@ -110,8 +110,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 96,
-      "odds2": 4
+      "odds1": 95,
+      "odds2": 5
     },
     {
       "id": 9,
@@ -190,12 +190,10 @@
       "team1": "Gonzaga",
       "seed2": 14,
       "team2": "Kennesaw St",
-      "score1": 67,
-      "score2": 60,
-      "status": "live",
-      "winner": null,
-      "odds1": 96,
-      "odds2": 4
+      "score1": 73,
+      "score2": 64,
+      "status": "final",
+      "winner": "Gonzaga"
     },
     {
       "id": 15,
@@ -239,8 +237,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 98,
-      "odds2": 2
+      "odds1": 99,
+      "odds2": 1
     },
     {
       "id": 18,
@@ -467,8 +465,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 58,
-      "odds2": 42
+      "odds1": 57,
+      "odds2": 43
     },
     {
       "id": 34,
@@ -527,8 +525,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 21,
-      "odds2": 79
+      "odds1": 20,
+      "odds2": 80
     },
     {
       "id": 38,
@@ -542,8 +540,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 0,
-      "odds2": 100
+      "odds1": 33,
+      "odds2": 67
     },
     {
       "id": 39,
@@ -557,8 +555,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 0,
-      "odds2": 100
+      "odds1": 91,
+      "odds2": 9
     }
   ]
 }
