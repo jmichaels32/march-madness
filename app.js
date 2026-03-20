@@ -1181,6 +1181,217 @@ function renderMobileLeaderboard(standings, gamesData) {
 }
 
 // =============================================================
+// BRACKET RISK / KL DIVERGENCE
+// =============================================================
+
+function computeBracketRisks(regionBrackets, finalFour, picksData, eliminated) {
+  const risks = [];
+  const allMembers = picksData.members;
+
+  function processSlot(slot, roundKey) {
+    if (slot.winner) return;
+    if (slot.team1 === "TBD" || slot.team2 === "TBD") return;
+    if (slot.odds1 == null || slot.odds2 == null) return;
+
+    const marketDist = { [slot.team1]: slot.odds1 / 100, [slot.team2]: slot.odds2 / 100 };
+
+    // Family distribution for this specific matchup
+    let team1Picks = 0, team2Picks = 0;
+    const team1Pickers = [], team2Pickers = [];
+
+    for (const member of allMembers) {
+      const pick = slot.picks[member.name];
+      if (pick === slot.team1) { team1Picks++; team1Pickers.push(member.name); }
+      else if (pick === slot.team2) { team2Picks++; team2Pickers.push(member.name); }
+    }
+
+    const totalPickers = team1Picks + team2Picks;
+    if (totalPickers === 0) return;
+
+    const familyDist = {
+      [slot.team1]: team1Picks / totalPickers,
+      [slot.team2]: team2Picks / totalPickers,
+    };
+
+    // KL(family || market)
+    const eps = 0.001;
+    let kl = 0;
+    for (const team of [slot.team1, slot.team2]) {
+      const p = Math.max(familyDist[team], eps);
+      const q = Math.max(marketDist[team], eps);
+      kl += p * Math.log2(p / q);
+    }
+
+    // Downstream points at stake: count points in this round and future rounds
+    // where each member picked this team
+    let team1Downstream = 0, team2Downstream = 0;
+    const roundIdx = ROUND_ORDER.indexOf(roundKey);
+
+    for (const member of allMembers) {
+      for (let ri = roundIdx; ri < ROUND_ORDER.length; ri++) {
+        const rk = ROUND_ORDER[ri];
+        const picks = member.picks[rk] || [];
+        for (const pick of picks) {
+          if (pick === slot.team1) team1Downstream += SCORING[rk];
+          if (pick === slot.team2) team2Downstream += SCORING[rk];
+        }
+      }
+    }
+
+    // Expected damage = P(team loses) * downstream points at stake for that team
+    const expectedDamage =
+      (1 - marketDist[slot.team1]) * team1Downstream +
+      (1 - marketDist[slot.team2]) * team2Downstream;
+
+    risks.push({
+      slot, roundKey, kl,
+      marketDist, familyDist,
+      team1Pickers, team2Pickers,
+      team1Downstream, team2Downstream,
+      expectedDamage,
+      totalStake: team1Downstream + team2Downstream,
+    });
+  }
+
+  for (const region of ALL_REGIONS) {
+    const data = regionBrackets[region];
+    for (const rk of ["round1", "round2", "sweet16", "elite8"]) {
+      for (const slot of (data[rk] || [])) processSlot(slot, rk);
+    }
+  }
+  processSlot(finalFour.semi1, "final4");
+  processSlot(finalFour.semi2, "final4");
+  processSlot(finalFour.champ, "championship");
+
+  risks.sort((a, b) => b.expectedDamage - a.expectedDamage);
+  return risks;
+}
+
+function renderRiskAnalysis(regionBrackets, finalFour, picksData, eliminated) {
+  const container = document.getElementById("risk-cards");
+  if (!container) return;
+  container.innerHTML = "";
+
+  const risks = computeBracketRisks(regionBrackets, finalFour, picksData, eliminated);
+
+  if (risks.length === 0) {
+    container.innerHTML = '<div class="risk-empty">No pending games with market odds available.</div>';
+    return;
+  }
+
+  const maxDamage = risks[0].expectedDamage || 1;
+
+  for (const r of risks) {
+    const card = document.createElement("div");
+    card.className = "risk-card";
+
+    const roundLabel = ROUND_LABELS[r.roundKey] || r.roundKey;
+    const t1 = r.slot.team1, t2 = r.slot.team2;
+    const mkt1 = Math.round(r.marketDist[t1] * 100);
+    const mkt2 = Math.round(r.marketDist[t2] * 100);
+    const fam1 = Math.round(r.familyDist[t1] * 100);
+    const fam2 = Math.round(r.familyDist[t2] * 100);
+
+    // Danger level (for visual intensity)
+    const dangerPct = Math.min((r.expectedDamage / maxDamage) * 100, 100);
+
+    // Header: matchup + round
+    const header = document.createElement("div");
+    header.className = "risk-card-header";
+    header.innerHTML = `
+      <span class="risk-matchup">
+        <span class="risk-seed">${r.slot.seed1 ?? ""}</span> ${esc(t1)}
+        <span class="risk-vs">vs</span>
+        <span class="risk-seed">${r.slot.seed2 ?? ""}</span> ${esc(t2)}
+      </span>
+      <span class="risk-round">${roundLabel}</span>
+    `;
+    card.appendChild(header);
+
+    // Comparison bars: market vs family for each team
+    const comparison = document.createElement("div");
+    comparison.className = "risk-comparison";
+
+    for (const [team, mktPct, famPct, pickers, downstream] of [
+      [t1, mkt1, fam1, r.team1Pickers, r.team1Downstream],
+      [t2, mkt2, fam2, r.team2Pickers, r.team2Downstream],
+    ]) {
+      const teamBlock = document.createElement("div");
+      teamBlock.className = "risk-team-block";
+
+      const teamName = document.createElement("div");
+      teamName.className = "risk-team-name";
+      teamName.textContent = team;
+      teamBlock.appendChild(teamName);
+
+      const bars = document.createElement("div");
+      bars.className = "risk-bars";
+      bars.innerHTML = `
+        <div class="risk-bar-row">
+          <span class="risk-bar-label">Market</span>
+          <div class="risk-bar-track">
+            <div class="risk-bar-fill market" style="width:${mktPct}%"></div>
+          </div>
+          <span class="risk-bar-val">${mktPct}%</span>
+        </div>
+        <div class="risk-bar-row">
+          <span class="risk-bar-label">Family</span>
+          <div class="risk-bar-track">
+            <div class="risk-bar-fill family" style="width:${famPct}%"></div>
+          </div>
+          <span class="risk-bar-val">${famPct}%</span>
+        </div>
+      `;
+      teamBlock.appendChild(bars);
+
+      // Pickers
+      const pickersEl = document.createElement("div");
+      pickersEl.className = "risk-pickers";
+      for (const name of pickers) {
+        const chip = document.createElement("span");
+        chip.className = "risk-picker-chip";
+        const dot = document.createElement("span");
+        dot.className = "risk-picker-dot";
+        dot.style.backgroundColor = PERSON_COLORS[name] || "#888";
+        chip.appendChild(dot);
+        chip.appendChild(document.createTextNode(name));
+        pickersEl.appendChild(chip);
+      }
+      teamBlock.appendChild(pickersEl);
+
+      // Downstream stake
+      const stakeEl = document.createElement("div");
+      stakeEl.className = "risk-downstream";
+      stakeEl.textContent = `${downstream} pts at stake`;
+      teamBlock.appendChild(stakeEl);
+
+      comparison.appendChild(teamBlock);
+    }
+    card.appendChild(comparison);
+
+    // Footer: KL divergence + expected damage meter
+    const footer = document.createElement("div");
+    footer.className = "risk-card-footer";
+    footer.innerHTML = `
+      <div class="risk-metric">
+        <span class="risk-metric-label">KL Divergence</span>
+        <span class="risk-metric-val">${r.kl.toFixed(3)} bits</span>
+      </div>
+      <div class="risk-metric">
+        <span class="risk-metric-label">Expected Damage</span>
+        <span class="risk-metric-val">${r.expectedDamage.toFixed(1)} pts</span>
+      </div>
+      <div class="risk-danger-bar">
+        <div class="risk-danger-fill" style="width:${dangerPct}%"></div>
+      </div>
+    `;
+    card.appendChild(footer);
+
+    container.appendChild(card);
+  }
+}
+
+// =============================================================
 // MAIN
 // =============================================================
 
@@ -1208,6 +1419,7 @@ async function refresh() {
     renderLeaderboard(standings, games);
     renderMobileBracket(regionBrackets, finalFour, eliminated);
     renderMobileLeaderboard(standings, games);
+    renderRiskAnalysis(regionBrackets, finalFour, picks, eliminated);
   } catch (err) {
     console.error("Error:", err);
   }

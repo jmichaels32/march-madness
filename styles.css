@@ -1097,6 +1097,208 @@ header .subtitle {
   width: 1200px;
 }
 
+/* ── Risk / KL Divergence Section ───────────── */
+.risk-section {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+.risk-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #f87171;
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+.risk-subtitle {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: #64748b;
+  margin-left: 0.5rem;
+}
+.risk-desc {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #64748b;
+  margin: 0 0 1.2rem;
+}
+.risk-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.risk-card {
+  background: linear-gradient(145deg, #1a1020, #1c1230);
+  border: 1px solid #3b1d4e;
+  border-radius: 10px;
+  padding: 1rem;
+  transition: border-color 0.2s;
+}
+.risk-card:hover {
+  border-color: #f87171;
+}
+.risk-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+.risk-matchup {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+.risk-seed {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 600;
+}
+.risk-vs {
+  font-size: 0.7rem;
+  color: #475569;
+  margin: 0 0.4rem;
+  font-weight: 400;
+}
+.risk-round {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #94a3b8;
+  background: rgba(148, 163, 184, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.risk-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+.risk-team-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.risk-team-name {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #cbd5e1;
+}
+.risk-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.risk-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.risk-bar-label {
+  font-size: 0.6rem;
+  color: #64748b;
+  width: 40px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.risk-bar-track {
+  flex: 1;
+  height: 8px;
+  background: rgba(30, 41, 59, 0.8);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.risk-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+.risk-bar-fill.market {
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+}
+.risk-bar-fill.family {
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+.risk-bar-val {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #94a3b8;
+  width: 30px;
+  font-variant-numeric: tabular-nums;
+}
+
+.risk-pickers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.risk-picker-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.6rem;
+  color: #94a3b8;
+  background: rgba(30, 41, 59, 0.5);
+  padding: 1px 6px;
+  border-radius: 8px;
+}
+.risk-picker-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.risk-downstream {
+  font-size: 0.6rem;
+  color: #64748b;
+  font-style: italic;
+}
+
+.risk-card-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(59, 29, 78, 0.5);
+}
+.risk-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.risk-metric-label {
+  font-size: 0.55rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.risk-metric-val {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #f87171;
+  font-variant-numeric: tabular-nums;
+}
+.risk-danger-bar {
+  flex: 1;
+  min-width: 80px;
+  height: 6px;
+  background: rgba(30, 41, 59, 0.6);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.risk-danger-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #f59e0b, #ef4444, #dc2626);
+}
+.risk-empty {
+  text-align: center;
+  color: #64748b;
+  font-size: 0.8rem;
+  padding: 2rem;
+}
+
 /* ── Responsive ─────────────────────────────── */
 @media (max-width: 768px) {
   header h1 { font-size: 1.4rem; letter-spacing: 2px; }

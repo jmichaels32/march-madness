@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>March Madness 2026 — Family Bracket Challenge</title>
-  <link rel="stylesheet" href="styles.css?v=19">
+  <link rel="stylesheet" href="styles.css?v=20">
 </head>
 <body>
   <header>
@@ -49,7 +49,14 @@
     <div class="lb-cards" id="leaderboard-body"></div>
   </section>
 
+  <!-- Risk Analysis section (both mobile and desktop) -->
+  <section class="risk-section" id="risk-section">
+    <h2 class="risk-title">Danger Zone <span class="risk-subtitle">KL Divergence Analysis</span></h2>
+    <p class="risk-desc">Games where our family's picks diverge most from market odds — ranked by expected bracket damage.</p>
+    <div class="risk-cards" id="risk-cards"></div>
+  </section>
+
   <!-- <a href="dev.html" class="dev-link">Dev Editor</a> -->
-  <script src="app.js?v=19"></script>
+  <script src="app.js?v=20"></script>
 </body>
 </html>
