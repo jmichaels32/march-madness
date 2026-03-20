@@ -541,6 +541,39 @@ header .subtitle {
   color: #64748b;
   font-variant-numeric: tabular-nums;
 }
+
+/* Chalk baseline toggle */
+.chalk-toggle {
+  display: block;
+  margin: 0 auto 0.75rem;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #94a3b8;
+  background: rgba(30, 52, 80, 0.4);
+  border: 1px dashed #334155;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.chalk-toggle:hover {
+  border-color: #64748b;
+  color: #cbd5e1;
+}
+
+/* Chalk card styling */
+.lb-card-chalk {
+  border-style: dashed;
+  border-color: #334155;
+  background: linear-gradient(145deg, #0c1628, #111d33);
+  opacity: 0.8;
+}
+.lb-card-chalk .lb-card-name::after {
+  content: " (baseline)";
+  font-size: 0.55rem;
+  font-weight: 400;
+  color: #475569;
+}
 .lb-round-chip.has-pts .lb-round-val {
   color: #4ade80;
 }

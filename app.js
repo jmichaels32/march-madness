@@ -268,6 +268,53 @@ function computeStandings(picksData, gamesData) {
 }
 
 // =============================================================
+// CHALK BASELINE (always pick the higher seed)
+// =============================================================
+
+function generateChalkPicks(gamesData) {
+  const picks = { round1: [], round2: [], sweet16: [], elite8: [], final4: [], championship: [] };
+
+  // R1: game IDs 1-32, pick lower seed number (= better seed)
+  const r1Winners = [];
+  for (let id = 1; id <= 32; id++) {
+    const g = gamesData.games.find(gm => gm.id === id);
+    if (!g) { r1Winners.push({ team: null, seed: 99 }); picks.round1.push(null); continue; }
+    const chalkTeam = (g.seed1 <= g.seed2) ? g.team1 : g.team2;
+    const chalkSeed = Math.min(g.seed1, g.seed2);
+    picks.round1.push(chalkTeam);
+    r1Winners.push({ team: chalkTeam, seed: chalkSeed });
+  }
+
+  // R2 → E8: pair up previous round, pick lower seed, tiebreak by bracket position
+  let prev = r1Winners;
+  for (const roundKey of ["round2", "sweet16", "elite8"]) {
+    const curr = [];
+    for (let i = 0; i < prev.length; i += 2) {
+      const a = prev[i], b = prev[i + 1] || { team: null, seed: 99 };
+      const winner = (a.seed <= b.seed) ? a : b;
+      picks[roundKey].push(winner.team);
+      curr.push(winner);
+    }
+    prev = curr;
+  }
+
+  // Final Four: E8 winners are [East, West, South, Midwest]
+  // Semis: East(0) vs South(2), West(1) vs Midwest(3)
+  const semi1W = (prev[0].seed <= prev[2].seed) ? prev[0] : prev[2];
+  const semi2W = (prev[1].seed <= prev[3].seed) ? prev[1] : prev[3];
+  picks.final4 = [semi1W.team, semi2W.team];
+
+  // Championship
+  const champ = (semi1W.seed <= semi2W.seed) ? semi1W : semi2W;
+  picks.championship = [champ.team];
+
+  return picks;
+}
+
+let showChalk = false;
+let _chalkStanding = null;
+
+// =============================================================
 // RENDERING
 // =============================================================
 
@@ -708,8 +755,9 @@ function renderLegend(picksData) {
 function renderLeaderboardCard(container, s, rank) {
   const card = document.createElement("div");
   card.className = `lb-card rank-${rank}`;
+  if (s.isChalk) card.classList.add("lb-card-chalk");
 
-  const color = PERSON_COLORS[s.name] || "#888";
+  const color = s.isChalk ? "#94a3b8" : (PERSON_COLORS[s.name] || "#888");
   const total = s.total; // 192
   const earnedPct = (s.earned / total) * 100;
   const lostPct = (s.lost / total) * 100;
@@ -776,7 +824,31 @@ function renderLeaderboardCard(container, s, rank) {
   container.appendChild(card);
 }
 
+function renderChalkToggle(containerId) {
+  let toggle = document.getElementById(containerId + "-chalk-toggle");
+  if (!toggle) {
+    toggle = document.createElement("button");
+    toggle.id = containerId + "-chalk-toggle";
+    toggle.className = "chalk-toggle";
+    const section = document.getElementById(containerId).parentElement;
+    const h2 = section.querySelector("h2");
+    if (h2) h2.after(toggle);
+  }
+  toggle.textContent = showChalk ? "Hide Chalk Baseline" : "Show Chalk Baseline";
+  toggle.onclick = () => {
+    showChalk = !showChalk;
+    // Re-render both leaderboards
+    if (_leaderboardData) {
+      renderLeaderboard(_leaderboardData.standings, _leaderboardData.gamesData);
+      renderMobileLeaderboard(_leaderboardData.standings, _leaderboardData.gamesData);
+    }
+  };
+}
+
+let _leaderboardData = null;
+
 function renderLeaderboard(standings, gamesData) {
+  _leaderboardData = { standings, gamesData };
   const container = document.getElementById("leaderboard-body");
   container.innerHTML = "";
 
@@ -785,7 +857,15 @@ function renderLeaderboard(standings, gamesData) {
     updatedEl.textContent = `Updated: ${new Date(gamesData.lastUpdated).toLocaleString()}`;
   }
 
-  standings.forEach((s, i) => renderLeaderboardCard(container, s, i + 1));
+  renderChalkToggle("leaderboard-body");
+
+  let allStandings = [...standings];
+  if (showChalk && _chalkStanding) {
+    allStandings.push(_chalkStanding);
+    allStandings.sort((a, b) => b.earned - a.earned);
+  }
+
+  allStandings.forEach((s, i) => renderLeaderboardCard(container, s, i + 1));
 }
 
 // =============================================================
@@ -1168,6 +1248,7 @@ function renderMiniBracket(regionBrackets, finalFour, eliminated) {
 }
 
 function renderMobileLeaderboard(standings, gamesData) {
+  _leaderboardData = { standings, gamesData };
   const container = document.getElementById("mobile-leaderboard-body");
   if (!container) return;
   container.innerHTML = "";
@@ -1177,7 +1258,15 @@ function renderMobileLeaderboard(standings, gamesData) {
     updatedEl.textContent = `Updated: ${new Date(gamesData.lastUpdated).toLocaleString()}`;
   }
 
-  standings.forEach((s, i) => renderLeaderboardCard(container, s, i + 1));
+  renderChalkToggle("mobile-leaderboard-body");
+
+  let allStandings = [...standings];
+  if (showChalk && _chalkStanding) {
+    allStandings.push(_chalkStanding);
+    allStandings.sort((a, b) => b.earned - a.earned);
+  }
+
+  allStandings.forEach((s, i) => renderLeaderboardCard(container, s, i + 1));
 }
 
 // =============================================================
@@ -1389,6 +1478,15 @@ async function refresh() {
     }
 
     const finalFour = buildFinalFour(regionBrackets, games, picks, gameLookup);
+
+    // Generate chalk baseline picks and compute its standing
+    const chalkPicks = generateChalkPicks(games);
+    const chalkMember = { name: "Chalk", picks: chalkPicks };
+    const chalkPicksData = { members: [chalkMember] };
+    const chalkStandings = computeStandings(chalkPicksData, games);
+    _chalkStanding = chalkStandings[0];
+    _chalkStanding.isChalk = true;
+
     const standings = computeStandings(picks, games);
 
     // Store data for filter re-renders
