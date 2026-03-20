@@ -1161,7 +1161,7 @@ function renderMiniBracket(regionBrackets, finalFour, eliminated) {
   requestAnimationFrame(() => {
     const scrollEl = container.closest(".mini-bracket-scroll");
     if (scrollEl) {
-      const scaledHeight = container.offsetHeight * 0.85;
+      const scaledHeight = container.offsetHeight * 1;
       scrollEl.style.height = scaledHeight + "px";
     }
   });
