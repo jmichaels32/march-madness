@@ -2,6 +2,12 @@
 """
 Fetch NCAA tournament game results from Kalshi API and update games.json.
 Runs as a GitHub Actions cron job.
+
+Uses a frontier-based approach:
+1. Build the bracket tree from games.json winners
+2. Find the "frontier" — matchups where both teams are known but no winner yet
+3. Match frontier games against Kalshi events
+4. Write winners/odds back, creating new game entries for R32+ as needed
 """
 
 import json
@@ -26,152 +32,80 @@ TOURNAMENT_END = "2026-04-10"
 # Paths
 GAMES_JSON = Path(__file__).parent.parent / "data" / "games.json"
 
+# Bracket structure: region → list of R1 game IDs (in bracket order, pairs feed into next round)
+REGION_R1_IDS = {
+    "East":    [1, 2, 3, 4, 5, 6, 7, 8],
+    "West":    [9, 10, 11, 12, 13, 14, 15, 16],
+    "South":   [17, 18, 19, 20, 21, 22, 23, 24],
+    "Midwest": [25, 26, 27, 28, 29, 30, 31, 32],
+}
+
+# Round progression
+ROUND_ORDER = ["round1", "round2", "sweet16", "elite8", "final4", "championship"]
+
+# Final Four matchups: (region1, region2) pairs
+FF_MATCHUPS = [("East", "South"), ("West", "Midwest")]
+
 # Kalshi team abbreviation → our games.json team name
-# Built from observing Kalshi event tickers and titles
 KALSHI_TEAM_MAP = {
     # East region
-    "DUKE": "Duke",
-    "SIENA": "Siena",
-    "SIE": "Siena",
-    "OSU": "Ohio St",
-    "TCU": "TCU",
-    "SJU": "St. John's",
-    "UNI": "Northern Iowa",
-    "KU": "Kansas",
-    "KAN": "Kansas",
-    "CBU": "Cal Baptist",
-    "CALB": "Cal Baptist",
-    "LOU": "Louisville",
-    "USF": "South Florida",
-    "MSU": "Michigan St",
-    "NDSU": "North Dakota St",
-    "UCLA": "UCLA",
-    "UCF": "UCF",
-    "UCONN": "UConn",
-    "CONN": "UConn",
-    "FUR": "Furman",
+    "DUKE": "Duke", "SIENA": "Siena", "SIE": "Siena",
+    "OSU": "Ohio St", "TCU": "TCU",
+    "SJU": "St. John's", "UNI": "Northern Iowa",
+    "KU": "Kansas", "KAN": "Kansas",
+    "CBU": "Cal Baptist", "CALB": "Cal Baptist",
+    "LOU": "Louisville", "USF": "South Florida",
+    "MSU": "Michigan St", "NDSU": "North Dakota St",
+    "UCLA": "UCLA", "UCF": "UCF",
+    "UCONN": "UConn", "CONN": "UConn", "FUR": "Furman",
     # West region
-    "ARIZ": "Arizona",
-    "ARI": "Arizona",
+    "ARIZ": "Arizona", "ARI": "Arizona",
     "LIU": "Long Island",
-    "VILL": "Villanova",
-    "USU": "Utah St",
-    "WIS": "Wisconsin",
-    "HP": "High Point",
-    "ARK": "Arkansas",
-    "HAW": "Hawaii",
-    "HAWA": "Hawaii",
-    "BYU": "BYU",
-    "TEX": "Texas",
-    "GONZ": "Gonzaga",
-    "GU": "Gonzaga",
-    "KENN": "Kennesaw St",
-    "KSU": "Kennesaw St",
-    "MIA": "Miami (FL)",
-    "MIAF": "Miami (FL)",
-    "MIZ": "Missouri",
-    "MOU": "Missouri",
+    "VILL": "Villanova", "USU": "Utah St",
+    "WIS": "Wisconsin", "HP": "High Point",
+    "ARK": "Arkansas", "HAW": "Hawaii", "HAWA": "Hawaii",
+    "BYU": "BYU", "TEX": "Texas",
+    "GONZ": "Gonzaga", "GU": "Gonzaga",
+    "KENN": "Kennesaw St", "KSU": "Kennesaw St",
+    "MIA": "Miami (FL)", "MIAF": "Miami (FL)",
+    "MIZ": "Missouri", "MOU": "Missouri",
     "PUR": "Purdue",
-    "QUEEN": "Queens (N.C.)",
-    "QU": "Queens (N.C.)",
+    "QUEEN": "Queens (N.C.)", "QU": "Queens (N.C.)",
     # South region
     "FLA": "Florida",
-    "PV": "Prairie View A&M",
-    "PVAM": "Prairie View A&M",
-    "CLEM": "Clemson",
-    "IOWA": "Iowa",
+    "PV": "Prairie View A&M", "PVAM": "Prairie View A&M",
+    "CLEM": "Clemson", "IOWA": "Iowa",
     "VAN": "Vanderbilt",
-    "MCNS": "McNeese",
-    "MCN": "McNeese",
-    "NEB": "Nebraska",
-    "TROY": "Troy",
-    "UNC": "North Carolina",
-    "VCU": "VCU",
-    "ILL": "Illinois",
-    "PENN": "Penn",
+    "MCNS": "McNeese", "MCN": "McNeese",
+    "NEB": "Nebraska", "TROY": "Troy",
+    "UNC": "North Carolina", "VCU": "VCU",
+    "ILL": "Illinois", "PENN": "Penn",
     "SMC": "Saint Mary's",
-    "TXAM": "Texas A&M",
-    "TAM": "Texas A&M",
-    "HOU": "Houston",
-    "HOUST": "Houston",
-    "IDHO": "Idaho",
-    "IDAH": "Idaho",
+    "TXAM": "Texas A&M", "TAM": "Texas A&M",
+    "HOU": "Houston", "HOUST": "Houston",
+    "IDHO": "Idaho", "IDAH": "Idaho",
     # Midwest region
-    "MICH": "Michigan",
-    "HOW": "Howard",
-    "UGA": "Georgia",
-    "GA": "Georgia",
+    "MICH": "Michigan", "HOW": "Howard",
+    "UGA": "Georgia", "GA": "Georgia",
     "SLU": "Saint Louis",
-    "TTU": "Texas Tech",
-    "AKR": "Akron",
-    "BAMA": "Alabama",
-    "ALA": "Alabama",
-    "HOFS": "Hofstra",
-    "HOF": "Hofstra",
+    "TTU": "Texas Tech", "AKR": "Akron",
+    "BAMA": "Alabama", "ALA": "Alabama",
+    "HOFS": "Hofstra", "HOF": "Hofstra",
     "TENN": "Tennessee",
-    "MOH": "Miami (Ohio)",
-    "MOHI": "Miami (Ohio)",
+    "MOH": "Miami (Ohio)", "MOHI": "Miami (Ohio)",
     "SMU": "SMU",
-    "UVA": "Virginia",
-    "VA": "Virginia",
+    "UVA": "Virginia", "VA": "Virginia",
     "WRST": "Wright St",
-    "UK": "Kentucky",
-    "KEN": "Kentucky",
-    "ISU": "Iowa St",
-    "IAST": "Iowa St",
-    "SC": "Santa Clara",
-    "SCU": "Santa Clara",
+    "UK": "Kentucky", "KEN": "Kentucky",
+    "ISU": "Iowa St", "IAST": "Iowa St",
+    "SC": "Santa Clara", "SCU": "Santa Clara",
     "TNST": "Tennessee St",
 }
 
-
-def sign_request(private_key_pem: str, api_key_id: str, method: str, path: str) -> dict:
-    """Create Kalshi auth headers using RSA-PSS signing."""
-    try:
-        from cryptography.hazmat.primitives import hashes, serialization
-        from cryptography.hazmat.primitives.asymmetric import padding
-    except ImportError:
-        print("ERROR: cryptography package not installed", file=sys.stderr)
-        sys.exit(1)
-
-    timestamp_ms = str(int(time.time() * 1000))
-    message = f"{timestamp_ms}{method}{path}"
-
-    private_key = serialization.load_pem_private_key(
-        private_key_pem.encode(), password=None
-    )
-    signature = private_key.sign(
-        message.encode(),
-        padding.PSS(
-            mgf=padding.MGF1(hashes.SHA256()),
-            salt_length=padding.PSS.DIGEST_LENGTH,
-        ),
-        hashes.SHA256(),
-    )
-
-    return {
-        "KALSHI-ACCESS-KEY": api_key_id,
-        "KALSHI-ACCESS-TIMESTAMP": timestamp_ms,
-        "KALSHI-ACCESS-SIGNATURE": base64.b64encode(signature).decode(),
-    }
-
-
-def kalshi_get(path: str, private_key_pem: str, api_key_id: str) -> dict:
-    """Make authenticated GET request to Kalshi API."""
-    sign_path = path.split("?")[0]
-    headers = sign_request(private_key_pem, api_key_id, "GET", sign_path)
-    headers["Accept"] = "application/json"
-
-    url = f"{KALSHI_BASE}{path}"
-    req = Request(url, headers=headers, method="GET")
-
-    try:
-        with urlopen(req) as resp:
-            return json.loads(resp.read().decode())
-    except HTTPError as e:
-        body = e.read().decode() if e.fp else ""
-        print(f"Kalshi API error {e.code}: {body}", file=sys.stderr)
-        raise
+# Reverse map: our team name → set of possible Kalshi abbreviations
+TEAM_TO_ABBREVS = {}
+for abbr, team in KALSHI_TEAM_MAP.items():
+    TEAM_TO_ABBREVS.setdefault(team, set()).add(abbr)
 
 
 def kalshi_get_unauthenticated(path: str) -> dict:
@@ -198,96 +132,246 @@ def is_tournament_date(date_str: str) -> bool:
     return TOURNAMENT_START <= date_str <= TOURNAMENT_END
 
 
-def resolve_winner_from_markets(markets: list, event_title: str) -> str | None:
+def normalize(name: str) -> str:
+    """Normalize team name for comparison."""
+    return (name.strip().rstrip(".")
+            .lower()
+            .replace("'", "").replace("\u02bb", "")
+            .replace("hawai i", "hawaii"))
+
+
+# ─── Bracket tree building ────────────────────────────────────
+
+def build_games_by_id(games: list) -> dict:
+    """Index games by ID."""
+    return {g["id"]: g for g in games}
+
+
+def find_game_by_teams(games: list, team1: str, team2: str, round_key: str) -> dict | None:
+    """Find a game in games list matching both teams and round."""
+    n1, n2 = normalize(team1), normalize(team2)
+    for g in games:
+        if g.get("round") != round_key:
+            continue
+        gt1, gt2 = normalize(g["team1"]), normalize(g["team2"])
+        if (n1 == gt1 and n2 == gt2) or (n1 == gt2 and n2 == gt1):
+            return g
+    return None
+
+
+def get_winner_seed(game: dict) -> int | None:
+    """Get the seed of the winning team."""
+    if not game or not game.get("winner"):
+        return None
+    if game["winner"] == game["team1"]:
+        return game.get("seed1")
+    return game.get("seed2")
+
+
+def build_frontier(games: list) -> list[dict]:
     """
-    Find the winner from settled markets.
-    Returns the full team name from the event title.
+    Build the bracket tree and return the frontier:
+    games where both teams are known but no winner yet.
+
+    Returns list of dicts: {team1, team2, seed1, seed2, round, region, game (or None)}
     """
-    # Parse teams from event title ("TCU at Ohio St.")
-    parts = event_title.split(" at ")
+    by_id = build_games_by_id(games)
+    frontier = []
+
+    # Also collect games that already have results (for completeness)
+    # but we only return frontier games
+
+    # ── Regional rounds (R1 → R2 → S16 → E8) ──
+    region_winners = {}  # region → E8 winner team name + seed
+
+    for region, r1_ids in REGION_R1_IDS.items():
+        # R1 games already exist in games.json
+        r1_games = [by_id.get(gid) for gid in r1_ids]
+
+        # Check R1 frontier
+        for g in r1_games:
+            if g and g.get("status") != "final" and g.get("team1") and g.get("team2"):
+                existing = find_game_by_teams(games, g["team1"], g["team2"], "round1")
+                frontier.append({
+                    "team1": g["team1"], "team2": g["team2"],
+                    "seed1": g.get("seed1"), "seed2": g.get("seed2"),
+                    "round": "round1", "region": region,
+                    "game": existing,
+                })
+
+        # Build R2 from R1 winners (pairs: 0+1, 2+3, 4+5, 6+7)
+        prev_round = r1_games
+        for round_key in ["round2", "sweet16", "elite8"]:
+            current_round = []
+            for i in range(0, len(prev_round), 2):
+                g1 = prev_round[i]
+                g2 = prev_round[i + 1] if i + 1 < len(prev_round) else None
+
+                w1 = g1.get("winner") if g1 else None
+                w2 = g2.get("winner") if g2 else None
+
+                if w1 and w2:
+                    # Both teams known — check if game exists or is on frontier
+                    existing = find_game_by_teams(games, w1, w2, round_key)
+                    if existing and existing.get("status") == "final":
+                        # Game done, not on frontier
+                        current_round.append(existing)
+                    else:
+                        # On the frontier
+                        s1 = get_winner_seed(g1)
+                        s2 = get_winner_seed(g2)
+                        frontier.append({
+                            "team1": w1, "team2": w2,
+                            "seed1": s1, "seed2": s2,
+                            "round": round_key, "region": region,
+                            "game": existing,  # May be None for R2+
+                        })
+                        # Use a stub so next round can reference it
+                        current_round.append(existing or {"winner": None})
+                else:
+                    # One or both teams unknown — not on frontier yet
+                    current_round.append({"winner": None})
+
+            prev_round = current_round
+
+        # Track E8 winner for Final Four
+        if prev_round and len(prev_round) == 1:
+            e8 = prev_round[0]
+            if e8 and e8.get("winner"):
+                region_winners[region] = {
+                    "team": e8["winner"],
+                    "seed": get_winner_seed(e8),
+                }
+
+    # ── Final Four ──
+    for i, (r1, r2) in enumerate(FF_MATCHUPS):
+        w1_info = region_winners.get(r1)
+        w2_info = region_winners.get(r2)
+        if w1_info and w2_info:
+            t1, t2 = w1_info["team"], w2_info["team"]
+            existing = find_game_by_teams(games, t1, t2, "final4")
+            if existing and existing.get("status") == "final":
+                # Done
+                pass
+            else:
+                frontier.append({
+                    "team1": t1, "team2": t2,
+                    "seed1": w1_info["seed"], "seed2": w2_info["seed"],
+                    "round": "final4", "region": None,
+                    "game": existing,
+                })
+
+    # ── Championship ──
+    # Need both FF winners
+    ff_winners = []
+    for r1, r2 in FF_MATCHUPS:
+        w1_info = region_winners.get(r1)
+        w2_info = region_winners.get(r2)
+        if w1_info and w2_info:
+            t1, t2 = w1_info["team"], w2_info["team"]
+            ff_game = find_game_by_teams(games, t1, t2, "final4")
+            if ff_game and ff_game.get("winner"):
+                winner_seed = get_winner_seed(ff_game)
+                ff_winners.append({"team": ff_game["winner"], "seed": winner_seed})
+            else:
+                ff_winners.append(None)
+        else:
+            ff_winners.append(None)
+
+    if len(ff_winners) == 2 and ff_winners[0] and ff_winners[1]:
+        t1, t2 = ff_winners[0]["team"], ff_winners[1]["team"]
+        existing = find_game_by_teams(games, t1, t2, "championship")
+        if not existing or existing.get("status") != "final":
+            frontier.append({
+                "team1": t1, "team2": t2,
+                "seed1": ff_winners[0]["seed"], "seed2": ff_winners[1]["seed"],
+                "round": "championship", "region": None,
+                "game": existing,
+            })
+
+    return frontier
+
+
+# ─── Kalshi matching ──────────────────────────────────────────
+
+def match_event_to_frontier(event: dict, frontier: list) -> dict | None:
+    """
+    Match a Kalshi event to a frontier game by checking if both
+    teams in the event title match a frontier entry.
+    """
+    title = event.get("title", "")
+    parts = title.split(" at ")
     if len(parts) != 2:
         return None
-    away_name = parts[0].strip().rstrip(".")
-    home_name = parts[1].strip().rstrip(".")
+    away = normalize(parts[0])
+    home = normalize(parts[1])
 
+    for fg in frontier:
+        t1 = normalize(fg["team1"])
+        t2 = normalize(fg["team2"])
+
+        # Both Kalshi teams must match both frontier teams (in either order)
+        m1 = (away == t1 or away in t1 or t1 in away)
+        m2 = (home == t2 or home in t2 or t2 in home)
+        m3 = (away == t2 or away in t2 or t2 in away)
+        m4 = (home == t1 or home in t1 or t1 in home)
+
+        if (m1 and m2) or (m3 and m4):
+            return fg
+
+    return None
+
+
+def resolve_winner_from_markets(markets: list) -> str | None:
+    """Find the winner team name from settled Kalshi markets."""
     for market in markets:
         if market.get("result") != "yes":
             continue
-
-        # Get ticker suffix (team abbreviation)
         ticker = market.get("ticker", market.get("ticker_name", ""))
-        # Ticker format: KXNCAAMBGAME-26MAR19TCUOSU-TCU
         suffix = ticker.rsplit("-", 1)[-1].upper() if "-" in ticker else ""
-
-        # Map suffix to our team name
         mapped = KALSHI_TEAM_MAP.get(suffix)
         if mapped:
             return mapped
-
-        # Fallback: try to match suffix against event title teams
-        if suffix and suffix.upper() in away_name.upper().replace(" ", "").replace(".", ""):
-            return away_name
-        if suffix and suffix.upper() in home_name.upper().replace(" ", "").replace(".", ""):
-            return home_name
-
-        # Last resort: use market title if it has "Winner" format
-        market_title = market.get("title", "")
-        if "Winner" in market_title:
-            winner_name = market_title.replace("Winner", "").strip().rstrip(".")
-            if winner_name:
-                return winner_name
-
     return None
 
 
-def normalize(name: str) -> str:
-    """Normalize team name for comparison."""
-    return name.strip().rstrip(".").lower().replace("'", "").replace("\u02bb", "").replace("hawai i", "hawaii")
+def extract_odds(markets: list) -> dict:
+    """Extract win probabilities from active Kalshi markets."""
+    odds = {}
+    for market in markets:
+        if market.get("status") != "active":
+            continue
+        m_ticker = market.get("ticker", market.get("ticker_name", ""))
+        suffix = m_ticker.rsplit("-", 1)[-1].upper() if "-" in m_ticker else ""
+        mapped = KALSHI_TEAM_MAP.get(suffix)
+        price = market.get("last_price", market.get("yes_bid"))
+        if mapped and price is not None:
+            pct = round(price * 100) if price < 1 else round(price)
+            odds[mapped] = min(pct, 99)
+    return odds
 
 
-def find_matching_game(games: list, winner_name: str, event_title: str) -> dict | None:
-    """Find the game in games.json that contains the winner team."""
-    # Parse both teams from event title
-    parts = event_title.split(" at ")
-    if len(parts) != 2:
-        return None
-    away = parts[0].strip().rstrip(".")
-    home = parts[1].strip().rstrip(".")
-
-    # Map both Kalshi names to our names
-    away_mapped = None
-    home_mapped = None
-
-    # Try direct normalization match
-    for game in games:
-        t1 = normalize(game["team1"])
-        t2 = normalize(game["team2"])
-        a = normalize(away)
-        h = normalize(home)
-
-        # Both teams must match (in either order)
-        match1 = (a == t1 or a in t1 or t1 in a)
-        match2 = (h == t2 or h in t2 or t2 in h)
-        match3 = (a == t2 or a in t2 or t2 in a)
-        match4 = (h == t1 or h in t1 or t1 in h)
-
-        if (match1 and match2) or (match3 and match4):
-            return game
-
-    return None
-
+# ─── Main ─────────────────────────────────────────────────────
 
 def main():
-    api_key_id = os.environ.get("KALSHI_API_KEY_ID", "")
-    private_key_pem = os.environ.get("KALSHI_PRIVATE_KEY", "")
-
     # Load current games.json
     with open(GAMES_JSON) as f:
         games_data = json.load(f)
 
     games = games_data["games"]
 
-    # Fetch events from Kalshi (public API works for reading)
+    # Build the frontier from current bracket state
+    frontier = build_frontier(games)
+    print(f"Frontier has {len(frontier)} games")
+    for fg in frontier:
+        print(f"  {fg['round']}: {fg['team1']} vs {fg['team2']} "
+              f"({'has entry' if fg['game'] else 'needs entry'})")
+
+    if not frontier:
+        print("No frontier games — tournament may be complete.")
+        return False
+
+    # Fetch events from Kalshi
     try:
         resp = kalshi_get_unauthenticated(
             f"/events?series_ticker={SERIES_TICKER}&limit=200&with_nested_markets=true"
@@ -299,7 +383,7 @@ def main():
     events = resp.get("events", [])
     print(f"Fetched {len(events)} Kalshi NCAA events")
 
-    # Filter to tournament dates only
+    # Filter to tournament dates
     tournament_events = []
     for event in events:
         ticker = event.get("ticker", "")
@@ -310,66 +394,70 @@ def main():
     print(f"Filtered to {len(tournament_events)} tournament-date events")
 
     updated = False
+    next_id = max((g["id"] for g in games), default=0) + 1
+
     for event in tournament_events:
         title = event.get("title", "")
-        ticker = event.get("ticker", "")
         markets = event.get("markets", [])
 
-        # Check if settled or active
+        # Match this event to a frontier game
+        fg = match_event_to_frontier(event, frontier)
+        if not fg:
+            continue
+
         any_settled = any(m.get("result") in ("yes", "no") for m in markets)
         any_active = any(m.get("status") == "active" for m in markets)
 
+        # Ensure the game entry exists in games.json
+        game = fg["game"]
+        if not game:
+            # Create new game entry for R2+
+            game = {
+                "id": next_id,
+                "round": fg["round"],
+                "region": fg["region"],
+                "seed1": fg["seed1"],
+                "seed2": fg["seed2"],
+                "team1": fg["team1"],
+                "team2": fg["team2"],
+                "score1": None,
+                "score2": None,
+                "status": "upcoming",
+                "winner": None,
+            }
+            games.append(game)
+            fg["game"] = game
+            next_id += 1
+            updated = True
+            print(f"  Created game entry: {fg['team1']} vs {fg['team2']} ({fg['round']})")
+
         if any_settled:
-            # Game is finished — find the winner
-            winner = resolve_winner_from_markets(markets, title)
+            winner = resolve_winner_from_markets(markets)
             if not winner:
                 print(f"  Could not determine winner for: {title}")
                 continue
 
-            game = find_matching_game(games, winner, title)
-            if not game:
-                event_date = parse_event_date(ticker)
-                print(f"  No match for: {title} (date: {event_date}, winner: {winner})")
-                continue
-
-            if game["winner"] != winner or game["status"] != "final":
+            if game.get("winner") != winner or game.get("status") != "final":
                 old_winner = game.get("winner", "none")
-                print(f"  Updating: {game['team1']} vs {game['team2']} → Winner: {winner} (was: {old_winner})")
+                print(f"  Result: {game['team1']} vs {game['team2']} → Winner: {winner} (was: {old_winner})")
                 game["winner"] = winner
                 game["status"] = "final"
-                # Clear odds when game is final
                 game.pop("odds1", None)
                 game.pop("odds2", None)
                 updated = True
 
         elif any_active:
-            # Game is upcoming/live — extract odds from market prices
-            game = find_matching_game(games, "", title)
-            if not game or game["status"] == "final":
+            if game.get("status") == "final":
                 continue
 
-            odds = {}
-            for market in markets:
-                if market.get("status") != "active":
-                    continue
-                m_ticker = market.get("ticker", market.get("ticker_name", ""))
-                suffix = m_ticker.rsplit("-", 1)[-1].upper() if "-" in m_ticker else ""
-                mapped = KALSHI_TEAM_MAP.get(suffix)
-                price = market.get("last_price", market.get("yes_bid"))
-                if mapped and price is not None:
-                    # Kalshi prices: if < 1 it's decimal (0.83 = 83%),
-                    # if >= 1 it's already cents (83 = 83%)
-                    pct = round(price * 100) if price < 1 else round(price)
-                    odds[mapped] = min(pct, 99)  # Cap at 99%
-
+            odds = extract_odds(markets)
             if odds:
                 t1_odds = odds.get(game["team1"])
                 t2_odds = odds.get(game["team2"])
-                # If we have both, ensure they sum to 100
+
+                # Normalize to sum to 100
                 if t1_odds is not None and t2_odds is not None:
-                    total = t1_odds + t2_odds
-                    if total != 100:
-                        # Normalize: keep the higher-confidence one, derive the other
+                    if t1_odds + t2_odds != 100:
                         t2_odds = 100 - t1_odds
                 elif t1_odds is not None:
                     t2_odds = 100 - t1_odds
