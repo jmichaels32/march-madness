@@ -105,6 +105,7 @@ function buildRegionBracket(region, gamesData, picksData, gameLookup, eliminated
       score1: g?.score1, score2: g?.score2,
       status: g?.status || "upcoming",
       clock: g?.clock, liveScore1: g?.liveScore1, liveScore2: g?.liveScore2,
+      odds1: g?.odds1 ?? null, odds2: g?.odds2 ?? null,
       picks: {},
     };
     // Map picks
@@ -440,7 +441,7 @@ function renderGameCell(slot, eliminated, roundKey) {
     nameEl.textContent = t.name || "TBD";
     row.appendChild(nameEl);
 
-    // Score
+    // Score or odds
     const scoreVal = slot.status === "live"
       ? (t.isTeam1 ? slot.liveScore1 : slot.liveScore2)
       : (t.isTeam1 ? slot.score1 : slot.score2);
@@ -449,6 +450,21 @@ function renderGameCell(slot, eliminated, roundKey) {
       scoreEl.className = "team-score";
       scoreEl.textContent = scoreVal;
       row.appendChild(scoreEl);
+    }
+
+    // Odds badge for active games
+    const odds = t.isTeam1 ? slot.odds1 : slot.odds2;
+    if (odds != null && slot.status !== "final") {
+      const oddsEl = document.createElement("span");
+      oddsEl.className = "team-odds";
+      if (odds >= 60) oddsEl.classList.add("favored");
+      else if (odds <= 40) oddsEl.classList.add("underdog");
+      oddsEl.textContent = `${odds}%`;
+      row.appendChild(oddsEl);
+      // Tint the row background based on odds
+      if (odds >= 50) {
+        row.style.background = `rgba(74, 222, 128, ${(odds - 50) * 0.003})`;
+      }
     }
 
     // Pick dots for this team
@@ -742,6 +758,21 @@ function renderMobileGameCard(slot, eliminated) {
       scoreEl.textContent = scoreVal;
       info.appendChild(scoreEl);
     }
+
+    // Odds badge
+    const odds = t.isTeam1 ? slot.odds1 : slot.odds2;
+    if (odds != null && slot.status !== "final") {
+      const oddsEl = document.createElement("span");
+      oddsEl.className = "mobile-team-odds";
+      if (odds >= 60) oddsEl.classList.add("favored");
+      else if (odds <= 40) oddsEl.classList.add("underdog");
+      oddsEl.textContent = `${odds}%`;
+      info.appendChild(oddsEl);
+      if (odds >= 50) {
+        row.style.background = `rgba(74, 222, 128, ${(odds - 50) * 0.003})`;
+      }
+    }
+
     row.appendChild(info);
 
     // Pickers row

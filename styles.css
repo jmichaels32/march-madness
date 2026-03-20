@@ -262,6 +262,26 @@ header .subtitle {
 }
 .team-row.winner .team-score { color: #4ade80; }
 
+/* ── Odds badges ───────────────────────────── */
+.team-odds {
+  font-size: 0.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  padding: 1px 4px;
+  border-radius: 3px;
+  color: #64748b;
+  background: rgba(30, 52, 80, 0.5);
+  margin-left: 2px;
+}
+.team-odds.favored {
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.1);
+}
+.team-odds.underdog {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.1);
+}
+
 /* ── Pick dots ──────────────────────────────── */
 .pick-dots {
   display: flex;
@@ -630,6 +650,25 @@ header .subtitle {
   font-variant-numeric: tabular-nums;
 }
 .mobile-team-row.winner .mobile-team-score { color: #4ade80; }
+
+.mobile-team-odds {
+  font-size: 0.65rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: #64748b;
+  background: rgba(30, 52, 80, 0.5);
+  margin-left: 4px;
+}
+.mobile-team-odds.favored {
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.1);
+}
+.mobile-team-odds.underdog {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.1);
+}
 
 .mobile-pickers {
   display: flex;

@@ -60,6 +60,7 @@ KALSHI_TEAM_MAP = {
     "HP": "High Point",
     "ARK": "Arkansas",
     "HAW": "Hawaii",
+    "HAWA": "Hawaii",
     "BYU": "BYU",
     "TEX": "Texas",
     "GONZ": "Gonzaga",
@@ -241,7 +242,7 @@ def resolve_winner_from_markets(markets: list, event_title: str) -> str | None:
 
 def normalize(name: str) -> str:
     """Normalize team name for comparison."""
-    return name.strip().rstrip(".").lower()
+    return name.strip().rstrip(".").lower().replace("'", "").replace("\u02bb", "").replace("hawai i", "hawaii")
 
 
 def find_matching_game(games: list, winner_name: str, event_title: str) -> dict | None:
@@ -314,31 +315,59 @@ def main():
         ticker = event.get("ticker", "")
         markets = event.get("markets", [])
 
-        # Only process settled events
+        # Check if settled or active
         any_settled = any(m.get("result") in ("yes", "no") for m in markets)
-        if not any_settled:
-            continue
+        any_active = any(m.get("status") == "active" for m in markets)
 
-        # Find the winner
-        winner = resolve_winner_from_markets(markets, title)
-        if not winner:
-            print(f"  Could not determine winner for: {title}")
-            continue
+        if any_settled:
+            # Game is finished — find the winner
+            winner = resolve_winner_from_markets(markets, title)
+            if not winner:
+                print(f"  Could not determine winner for: {title}")
+                continue
 
-        # Find matching game in our data
-        game = find_matching_game(games, winner, title)
-        if not game:
-            event_date = parse_event_date(ticker)
-            print(f"  No match for: {title} (date: {event_date}, winner: {winner})")
-            continue
+            game = find_matching_game(games, winner, title)
+            if not game:
+                event_date = parse_event_date(ticker)
+                print(f"  No match for: {title} (date: {event_date}, winner: {winner})")
+                continue
 
-        # Update game if changed
-        if game["winner"] != winner or game["status"] != "final":
-            old_winner = game.get("winner", "none")
-            print(f"  Updating: {game['team1']} vs {game['team2']} → Winner: {winner} (was: {old_winner})")
-            game["winner"] = winner
-            game["status"] = "final"
-            updated = True
+            if game["winner"] != winner or game["status"] != "final":
+                old_winner = game.get("winner", "none")
+                print(f"  Updating: {game['team1']} vs {game['team2']} → Winner: {winner} (was: {old_winner})")
+                game["winner"] = winner
+                game["status"] = "final"
+                # Clear odds when game is final
+                game.pop("odds1", None)
+                game.pop("odds2", None)
+                updated = True
+
+        elif any_active:
+            # Game is upcoming/live — extract odds from market prices
+            game = find_matching_game(games, "", title)
+            if not game or game["status"] == "final":
+                continue
+
+            odds = {}
+            for market in markets:
+                if market.get("status") != "active":
+                    continue
+                m_ticker = market.get("ticker", market.get("ticker_name", ""))
+                suffix = m_ticker.rsplit("-", 1)[-1].upper() if "-" in m_ticker else ""
+                mapped = KALSHI_TEAM_MAP.get(suffix)
+                price = market.get("last_price", market.get("yes_bid"))
+                if mapped and price is not None:
+                    odds[mapped] = round(price * 100)
+
+            if odds:
+                t1_odds = odds.get(game["team1"])
+                t2_odds = odds.get(game["team2"])
+                if t1_odds is not None and t1_odds != game.get("odds1"):
+                    game["odds1"] = t1_odds
+                    updated = True
+                if t2_odds is not None and t2_odds != game.get("odds2"):
+                    game["odds2"] = t2_odds
+                    updated = True
 
     if updated:
         games_data["lastUpdated"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
