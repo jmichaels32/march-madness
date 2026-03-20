@@ -351,6 +351,142 @@ def extract_odds(markets: list) -> dict:
     return odds
 
 
+# ─── ESPN scores ──────────────────────────────────────────────
+
+# ESPN shortDisplayName → our games.json team name (only where they differ)
+ESPN_TEAM_MAP = {
+    "Ohio State": "Ohio St",
+    "N Dakota St": "North Dakota St",
+    "Michigan St": "Michigan St",
+    "Hawai'i": "Hawaii",
+    "High Point": "High Point",
+    "Kennesaw St": "Kennesaw St",
+    "Queens": "Queens (N.C.)",
+    "Miami": "Miami (FL)",
+    "PVAMU": "Prairie View A&M",
+    "Prairie View": "Prairie View A&M",
+    "Saint Mary's": "Saint Mary's",
+    "N Iowa": "Northern Iowa",
+    "Cal Baptist": "Cal Baptist",
+    "S Florida": "South Florida",
+    "Utah State": "Utah St",
+    "Wright State": "Wright St",
+    "Wright St": "Wright St",
+    "Iowa State": "Iowa St",
+    "Tennessee State": "Tennessee St",
+    "Tennessee St": "Tennessee St",
+    "Texas A&M": "Texas A&M",
+    "Long Island": "Long Island",
+    "LIU": "Long Island",
+    "Santa Clara": "Santa Clara",
+    "N Carolina": "North Carolina",
+    "Miami (OH)": "Miami (Ohio)",
+}
+
+
+def espn_team_name(espn_name: str) -> str:
+    """Map ESPN team name to our games.json team name."""
+    return ESPN_TEAM_MAP.get(espn_name, espn_name)
+
+
+def fetch_espn_scores(games: list) -> bool:
+    """
+    Fetch scores from ESPN for games that are final or in-progress.
+    Only queries dates where we have active/final games.
+    Returns True if any games were updated.
+    """
+    # Collect dates we need to query — from games on the frontier or recently finished
+    # We'll query today and yesterday to catch games that just finished
+    from datetime import timedelta
+    today = datetime.now(timezone.utc)
+    dates_to_check = set()
+    for delta in range(0, 3):  # today, yesterday, day before
+        d = today - timedelta(days=delta)
+        dates_to_check.add(d.strftime("%Y%m%d"))
+
+    updated = False
+    all_espn_games = []
+
+    for date_str in sorted(dates_to_check):
+        try:
+            url = (f"https://site.api.espn.com/apis/site/v2/sports/basketball/"
+                   f"mens-college-basketball/scoreboard?dates={date_str}&groups=100&limit=100")
+            req = Request(url, headers={"Accept": "application/json"})
+            with urlopen(req) as resp:
+                data = json.loads(resp.read().decode())
+            all_espn_games.extend(data.get("events", []))
+        except Exception as e:
+            print(f"  ESPN fetch failed for {date_str}: {e}", file=sys.stderr)
+
+    print(f"Fetched {len(all_espn_games)} ESPN events")
+
+    for espn_event in all_espn_games:
+        status_name = espn_event.get("status", {}).get("type", {}).get("name", "")
+        if status_name not in ("STATUS_FINAL", "STATUS_IN_PROGRESS"):
+            continue
+
+        comps = espn_event.get("competitions", [{}])[0]
+        competitors = comps.get("competitors", [])
+        if len(competitors) != 2:
+            continue
+
+        # Extract team info
+        teams = []
+        for c in competitors:
+            t = c.get("team", {})
+            name = espn_team_name(t.get("shortDisplayName", ""))
+            score = c.get("score")
+            try:
+                score = int(score) if score else None
+            except (ValueError, TypeError):
+                score = None
+            teams.append({"name": name, "score": score})
+
+        # Find matching game in games.json
+        for game in games:
+            gt1, gt2 = normalize(game["team1"]), normalize(game["team2"])
+            et1, et2 = normalize(teams[0]["name"]), normalize(teams[1]["name"])
+
+            matched = False
+            if (gt1 == et1 or gt1 in et1 or et1 in gt1) and \
+               (gt2 == et2 or gt2 in et2 or et2 in gt2):
+                s1, s2 = teams[0]["score"], teams[1]["score"]
+                matched = True
+            elif (gt1 == et2 or gt1 in et2 or et2 in gt1) and \
+                 (gt2 == et1 or gt2 in et1 or et1 in gt2):
+                s1, s2 = teams[1]["score"], teams[0]["score"]
+                matched = True
+
+            if matched:
+                if s1 is not None and s1 != game.get("score1"):
+                    game["score1"] = s1
+                    updated = True
+                if s2 is not None and s2 != game.get("score2"):
+                    game["score2"] = s2
+                    updated = True
+
+                # Also update live status from ESPN
+                if status_name == "STATUS_IN_PROGRESS" and game.get("status") != "final":
+                    if game.get("status") != "live":
+                        game["status"] = "live"
+                        updated = True
+                elif status_name == "STATUS_FINAL" and game.get("status") != "final":
+                    # ESPN says final — update winner from score if Kalshi hasn't set it
+                    if not game.get("winner") and s1 is not None and s2 is not None:
+                        if s1 > s2:
+                            game["winner"] = game["team1"]
+                        elif s2 > s1:
+                            game["winner"] = game["team2"]
+                        game["status"] = "final"
+                        game.pop("odds1", None)
+                        game.pop("odds2", None)
+                        updated = True
+                        print(f"  ESPN final: {game['team1']} {s1} - {game['team2']} {s2}")
+                break
+
+    return updated
+
+
 # ─── Main ─────────────────────────────────────────────────────
 
 def main():
@@ -470,6 +606,12 @@ def main():
                 if t2_odds is not None and t2_odds != game.get("odds2"):
                     game["odds2"] = t2_odds
                     updated = True
+
+    # ── Fetch scores from ESPN ──
+    print("\nFetching scores from ESPN...")
+    espn_updated = fetch_espn_scores(games)
+    if espn_updated:
+        updated = True
 
     if updated:
         games_data["lastUpdated"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
