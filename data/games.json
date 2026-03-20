@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T04:10:00Z",
+  "lastUpdated": "2026-03-20T04:24:45Z",
   "games": [
     {
       "id": 1,
@@ -125,8 +125,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 98,
-      "odds2": 2
+      "odds1": 99,
+      "odds2": 1
     },
     {
       "id": 10,
@@ -190,8 +190,8 @@
       "team1": "Gonzaga",
       "seed2": 14,
       "team2": "Kennesaw St",
-      "score1": 57,
-      "score2": 46,
+      "score1": 67,
+      "score2": 58,
       "status": "live",
       "winner": null,
       "odds1": 97,
@@ -331,11 +331,9 @@
       "seed2": 15,
       "team2": "Idaho",
       "score1": 78,
-      "score2": 45,
-      "status": "live",
-      "winner": null,
-      "odds1": 99,
-      "odds2": 1
+      "score2": 47,
+      "status": "final",
+      "winner": "Houston"
     },
     {
       "id": 25,
@@ -358,12 +356,10 @@
       "team1": "Georgia",
       "seed2": 9,
       "team2": "Saint Louis",
-      "score1": 71,
-      "score2": 100,
-      "status": "live",
-      "winner": null,
-      "odds1": 1,
-      "odds2": 99
+      "score1": 77,
+      "score2": 102,
+      "status": "final",
+      "winner": "Saint Louis"
     },
     {
       "id": 27,
@@ -392,8 +388,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 86,
-      "odds2": 14
+      "odds1": 85,
+      "odds2": 15
     },
     {
       "id": 29,
@@ -410,7 +406,9 @@
       "score1": null,
       "score2": null,
       "status": "upcoming",
-      "winner": null
+      "winner": null,
+      "odds1": 84,
+      "odds2": 16
     },
     {
       "id": 30,
@@ -454,8 +452,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 97,
-      "odds2": 3
+      "odds1": 96,
+      "odds2": 4
     },
     {
       "id": 33,
@@ -469,8 +467,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 57,
-      "odds2": 43
+      "odds1": 58,
+      "odds2": 42
     },
     {
       "id": 34,
@@ -514,8 +512,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 17,
-      "odds2": 83
+      "odds1": 15,
+      "odds2": 85
     },
     {
       "id": 37,
@@ -529,8 +527,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 31,
-      "odds2": 69
+      "odds1": 30,
+      "odds2": 70
     }
   ]
 }
