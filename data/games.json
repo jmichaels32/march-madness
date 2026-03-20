@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T04:01:08Z",
+  "lastUpdated": "2026-03-20T04:02:31Z",
   "games": [
     {
       "id": 1,
@@ -352,8 +352,8 @@
       "team1": "Georgia",
       "seed2": 9,
       "team2": "Saint Louis",
-      "score1": 57,
-      "score2": 95,
+      "score1": 59,
+      "score2": 97,
       "status": "live",
       "winner": null,
       "odds1": 1,
