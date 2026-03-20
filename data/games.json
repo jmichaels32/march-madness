@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T22:59:42Z",
+  "lastUpdated": "2026-03-20T23:14:11Z",
   "games": [
     {
       "id": 1,
@@ -95,8 +95,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 68,
-      "odds2": 32
+      "odds1": 69,
+      "odds2": 31
     },
     {
       "id": 8,
@@ -244,12 +244,12 @@
       "team1": "Clemson",
       "seed2": 9,
       "team2": "Iowa",
-      "score1": 4,
-      "score2": 8,
+      "score1": 10,
+      "score2": 22,
       "status": "live",
       "winner": null,
-      "odds1": 39,
-      "odds2": 61
+      "odds1": 20,
+      "odds2": 80
     },
     {
       "id": 19,
@@ -464,8 +464,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 86,
-      "odds2": 14
+      "odds1": 85,
+      "odds2": 15
     },
     {
       "id": 35,
@@ -554,8 +554,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 31,
-      "odds2": 69
+      "odds1": 32,
+      "odds2": 68
     },
     {
       "id": 41,
@@ -569,8 +569,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 35,
-      "odds2": 65
+      "odds1": 34,
+      "odds2": 66
     },
     {
       "id": 42,
@@ -584,8 +584,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 50,
-      "odds2": 50
+      "odds1": 49,
+      "odds2": 51
     },
     {
       "id": 43,
@@ -614,8 +614,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 60,
-      "odds2": 40
+      "odds1": 56,
+      "odds2": 44
     }
   ]
 }
