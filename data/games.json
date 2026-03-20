@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T19:45:43Z",
+  "lastUpdated": "2026-03-20T19:59:25Z",
   "games": [
     {
       "id": 1,
@@ -378,12 +378,12 @@
       "team1": "Alabama",
       "seed2": 13,
       "team2": "Hofstra",
-      "score1": 18,
-      "score2": 25,
+      "score1": 25,
+      "score2": 30,
       "status": "live",
       "winner": null,
-      "odds1": 69,
-      "odds2": 31
+      "odds1": 67,
+      "odds2": 33
     },
     {
       "id": 29,
@@ -412,12 +412,10 @@
       "team1": "Virginia",
       "seed2": 14,
       "team2": "Wright St",
-      "score1": 69,
-      "score2": 70,
-      "status": "live",
-      "winner": null,
-      "odds1": 64,
-      "odds2": 36
+      "score1": 82,
+      "score2": 73,
+      "status": "final",
+      "winner": "Virginia"
     },
     {
       "id": 31,
@@ -440,8 +438,8 @@
       "team1": "Iowa St",
       "seed2": 15,
       "team2": "Tennessee St",
-      "score1": 38,
-      "score2": 11,
+      "score1": 48,
+      "score2": 21,
       "status": "live",
       "winner": null,
       "odds1": 99,
