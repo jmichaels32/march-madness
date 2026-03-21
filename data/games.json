@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-21T04:17:25Z",
+  "lastUpdated": "2026-03-21T04:51:18Z",
   "games": [
     {
       "id": 1,
@@ -100,12 +100,10 @@
       "team1": "UConn",
       "seed2": 15,
       "team2": "Furman",
-      "score1": 65,
-      "score2": 55,
-      "status": "live",
-      "winner": null,
-      "odds1": 96,
-      "odds2": 4
+      "score1": 82,
+      "score2": 71,
+      "status": "final",
+      "winner": "UConn"
     },
     {
       "id": 9,
@@ -193,12 +191,10 @@
       "team1": "Miami (FL)",
       "seed2": 10,
       "team2": "Missouri",
-      "score1": 68,
-      "score2": 61,
-      "status": "live",
-      "winner": null,
-      "odds1": 92,
-      "odds2": 8
+      "score1": 80,
+      "score2": 66,
+      "status": "final",
+      "winner": "Miami (FL)"
     },
     {
       "id": 16,
@@ -604,6 +600,36 @@
       "winner": null,
       "odds1": 53,
       "odds2": 47
+    },
+    {
+      "id": 45,
+      "round": "round2",
+      "region": "East",
+      "seed1": 5,
+      "seed2": 4,
+      "team1": "St. John's",
+      "team2": "Kansas",
+      "score1": null,
+      "score2": null,
+      "status": "upcoming",
+      "winner": null,
+      "odds1": 59,
+      "odds2": 41
+    },
+    {
+      "id": 46,
+      "round": "round2",
+      "region": "South",
+      "seed1": 1,
+      "seed2": 9,
+      "team1": "Florida",
+      "team2": "Iowa",
+      "score1": null,
+      "score2": null,
+      "status": "upcoming",
+      "winner": null,
+      "odds1": 84,
+      "odds2": 16
     }
   ]
 }
