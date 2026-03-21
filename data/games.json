@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-21T16:52:59Z",
+  "lastUpdated": "2026-03-21T17:03:42Z",
   "games": [
     {
       "id": 1,
@@ -463,8 +463,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 34,
-      "odds2": 66
+      "odds1": 35,
+      "odds2": 65
     },
     {
       "id": 36,
@@ -519,8 +519,8 @@
       "seed2": 9,
       "team1": "Michigan",
       "team2": "Saint Louis",
-      "score1": 42,
-      "score2": 34,
+      "score1": 46,
+      "score2": 39,
       "status": "live",
       "winner": null,
       "odds1": 93,
@@ -553,8 +553,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 35,
-      "odds2": 65
+      "odds1": 34,
+      "odds2": 66
     },
     {
       "id": 42,
@@ -628,8 +628,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 83,
-      "odds2": 17
+      "odds1": 84,
+      "odds2": 16
     },
     {
       "id": 47,
