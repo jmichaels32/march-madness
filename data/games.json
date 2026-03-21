@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-21T05:14:30Z",
+  "lastUpdated": "2026-03-21T05:33:39Z",
   "games": [
     {
       "id": 1,
@@ -463,8 +463,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 37,
-      "odds2": 63
+      "odds1": 36,
+      "odds2": 64
     },
     {
       "id": 36,
@@ -478,8 +478,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 15,
-      "odds2": 85
+      "odds1": 14,
+      "odds2": 86
     },
     {
       "id": 37,
@@ -523,8 +523,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 89,
-      "odds2": 11
+      "odds1": 88,
+      "odds2": 12
     },
     {
       "id": 40,
@@ -643,8 +643,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 38,
-      "odds2": 62
+      "odds1": 37,
+      "odds2": 63
     },
     {
       "id": 48,
@@ -658,8 +658,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 28,
-      "odds2": 72
+      "odds1": 26,
+      "odds2": 74
     }
   ]
 }
