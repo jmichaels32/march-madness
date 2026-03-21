@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-21T18:13:48Z",
+  "lastUpdated": "2026-03-21T18:30:28Z",
   "games": [
     {
       "id": 1,
@@ -519,12 +519,10 @@
       "seed2": 9,
       "team1": "Michigan",
       "team2": "Saint Louis",
-      "score1": 92,
+      "score1": 95,
       "score2": 72,
-      "status": "live",
-      "winner": null,
-      "odds1": 99,
-      "odds2": 1
+      "status": "final",
+      "winner": "Michigan"
     },
     {
       "id": 40,
