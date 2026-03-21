@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-21T23:31:47Z",
+  "lastUpdated": "2026-03-21T23:43:49Z",
   "games": [
     {
       "id": 1,
@@ -444,12 +444,10 @@
       "seed2": 9,
       "team1": "Duke",
       "team2": "TCU",
-      "score1": 70,
-      "score2": 52,
-      "status": "live",
-      "winner": null,
-      "odds1": 99,
-      "odds2": 1
+      "score1": 81,
+      "score2": 58,
+      "status": "final",
+      "winner": "Duke"
     },
     {
       "id": 35,
@@ -502,12 +500,12 @@
       "seed2": 2,
       "team1": "Texas A&M",
       "team2": "Houston",
-      "score1": 28,
-      "score2": 51,
+      "score1": 37,
+      "score2": 59,
       "status": "live",
       "winner": null,
-      "odds1": 2,
-      "odds2": 98
+      "odds1": 1,
+      "odds2": 99
     },
     {
       "id": 39,
@@ -530,12 +528,12 @@
       "seed2": 3,
       "team1": "Texas",
       "team2": "Gonzaga",
-      "score1": 19,
-      "score2": 21,
+      "score1": 20,
+      "score2": 28,
       "status": "live",
       "winner": null,
-      "odds1": 28,
-      "odds2": 72
+      "odds1": 18,
+      "odds2": 82
     },
     {
       "id": 41,
@@ -549,8 +547,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 35,
-      "odds2": 65
+      "odds1": 34,
+      "odds2": 66
     },
     {
       "id": 42,
@@ -564,8 +562,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 51,
-      "odds2": 49
+      "odds1": 52,
+      "odds2": 48
     },
     {
       "id": 43,
@@ -654,8 +652,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 26,
-      "odds2": 74
+      "odds1": 25,
+      "odds2": 75
     }
   ]
 }
