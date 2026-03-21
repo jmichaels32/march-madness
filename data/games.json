@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-21T00:38:40Z",
+  "lastUpdated": "2026-03-21T01:08:42Z",
   "games": [
     {
       "id": 1,
@@ -35,8 +35,8 @@
       "team1": "St. John's",
       "seed2": 12,
       "team2": "Northern Iowa",
-      "score1": 24,
-      "score2": 10,
+      "score1": 61,
+      "score2": 42,
       "status": "live",
       "winner": null,
       "odds1": 99,
@@ -54,8 +54,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 89,
-      "odds2": 11
+      "odds1": 90,
+      "odds2": 10
     },
     {
       "id": 5,
@@ -91,12 +91,12 @@
       "team1": "UCLA",
       "seed2": 10,
       "team2": "UCF",
-      "score1": 22,
-      "score2": 12,
+      "score1": 54,
+      "score2": 43,
       "status": "live",
       "winner": null,
-      "odds1": 82,
-      "odds2": 18
+      "odds1": 91,
+      "odds2": 9
     },
     {
       "id": 8,
@@ -214,8 +214,8 @@
       "team1": "Purdue",
       "seed2": 15,
       "team2": "Queens (N.C.)",
-      "score1": 24,
-      "score2": 17,
+      "score1": 67,
+      "score2": 45,
       "status": "live",
       "winner": null,
       "odds1": 99,
@@ -244,12 +244,12 @@
       "team1": "Clemson",
       "seed2": 9,
       "team2": "Iowa",
-      "score1": 48,
-      "score2": 55,
+      "score1": 61,
+      "score2": 67,
       "status": "live",
       "winner": null,
-      "odds1": 10,
-      "odds2": 90
+      "odds1": 1,
+      "odds2": 99
     },
     {
       "id": 19,
