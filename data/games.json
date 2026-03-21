@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-21T04:51:18Z",
+  "lastUpdated": "2026-03-21T05:14:30Z",
   "games": [
     {
       "id": 1,
@@ -433,8 +433,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 55,
-      "odds2": 45
+      "odds1": 54,
+      "odds2": 46
     },
     {
       "id": 34,
@@ -538,8 +538,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 31,
-      "odds2": 69
+      "odds1": 32,
+      "odds2": 68
     },
     {
       "id": 41,
@@ -613,8 +613,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 59,
-      "odds2": 41
+      "odds1": 60,
+      "odds2": 40
     },
     {
       "id": 46,
@@ -628,8 +628,38 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 84,
-      "odds2": 16
+      "odds1": 83,
+      "odds2": 17
+    },
+    {
+      "id": 47,
+      "round": "round2",
+      "region": "East",
+      "seed1": 7,
+      "seed2": 2,
+      "team1": "UCLA",
+      "team2": "UConn",
+      "score1": null,
+      "score2": null,
+      "status": "upcoming",
+      "winner": null,
+      "odds1": 38,
+      "odds2": 62
+    },
+    {
+      "id": 48,
+      "round": "round2",
+      "region": "West",
+      "seed1": 7,
+      "seed2": 2,
+      "team1": "Miami (FL)",
+      "team2": "Purdue",
+      "score1": null,
+      "score2": null,
+      "status": "upcoming",
+      "winner": null,
+      "odds1": 28,
+      "odds2": 72
     }
   ]
 }
