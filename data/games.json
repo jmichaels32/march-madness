@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-21T01:08:42Z",
+  "lastUpdated": "2026-03-21T01:52:33Z",
   "games": [
     {
       "id": 1,
@@ -35,12 +35,10 @@
       "team1": "St. John's",
       "seed2": 12,
       "team2": "Northern Iowa",
-      "score1": 61,
-      "score2": 42,
-      "status": "live",
-      "winner": null,
-      "odds1": 99,
-      "odds2": 1
+      "score1": 79,
+      "score2": 53,
+      "status": "final",
+      "winner": "St. John's"
     },
     {
       "id": 4,
@@ -91,12 +89,12 @@
       "team1": "UCLA",
       "seed2": 10,
       "team2": "UCF",
-      "score1": 54,
-      "score2": 43,
+      "score1": 72,
+      "score2": 65,
       "status": "live",
       "winner": null,
-      "odds1": 91,
-      "odds2": 9
+      "odds1": 99,
+      "odds2": 1
     },
     {
       "id": 8,
@@ -203,8 +201,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 53,
-      "odds2": 47
+      "odds1": 55,
+      "odds2": 45
     },
     {
       "id": 16,
@@ -214,12 +212,10 @@
       "team1": "Purdue",
       "seed2": 15,
       "team2": "Queens (N.C.)",
-      "score1": 67,
-      "score2": 45,
-      "status": "live",
-      "winner": null,
-      "odds1": 99,
-      "odds2": 1
+      "score1": 104,
+      "score2": 71,
+      "status": "final",
+      "winner": "Purdue"
     },
     {
       "id": 17,
@@ -229,9 +225,9 @@
       "team1": "Florida",
       "seed2": 16,
       "team2": "Prairie View A&M",
-      "score1": null,
-      "score2": null,
-      "status": "upcoming",
+      "score1": 15,
+      "score2": 12,
+      "status": "live",
       "winner": null,
       "odds1": 99,
       "odds2": 1
@@ -246,10 +242,8 @@
       "team2": "Iowa",
       "score1": 61,
       "score2": 67,
-      "status": "live",
-      "winner": null,
-      "odds1": 1,
-      "odds2": 99
+      "status": "final",
+      "winner": "Iowa"
     },
     {
       "id": 19,
