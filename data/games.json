@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-21T23:54:45Z",
+  "lastUpdated": "2026-03-22T00:22:22Z",
   "games": [
     {
       "id": 1,
@@ -485,12 +485,12 @@
       "seed2": 3,
       "team1": "VCU",
       "team2": "Illinois",
-      "score1": null,
-      "score2": null,
-      "status": "upcoming",
+      "score1": 2,
+      "score2": 7,
+      "status": "live",
       "winner": null,
-      "odds1": 15,
-      "odds2": 85
+      "odds1": 10,
+      "odds2": 90
     },
     {
       "id": 38,
@@ -500,8 +500,8 @@
       "seed2": 2,
       "team1": "Texas A&M",
       "team2": "Houston",
-      "score1": 41,
-      "score2": 67,
+      "score1": 57,
+      "score2": 81,
       "status": "live",
       "winner": null,
       "odds1": 1,
@@ -528,12 +528,12 @@
       "seed2": 3,
       "team1": "Texas",
       "team2": "Gonzaga",
-      "score1": 20,
-      "score2": 28,
+      "score1": 43,
+      "score2": 40,
       "status": "live",
       "winner": null,
-      "odds1": 40,
-      "odds2": 60
+      "odds1": 44,
+      "odds2": 56
     },
     {
       "id": 41,
@@ -592,8 +592,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 51,
-      "odds2": 49
+      "odds1": 52,
+      "odds2": 48
     },
     {
       "id": 45,
