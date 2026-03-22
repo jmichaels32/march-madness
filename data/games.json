@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-22T23:42:00Z",
+  "lastUpdated": "2026-03-22T23:54:42Z",
   "games": [
     {
       "id": 1,
@@ -565,8 +565,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 87,
-      "odds2": 13
+      "odds1": 88,
+      "odds2": 12
     },
     {
       "id": 44,
@@ -576,12 +576,12 @@
       "seed2": 3,
       "team1": "Tennessee",
       "team2": "Virginia",
-      "score1": 54,
-      "score2": 48,
+      "score1": 62,
+      "score2": 55,
       "status": "live",
       "winner": null,
-      "odds1": 78,
-      "odds2": 22
+      "odds1": 85,
+      "odds2": 15
     },
     {
       "id": 45,
@@ -604,12 +604,12 @@
       "seed2": 9,
       "team1": "Florida",
       "team2": "Iowa",
-      "score1": 13,
-      "score2": 23,
+      "score1": 25,
+      "score2": 28,
       "status": "live",
       "winner": null,
-      "odds1": 62,
-      "odds2": 38
+      "odds1": 75,
+      "odds2": 25
     },
     {
       "id": 47,
@@ -668,6 +668,21 @@
       "winner": null,
       "odds1": 25,
       "odds2": 75
+    },
+    {
+      "id": 51,
+      "round": "sweet16",
+      "region": "East",
+      "seed1": 1,
+      "seed2": 5,
+      "team1": "Duke",
+      "team2": "St. John's",
+      "score1": null,
+      "score2": null,
+      "status": "upcoming",
+      "winner": null,
+      "odds1": 80,
+      "odds2": 20
     }
   ]
 }
