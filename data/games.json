@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-22T19:58:01Z",
+  "lastUpdated": "2026-03-22T20:11:21Z",
   "games": [
     {
       "id": 1,
@@ -533,12 +533,12 @@
       "seed2": 2,
       "team1": "Kentucky",
       "team2": "Iowa St",
-      "score1": 30,
-      "score2": 26,
+      "score1": 36,
+      "score2": 41,
       "status": "live",
       "winner": null,
-      "odds1": 33,
-      "odds2": 67
+      "odds1": 23,
+      "odds2": 77
     },
     {
       "id": 42,
@@ -567,8 +567,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 82,
-      "odds2": 18
+      "odds1": 85,
+      "odds2": 15
     },
     {
       "id": 44,
