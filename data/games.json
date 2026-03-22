@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-22T23:10:51Z",
+  "lastUpdated": "2026-03-22T23:25:37Z",
   "games": [
     {
       "id": 1,
@@ -576,12 +576,12 @@
       "seed2": 3,
       "team1": "Tennessee",
       "team2": "Virginia",
-      "score1": 35,
-      "score2": 27,
+      "score1": 38,
+      "score2": 34,
       "status": "live",
       "winner": null,
-      "odds1": 66,
-      "odds2": 34
+      "odds1": 64,
+      "odds2": 36
     },
     {
       "id": 45,
@@ -591,12 +591,12 @@
       "seed2": 4,
       "team1": "St. John's",
       "team2": "Kansas",
-      "score1": 54,
-      "score2": 40,
+      "score1": 62,
+      "score2": 55,
       "status": "live",
       "winner": null,
-      "odds1": 96,
-      "odds2": 4
+      "odds1": 91,
+      "odds2": 9
     },
     {
       "id": 46,
@@ -606,12 +606,12 @@
       "seed2": 9,
       "team1": "Florida",
       "team2": "Iowa",
-      "score1": 0,
-      "score2": 0,
+      "score1": 12,
+      "score2": 15,
       "status": "live",
       "winner": null,
-      "odds1": 84,
-      "odds2": 16
+      "odds1": 74,
+      "odds2": 26
     },
     {
       "id": 47,
