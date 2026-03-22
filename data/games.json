@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-22T21:50:13Z",
+  "lastUpdated": "2026-03-22T21:59:45Z",
   "games": [
     {
       "id": 1,
@@ -565,8 +565,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 85,
-      "odds2": 15
+      "odds1": 86,
+      "odds2": 14
     },
     {
       "id": 44,
@@ -592,11 +592,11 @@
       "team1": "St. John's",
       "team2": "Kansas",
       "score1": 16,
-      "score2": 10,
+      "score2": 14,
       "status": "live",
       "winner": null,
-      "odds1": 75,
-      "odds2": 25
+      "odds1": 63,
+      "odds2": 37
     },
     {
       "id": 46,
