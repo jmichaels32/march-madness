@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-22T03:36:04Z",
+  "lastUpdated": "2026-03-22T04:27:39Z",
   "games": [
     {
       "id": 1,
@@ -468,12 +468,10 @@
       "seed2": 4,
       "team1": "High Point",
       "team2": "Arkansas",
-      "score1": 80,
-      "score2": 83,
-      "status": "live",
-      "winner": null,
-      "odds1": 21,
-      "odds2": 79
+      "score1": 88,
+      "score2": 94,
+      "status": "final",
+      "winner": "Arkansas"
     },
     {
       "id": 37,
@@ -584,8 +582,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 51,
-      "odds2": 49
+      "odds1": 52,
+      "odds2": 48
     },
     {
       "id": 45,
@@ -629,8 +627,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 37,
-      "odds2": 63
+      "odds1": 36,
+      "odds2": 64
     },
     {
       "id": 48,
@@ -644,8 +642,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 26,
-      "odds2": 74
+      "odds1": 25,
+      "odds2": 75
     },
     {
       "id": 49,
@@ -659,8 +657,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 43,
-      "odds2": 57
+      "odds1": 44,
+      "odds2": 56
     }
   ]
 }
