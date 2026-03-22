@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-22T00:56:36Z",
+  "lastUpdated": "2026-03-22T01:39:20Z",
   "games": [
     {
       "id": 1,
@@ -429,12 +429,12 @@
       "seed2": 4,
       "team1": "Vanderbilt",
       "team2": "Nebraska",
-      "score1": null,
-      "score2": null,
-      "status": "upcoming",
+      "score1": 19,
+      "score2": 25,
+      "status": "live",
       "winner": null,
-      "odds1": 55,
-      "odds2": 45
+      "odds1": 40,
+      "odds2": 60
     },
     {
       "id": 34,
@@ -485,12 +485,12 @@
       "seed2": 3,
       "team1": "VCU",
       "team2": "Illinois",
-      "score1": 26,
-      "score2": 26,
+      "score1": 32,
+      "score2": 43,
       "status": "live",
       "winner": null,
-      "odds1": 17,
-      "odds2": 83
+      "odds1": 5,
+      "odds2": 95
     },
     {
       "id": 38,
@@ -526,12 +526,10 @@
       "seed2": 3,
       "team1": "Texas",
       "team2": "Gonzaga",
-      "score1": 66,
-      "score2": 64,
-      "status": "live",
-      "winner": null,
-      "odds1": 64,
-      "odds2": 36
+      "score1": 74,
+      "score2": 68,
+      "status": "final",
+      "winner": "Texas"
     },
     {
       "id": 41,
@@ -560,8 +558,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 51,
-      "odds2": 49
+      "odds1": 52,
+      "odds2": 48
     },
     {
       "id": 43,
@@ -575,8 +573,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 87,
-      "odds2": 13
+      "odds1": 86,
+      "odds2": 14
     },
     {
       "id": 44,
@@ -650,8 +648,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 24,
-      "odds2": 76
+      "odds1": 26,
+      "odds2": 74
     }
   ]
 }
