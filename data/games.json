@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-22T18:16:38Z",
+  "lastUpdated": "2026-03-22T18:34:23Z",
   "games": [
     {
       "id": 1,
@@ -537,8 +537,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 33,
-      "odds2": 67
+      "odds1": 34,
+      "odds2": 66
     },
     {
       "id": 42,
@@ -640,10 +640,8 @@
       "team2": "Purdue",
       "score1": 69,
       "score2": 79,
-      "status": "live",
-      "winner": null,
-      "odds1": 1,
-      "odds2": 99
+      "status": "final",
+      "winner": "Purdue"
     },
     {
       "id": 49,
