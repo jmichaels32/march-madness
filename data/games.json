@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-22T20:55:40Z",
+  "lastUpdated": "2026-03-22T21:08:58Z",
   "games": [
     {
       "id": 1,
@@ -535,10 +535,8 @@
       "team2": "Iowa St",
       "score1": 63,
       "score2": 82,
-      "status": "live",
-      "winner": null,
-      "odds1": 1,
-      "odds2": 99
+      "status": "final",
+      "winner": "Iowa St"
     },
     {
       "id": 42,
@@ -670,8 +668,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 27,
-      "odds2": 73
+      "odds1": 26,
+      "odds2": 74
     }
   ]
 }
