@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-22T23:54:42Z",
+  "lastUpdated": "2026-03-23T00:23:15Z",
   "games": [
     {
       "id": 1,
@@ -561,12 +561,12 @@
       "seed2": 9,
       "team1": "Arizona",
       "team2": "Utah St",
-      "score1": null,
-      "score2": null,
-      "status": "upcoming",
+      "score1": 12,
+      "score2": 6,
+      "status": "live",
       "winner": null,
-      "odds1": 88,
-      "odds2": 12
+      "odds1": 92,
+      "odds2": 8
     },
     {
       "id": 44,
@@ -576,12 +576,12 @@
       "seed2": 3,
       "team1": "Tennessee",
       "team2": "Virginia",
-      "score1": 62,
-      "score2": 55,
+      "score1": 72,
+      "score2": 71,
       "status": "live",
       "winner": null,
-      "odds1": 85,
-      "odds2": 15
+      "odds1": 69,
+      "odds2": 31
     },
     {
       "id": 45,
@@ -608,8 +608,8 @@
       "score2": 28,
       "status": "live",
       "winner": null,
-      "odds1": 75,
-      "odds2": 25
+      "odds1": 79,
+      "odds2": 21
     },
     {
       "id": 47,
@@ -623,8 +623,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 36,
-      "odds2": 64
+      "odds1": 34,
+      "odds2": 66
     },
     {
       "id": 48,
@@ -681,8 +681,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 80,
-      "odds2": 20
+      "odds1": 74,
+      "odds2": 26
     }
   ]
 }
