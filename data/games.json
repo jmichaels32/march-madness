@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-23T04:37:05Z",
+  "lastUpdated": "2026-03-23T05:19:51Z",
   "games": [
     {
       "id": 1,
@@ -671,8 +671,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 71,
-      "odds2": 29
+      "odds1": 73,
+      "odds2": 27
     },
     {
       "id": 52,
@@ -714,8 +714,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 76,
-      "odds2": 24
+      "odds1": 77,
+      "odds2": 23
     },
     {
       "id": 55,
@@ -731,6 +731,21 @@
       "winner": null,
       "odds1": 50,
       "odds2": 50
+    },
+    {
+      "id": 56,
+      "round": "sweet16",
+      "region": "Midwest",
+      "seed1": 1,
+      "seed2": 4,
+      "team1": "Michigan",
+      "team2": "Alabama",
+      "score1": null,
+      "score2": null,
+      "status": "upcoming",
+      "winner": null,
+      "odds1": 82,
+      "odds2": 18
     }
   ]
 }
