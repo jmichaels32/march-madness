@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-26T23:48:54Z",
+  "lastUpdated": "2026-03-27T00:01:40Z",
   "games": [
     {
       "id": 1,
@@ -656,8 +656,8 @@
       "score2": 30,
       "status": "live",
       "winner": null,
-      "odds1": 25,
-      "odds2": 75
+      "odds1": 18,
+      "odds2": 82
     },
     {
       "id": 51,
@@ -671,8 +671,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 72,
-      "odds2": 28
+      "odds1": 71,
+      "odds2": 29
     },
     {
       "id": 52,
@@ -695,12 +695,12 @@
       "seed2": 4,
       "team1": "Iowa",
       "team2": "Nebraska",
-      "score1": 17,
-      "score2": 25,
+      "score1": 24,
+      "score2": 32,
       "status": "live",
       "winner": null,
-      "odds1": 32,
-      "odds2": 68
+      "odds1": 28,
+      "odds2": 72
     },
     {
       "id": 54,
@@ -729,8 +729,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 47,
-      "odds2": 53
+      "odds1": 46,
+      "odds2": 54
     },
     {
       "id": 56,
