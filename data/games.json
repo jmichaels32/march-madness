@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-27T03:40:00Z",
+  "lastUpdated": "2026-03-27T04:37:53Z",
   "games": [
     {
       "id": 1,
@@ -637,12 +637,10 @@
       "seed2": 2,
       "team1": "Illinois",
       "team2": "Houston",
-      "score1": 44,
-      "score2": 29,
-      "status": "live",
-      "winner": null,
-      "odds1": 94,
-      "odds2": 6
+      "score1": 65,
+      "score2": 55,
+      "status": "final",
+      "winner": "Illinois"
     },
     {
       "id": 50,
@@ -706,12 +704,10 @@
       "seed2": 4,
       "team1": "Arizona",
       "team2": "Arkansas",
-      "score1": 78,
-      "score2": 57,
-      "status": "live",
-      "winner": null,
-      "odds1": 99,
-      "odds2": 1
+      "score1": 109,
+      "score2": 88,
+      "status": "final",
+      "winner": "Arizona"
     },
     {
       "id": 55,
