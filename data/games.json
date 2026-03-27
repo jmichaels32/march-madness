@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-27T00:54:45Z",
+  "lastUpdated": "2026-03-27T01:35:00Z",
   "games": [
     {
       "id": 1,
@@ -641,8 +641,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 44,
-      "odds2": 56
+      "odds1": 43,
+      "odds2": 57
     },
     {
       "id": 50,
@@ -652,12 +652,10 @@
       "seed2": 2,
       "team1": "Texas",
       "team2": "Purdue",
-      "score1": 65,
-      "score2": 63,
-      "status": "live",
-      "winner": null,
-      "odds1": 36,
-      "odds2": 64
+      "score1": 77,
+      "score2": 79,
+      "status": "final",
+      "winner": "Purdue"
     },
     {
       "id": 51,
@@ -695,12 +693,10 @@
       "seed2": 4,
       "team1": "Iowa",
       "team2": "Nebraska",
-      "score1": 55,
-      "score2": 58,
-      "status": "live",
-      "winner": null,
-      "odds1": 32,
-      "odds2": 68
+      "score1": 77,
+      "score2": 71,
+      "status": "final",
+      "winner": "Iowa"
     },
     {
       "id": 54,
@@ -744,8 +740,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 80,
-      "odds2": 20
+      "odds1": 81,
+      "odds2": 19
     }
   ]
 }
