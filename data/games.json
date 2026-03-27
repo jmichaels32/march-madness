@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-27T04:37:53Z",
+  "lastUpdated": "2026-03-27T05:21:27Z",
   "games": [
     {
       "id": 1,
@@ -667,8 +667,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 72,
-      "odds2": 28
+      "odds1": 71,
+      "odds2": 29
     },
     {
       "id": 52,
@@ -736,8 +736,38 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 81,
-      "odds2": 19
+      "odds1": 82,
+      "odds2": 18
+    },
+    {
+      "id": 57,
+      "round": "elite8",
+      "region": "West",
+      "seed1": 1,
+      "seed2": 2,
+      "team1": "Arizona",
+      "team2": "Purdue",
+      "score1": null,
+      "score2": null,
+      "status": "upcoming",
+      "winner": null,
+      "odds1": 71,
+      "odds2": 29
+    },
+    {
+      "id": 58,
+      "round": "elite8",
+      "region": "South",
+      "seed1": 9,
+      "seed2": 3,
+      "team1": "Iowa",
+      "team2": "Illinois",
+      "score1": null,
+      "score2": null,
+      "status": "upcoming",
+      "winner": null,
+      "odds1": 29,
+      "odds2": 71
     }
   ]
 }
