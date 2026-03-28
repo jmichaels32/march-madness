@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-28T21:57:47Z",
+  "lastUpdated": "2026-03-28T22:12:32Z",
   "games": [
     {
       "id": 1,
@@ -756,12 +756,12 @@
       "seed2": 3,
       "team1": "Iowa",
       "team2": "Illinois",
-      "score1": null,
-      "score2": null,
-      "status": "upcoming",
+      "score1": 4,
+      "score2": 0,
+      "status": "live",
       "winner": null,
-      "odds1": 25,
-      "odds2": 75
+      "odds1": 29,
+      "odds2": 71
     },
     {
       "id": 59,
