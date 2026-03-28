@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-28T04:59:03Z",
+  "lastUpdated": "2026-03-28T05:33:29Z",
   "games": [
     {
       "id": 1,
@@ -762,6 +762,21 @@
       "winner": null,
       "odds1": 27,
       "odds2": 73
+    },
+    {
+      "id": 59,
+      "round": "elite8",
+      "region": "East",
+      "seed1": 1,
+      "seed2": 2,
+      "team1": "Duke",
+      "team2": "UConn",
+      "score1": null,
+      "score2": null,
+      "status": "upcoming",
+      "winner": null,
+      "odds1": 67,
+      "odds2": 33
     }
   ]
 }
