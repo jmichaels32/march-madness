@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-29T23:18:20Z",
+  "lastUpdated": "2026-03-29T23:35:58Z",
   "games": [
     {
       "id": 1,
@@ -768,11 +768,9 @@
       "team1": "Duke",
       "team2": "UConn",
       "score1": 72,
-      "score2": 69,
-      "status": "live",
-      "winner": null,
-      "odds1": 86,
-      "odds2": 14
+      "score2": 73,
+      "status": "final",
+      "winner": "UConn"
     }
   ]
 }
