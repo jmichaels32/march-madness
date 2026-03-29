@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-28T23:59:32Z",
+  "lastUpdated": "2026-03-29T00:57:07Z",
   "games": [
     {
       "id": 1,
@@ -745,8 +745,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 72,
-      "odds2": 28
+      "odds1": 71,
+      "odds2": 29
     },
     {
       "id": 58,
@@ -756,12 +756,10 @@
       "seed2": 3,
       "team1": "Iowa",
       "team2": "Illinois",
-      "score1": 49,
-      "score2": 48,
-      "status": "live",
-      "winner": null,
-      "odds1": 33,
-      "odds2": 67
+      "score1": 59,
+      "score2": 71,
+      "status": "final",
+      "winner": "Illinois"
     },
     {
       "id": 59,
