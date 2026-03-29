@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-29T01:41:03Z",
+  "lastUpdated": "2026-03-29T02:40:13Z",
   "games": [
     {
       "id": 1,
@@ -741,12 +741,12 @@
       "seed2": 2,
       "team1": "Arizona",
       "team2": "Purdue",
-      "score1": 27,
-      "score2": 33,
+      "score1": 55,
+      "score2": 49,
       "status": "live",
       "winner": null,
-      "odds1": 50,
-      "odds2": 50
+      "odds1": 91,
+      "odds2": 9
     },
     {
       "id": 58,
@@ -773,8 +773,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 68,
-      "odds2": 32
+      "odds1": 66,
+      "odds2": 34
     }
   ]
 }
