@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-29T23:35:58Z",
+  "lastUpdated": "2026-03-30T00:58:12Z",
   "games": [
     {
       "id": 1,
@@ -771,6 +771,21 @@
       "score2": 73,
       "status": "final",
       "winner": "UConn"
+    },
+    {
+      "id": 60,
+      "round": "final4",
+      "region": null,
+      "seed1": 2,
+      "seed2": 3,
+      "team1": "UConn",
+      "team2": "Illinois",
+      "score1": null,
+      "score2": null,
+      "status": "upcoming",
+      "winner": null,
+      "odds1": 46,
+      "odds2": 54
     }
   ]
 }
