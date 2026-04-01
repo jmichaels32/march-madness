@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-31T16:24:38Z",
+  "lastUpdated": "2026-04-01T22:22:28Z",
   "games": [
     {
       "id": 1,
@@ -784,8 +784,8 @@
       "score2": null,
       "status": "upcoming",
       "winner": null,
-      "odds1": 46,
-      "odds2": 54
+      "odds1": 45,
+      "odds2": 55
     }
   ]
 }
