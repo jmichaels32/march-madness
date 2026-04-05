@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-05T00:00:40Z",
+  "lastUpdated": "2026-04-05T00:58:11Z",
   "games": [
     {
       "id": 1,
@@ -780,12 +780,10 @@
       "seed2": 3,
       "team1": "UConn",
       "team2": "Illinois",
-      "score1": 57,
-      "score2": 51,
-      "status": "live",
-      "winner": null,
-      "odds1": 80,
-      "odds2": 20
+      "score1": 71,
+      "score2": 62,
+      "status": "final",
+      "winner": "UConn"
     }
   ]
 }
