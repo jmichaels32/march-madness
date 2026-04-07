@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-05T00:58:11Z",
+  "lastUpdated": "2026-04-07T00:56:29Z",
   "games": [
     {
       "id": 1,
@@ -715,8 +715,8 @@
       "seed2": 2,
       "team1": "Michigan St",
       "team2": "UConn",
-      "score1": 63,
-      "score2": 67,
+      "score1": 6,
+      "score2": 2,
       "status": "final",
       "winner": "UConn"
     },
