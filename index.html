@@ -4,59 +4,373 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>March Madness 2026 — Family Bracket Challenge</title>
-  <link rel="stylesheet" href="styles.css?v=24">
+  <link rel="stylesheet" href="styles.css?v=25">
+  <style>
+    /* ── Victory Landing Page ────────────────── */
+    .victory-header {
+      background: linear-gradient(160deg, #0f2342 0%, #1a3a5c 40%, #0f2342 100%);
+      border-bottom: 2px solid rgba(244, 160, 32, 0.6);
+      padding: 2.5rem 1rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .victory-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(244, 160, 32, 0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .victory-header h1 {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 4px;
+      text-shadow: 0 2px 20px rgba(244, 160, 32, 0.3);
+      position: relative;
+    }
+    .victory-header .subtitle {
+      color: #f4a020;
+      font-size: 0.8rem;
+      font-weight: 500;
+      margin-top: 0.3rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      position: relative;
+    }
+    .tournament-result {
+      margin-top: 1.2rem;
+      font-size: 0.75rem;
+      color: #94a3b8;
+      position: relative;
+    }
+    .tournament-result strong {
+      color: #ffd700;
+      font-weight: 800;
+    }
+
+    /* ── Champion Banner ─────────────────────── */
+    .champion-banner {
+      max-width: 600px;
+      margin: 2rem auto 0;
+      padding: 0 1rem;
+      text-align: center;
+    }
+    .champion-card {
+      background: linear-gradient(145deg, #1a2a10, #1f3518);
+      border: 2px solid rgba(74, 222, 128, 0.4);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .champion-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 20%, rgba(74, 222, 128, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .champion-trophy {
+      font-size: 3.5rem;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .champion-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4ade80;
+      margin-bottom: 0.3rem;
+    }
+    .champion-name {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 0 30px rgba(74, 222, 128, 0.3);
+      margin-bottom: 0.4rem;
+    }
+    .champion-score {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #4ade80;
+      font-variant-numeric: tabular-nums;
+    }
+    .champion-score span {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #64748b;
+    }
+    .champion-detail {
+      margin-top: 0.8rem;
+      font-size: 0.75rem;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+    .champion-detail strong {
+      color: #4ade80;
+    }
+
+    /* ── Final Leaderboard ───────────────────── */
+    .final-leaderboard {
+      max-width: 600px;
+      margin: 2.5rem auto;
+      padding: 0 1rem;
+    }
+    .final-leaderboard h2 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #f4a020;
+      text-align: center;
+      letter-spacing: 1px;
+      margin-bottom: 1rem;
+    }
+    .final-lb-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 6px;
+    }
+    .final-lb-row {
+      background: linear-gradient(145deg, #0f1f36, #162a48);
+      border-radius: 8px;
+    }
+    .final-lb-row td {
+      padding: 0.7rem 0.75rem;
+      border: 1px solid #1e3450;
+      border-left: none;
+      border-right: none;
+    }
+    .final-lb-row td:first-child {
+      border-left: 1px solid #1e3450;
+      border-radius: 8px 0 0 8px;
+    }
+    .final-lb-row td:last-child {
+      border-right: 1px solid #1e3450;
+      border-radius: 0 8px 8px 0;
+    }
+    .final-lb-row.rank-1 {
+      background: linear-gradient(145deg, #1a2a10, #1f3518);
+      border-color: rgba(74, 222, 128, 0.3);
+    }
+    .final-lb-row.rank-1 td {
+      border-color: rgba(74, 222, 128, 0.3);
+    }
+    .final-lb-row.rank-2 td { border-color: rgba(192, 192, 192, 0.2); }
+    .final-lb-row.rank-3 td { border-color: rgba(205, 127, 50, 0.2); }
+
+    .lb-rank {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #475569;
+      text-align: center;
+      width: 32px;
+    }
+    .rank-1 .lb-rank { color: #4ade80; }
+    .rank-2 .lb-rank { color: #c0c0c0; }
+    .rank-3 .lb-rank { color: #cd7f32; }
+
+    .lb-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #e2e8f0;
+    }
+    .rank-1 .lb-name { color: #4ade80; font-weight: 800; }
+
+    .lb-pts {
+      font-size: 1rem;
+      font-weight: 900;
+      color: #94a3b8;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+    .rank-1 .lb-pts { color: #4ade80; }
+    .lb-pts-label {
+      font-size: 0.55rem;
+      font-weight: 500;
+      color: #475569;
+      margin-left: 2px;
+    }
+
+    .lb-breakdown {
+      font-size: 0.6rem;
+      color: #475569;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    /* ── Picks images ────────────────────────── */
+    .picks-gallery {
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      padding: 0 1rem;
+    }
+    .picks-gallery h2 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #f4a020;
+      text-align: center;
+      letter-spacing: 1px;
+      margin-bottom: 1rem;
+    }
+    .picks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 0.75rem;
+    }
+    .pick-thumb {
+      text-align: center;
+      text-decoration: none;
+    }
+    .pick-thumb img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px solid #1e3450;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .pick-thumb:hover img {
+      border-color: #f4a020;
+      transform: scale(1.05);
+    }
+    .pick-thumb .pick-label {
+      display: block;
+      margin-top: 0.3rem;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #94a3b8;
+    }
+
+    /* ── Nav link to bracket ─────────────────── */
+    .nav-links {
+      text-align: center;
+      margin: 2rem 0 3rem;
+    }
+    .nav-link {
+      display: inline-block;
+      padding: 0.7rem 1.8rem;
+      background: linear-gradient(145deg, #1a3050, #1e3a5c);
+      border: 1px solid #2d5a8f;
+      border-radius: 8px;
+      color: #93c5fd;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      transition: all 0.2s;
+    }
+    .nav-link:hover {
+      background: linear-gradient(145deg, #1e3a5c, #234670);
+      border-color: #60a5fa;
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      .victory-header h1 { font-size: 1.5rem; letter-spacing: 2px; }
+      .victory-header { padding: 1.5rem 0.5rem 1.2rem; }
+      .champion-name { font-size: 1.8rem; }
+      .champion-trophy { font-size: 2.5rem; }
+      .champion-card { padding: 1.5rem 1rem; }
+      .lb-breakdown { display: none; }
+    }
+  </style>
 </head>
 <body>
-  <header>
+
+  <div class="victory-header">
     <h1>MARCH MADNESS 2026</h1>
     <div class="subtitle">Family Bracket Challenge</div>
-  </header>
-
-  <div class="legend" id="legend"></div>
-
-  <!-- Mobile: leaderboard first, then tabbed regions -->
-  <section class="leaderboard mobile-leaderboard" id="mobile-leaderboard-section">
-    <h2>Leaderboard</h2>
-    <div class="last-updated" id="mobile-last-updated"></div>
-    <div class="lb-cards" id="mobile-leaderboard-body"></div>
-  </section>
-
-  <!-- Mobile: mini bracket overview -->
-  <div class="mini-bracket-wrapper" id="mini-bracket-wrapper">
-    <h2 class="mini-bracket-title">Tournament Bracket</h2>
-    <div class="mini-bracket-hint">Swipe to scroll</div>
-    <div class="mini-bracket-scroll">
-      <div class="mini-bracket" id="mini-bracket"></div>
+    <div class="tournament-result">
+      <strong>Michigan</strong> defeated UConn 69-63 to win the National Championship
     </div>
   </div>
 
-  <div class="mobile-bracket" id="mobile-bracket">
-    <div class="mobile-filter-bar" id="mobile-filter-bar"></div>
-    <div class="mobile-person-summary" id="mobile-person-summary"></div>
-    <div class="mobile-region-tabs" id="mobile-region-tabs"></div>
-    <div class="mobile-region-content" id="mobile-region-content"></div>
+  <div class="champion-banner">
+    <div class="champion-card">
+      <div class="champion-trophy">&#127942;</div>
+      <div class="champion-label">Bracket Champion</div>
+      <div class="champion-name">Susun</div>
+      <div class="champion-score">128 <span>pts</span></div>
+      <div class="champion-detail">
+        The only one who picked <strong>Michigan</strong> to win it all.<br>
+        28/32 first round &middot; 10/16 second round &middot; Championship bonus: +32
+      </div>
+    </div>
   </div>
 
-  <!-- Desktop: full bracket view -->
-  <div class="desktop-filter-bar desktop-only" id="desktop-filter-bar"></div>
-  <div class="bracket-wrapper desktop-only">
-    <div class="bracket" id="bracket"></div>
+  <section class="final-leaderboard">
+    <h2>Final Standings</h2>
+    <table class="final-lb-table">
+      <tr class="final-lb-row rank-1">
+        <td class="lb-rank">1</td>
+        <td class="lb-name">Susun</td>
+        <td class="lb-breakdown">28+20+16+16+16+32</td>
+        <td class="lb-pts">128 <span class="lb-pts-label">pts</span></td>
+      </tr>
+      <tr class="final-lb-row rank-2">
+        <td class="lb-rank">2</td>
+        <td class="lb-name">Brent</td>
+        <td class="lb-breakdown">27+18+16+16+16+0</td>
+        <td class="lb-pts">93 <span class="lb-pts-label">pts</span></td>
+      </tr>
+      <tr class="final-lb-row rank-3">
+        <td class="lb-rank">3</td>
+        <td class="lb-name">Pappap</td>
+        <td class="lb-breakdown">28+22+20+8+0+0</td>
+        <td class="lb-pts">78 <span class="lb-pts-label">pts</span></td>
+      </tr>
+      <tr class="final-lb-row">
+        <td class="lb-rank">4</td>
+        <td class="lb-name">Charlotte</td>
+        <td class="lb-breakdown">24+20+20+8+0+0</td>
+        <td class="lb-pts">72 <span class="lb-pts-label">pts</span></td>
+      </tr>
+      <tr class="final-lb-row">
+        <td class="lb-rank">5</td>
+        <td class="lb-name">Nathan</td>
+        <td class="lb-breakdown">26+18+12+8+0+0</td>
+        <td class="lb-pts">64 <span class="lb-pts-label">pts</span></td>
+      </tr>
+      <tr class="final-lb-row">
+        <td class="lb-rank">6</td>
+        <td class="lb-name">Jason</td>
+        <td class="lb-breakdown">22+18+16+8+0+0</td>
+        <td class="lb-pts">64 <span class="lb-pts-label">pts</span></td>
+      </tr>
+      <tr class="final-lb-row">
+        <td class="lb-rank">7</td>
+        <td class="lb-name">Andrea</td>
+        <td class="lb-breakdown">27+16+12+8+0+0</td>
+        <td class="lb-pts">63 <span class="lb-pts-label">pts</span></td>
+      </tr>
+      <tr class="final-lb-row">
+        <td class="lb-rank">8</td>
+        <td class="lb-name">Ben</td>
+        <td class="lb-breakdown">17+12+16+16+0+0</td>
+        <td class="lb-pts">61 <span class="lb-pts-label">pts</span></td>
+      </tr>
+      <tr class="final-lb-row">
+        <td class="lb-rank">9</td>
+        <td class="lb-name">Jack</td>
+        <td class="lb-breakdown">26+16+16+0+0+0</td>
+        <td class="lb-pts">58 <span class="lb-pts-label">pts</span></td>
+      </tr>
+      <tr class="final-lb-row">
+        <td class="lb-rank">10</td>
+        <td class="lb-name">Nana</td>
+        <td class="lb-breakdown">10+10+0+0+0+0</td>
+        <td class="lb-pts">20 <span class="lb-pts-label">pts</span></td>
+      </tr>
+    </table>
+  </section>
+
+  <div class="nav-links">
+    <a class="nav-link" href="bracket.html">View Full Bracket &amp; Picks</a>
   </div>
 
-  <section class="leaderboard desktop-only" id="leaderboard-section">
-    <h2>Leaderboard</h2>
-    <div class="last-updated" id="last-updated"></div>
-    <div class="lb-cards" id="leaderboard-body"></div>
-  </section>
-
-  <!-- Risk Analysis section (both mobile and desktop) -->
-  <section class="risk-section" id="risk-section">
-    <h2 class="risk-title">Upset Watch</h2>
-    <p class="risk-desc">Games where we're most likely to get burned — ranked by how many of us the market thinks will be wrong.</p>
-    <div class="risk-cards" id="risk-cards"></div>
-  </section>
-
-  <!-- <a href="dev.html" class="dev-link">Dev Editor</a> -->
-  <script src="app.js?v=24"></script>
 </body>
 </html>

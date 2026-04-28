@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>March Madness 2026 — Family Bracket Challenge</title>
+  <link rel="stylesheet" href="styles.css?v=24">
+</head>
+<body>
+  <header>
+    <h1>MARCH MADNESS 2026</h1>
+    <div class="subtitle">Family Bracket Challenge</div>
+  </header>
+
+  <div class="legend" id="legend"></div>
+
+  <!-- Mobile: leaderboard first, then tabbed regions -->
+  <section class="leaderboard mobile-leaderboard" id="mobile-leaderboard-section">
+    <h2>Leaderboard</h2>
+    <div class="last-updated" id="mobile-last-updated"></div>
+    <div class="lb-cards" id="mobile-leaderboard-body"></div>
+  </section>
+
+  <!-- Mobile: mini bracket overview -->
+  <div class="mini-bracket-wrapper" id="mini-bracket-wrapper">
+    <h2 class="mini-bracket-title">Tournament Bracket</h2>
+    <div class="mini-bracket-hint">Swipe to scroll</div>
+    <div class="mini-bracket-scroll">
+      <div class="mini-bracket" id="mini-bracket"></div>
+    </div>
+  </div>
+
+  <div class="mobile-bracket" id="mobile-bracket">
+    <div class="mobile-filter-bar" id="mobile-filter-bar"></div>
+    <div class="mobile-person-summary" id="mobile-person-summary"></div>
+    <div class="mobile-region-tabs" id="mobile-region-tabs"></div>
+    <div class="mobile-region-content" id="mobile-region-content"></div>
+  </div>
+
+  <!-- Desktop: full bracket view -->
+  <div class="desktop-filter-bar desktop-only" id="desktop-filter-bar"></div>
+  <div class="bracket-wrapper desktop-only">
+    <div class="bracket" id="bracket"></div>
+  </div>
+
+  <section class="leaderboard desktop-only" id="leaderboard-section">
+    <h2>Leaderboard</h2>
+    <div class="last-updated" id="last-updated"></div>
+    <div class="lb-cards" id="leaderboard-body"></div>
+  </section>
+
+  <!-- Risk Analysis section (both mobile and desktop) -->
+  <section class="risk-section" id="risk-section">
+    <h2 class="risk-title">Upset Watch</h2>
+    <p class="risk-desc">Games where we're most likely to get burned — ranked by how many of us the market thinks will be wrong.</p>
+    <div class="risk-cards" id="risk-cards"></div>
+  </section>
+
+  <!-- <a href="dev.html" class="dev-link">Dev Editor</a> -->
+  <script src="app.js?v=24"></script>
+</body>
+</html>
